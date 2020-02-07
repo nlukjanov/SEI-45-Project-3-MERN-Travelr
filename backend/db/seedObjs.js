@@ -1,3 +1,27 @@
+const groupObjs = [
+  {
+    name: 'The Web Pack',
+    description: 'something',
+    imageURL: 'some-image.jpg',
+    isPrivate: true,
+    members: []
+  },
+  {
+    name: 'Travellin Crew',
+    description: 'something',
+    imageURL: 'some-image.jpg',
+    isPrivate: true,
+    members: []
+  },
+  {
+    name: 'Phoebe\'s Flybies',
+    description: 'something',
+    imageURL: 'some-image.jpg',
+    isPrivate: true,
+    members: []
+  }
+]
+
 const userObjs = [
   {
     name: 'Bheki',
@@ -88,4 +112,4 @@ const categoryObjs = [
   }
 ]
 
-module.exports = { userObjs, tripObjs, categoryObjs }
+module.exports = { userObjs, tripObjs, categoryObjs, groupObjs }
