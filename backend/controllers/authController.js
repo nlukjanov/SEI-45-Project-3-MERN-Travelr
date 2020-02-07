@@ -13,4 +13,19 @@ function register(req, res) {
     .catch(err => res.json(err))
 }
 
-module.exports = { register }
+function login(req, res) {
+  User.findOne({ email: req.body.email })
+    .then(user => {
+      if (!user || !user.validatePassword(req.body.password)) {
+        return res.status(401).json({ message: 'Unauthorized' })
+      }
+      const token = jwt.sign({ sub: user._id }, secret, { expiresIn: '24h' })
+      res.status(202).json({
+        message: `Welcome back ${user.name}`,
+        token
+      })
+    })
+    .catch(err => res.json(err))
+}
+
+module.exports = { register, login }
