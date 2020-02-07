@@ -16,8 +16,4 @@ const userSchema = new mongoose.Schema({
   // completed trips will be sorted on the front end
 })
 
-<<<<<<< HEAD
 module.exports = mongoose.model('User', userSchema)
-=======
-module.exports = mongoose.model('User', userSchema)
->>>>>>> 2bc95542567d42b22141efe766638838880ed2a4
