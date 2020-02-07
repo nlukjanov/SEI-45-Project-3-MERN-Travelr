@@ -1,8 +1,33 @@
+const groupObjs = [
+  {
+    name: 'The Web Pack',
+    description: 'something',
+    imageURL: 'some-image.jpg',
+    isPrivate: true,
+    members: []
+  },
+  {
+    name: 'Travellin Crew',
+    description: 'something',
+    imageURL: 'some-image.jpg',
+    isPrivate: true,
+    members: []
+  },
+  {
+    name: 'Phoebe\'s Flybies',
+    description: 'something',
+    imageURL: 'some-image.jpg',
+    isPrivate: true,
+    members: []
+  }
+]
+
 const userObjs = [
   {
     name: 'Bheki',
     email: 'bheki@email.com',
     password: 'pass',
+    passwordConfirmation: 'pass',
     dob: new Date(),
     country: 'South Africa',
     city: 'Johannesburg',
@@ -17,6 +42,7 @@ const userObjs = [
     name: 'Nik',
     email: 'nik@email.com',
     password: 'pass',
+    passwordConfirmation: 'pass',
     dob: new Date(),
     country: 'Russia',
     city: 'Moscow',
@@ -31,6 +57,7 @@ const userObjs = [
     name: 'Jean',
     email: 'jean@email.com',
     password: 'pass',
+    passwordConfirmation: 'pass',
     dob: new Date(),
     country: 'Turkey',
     city: 'Istanbul',
@@ -88,4 +115,4 @@ const categoryObjs = [
   }
 ]
 
-module.exports = { userObjs, tripObjs, categoryObjs }
+module.exports = { userObjs, tripObjs, categoryObjs, groupObjs }
