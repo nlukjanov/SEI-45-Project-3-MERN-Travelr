@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken')
 const { secret } = require('../config/environment')
 
 function register(req, res) {
-  console.log(req.body)
   User.create(req.body)
     .then(user =>
       res
