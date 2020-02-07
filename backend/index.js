@@ -3,7 +3,8 @@ const app = express()
 const { port, dbURI } = require('./config/environment')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
-// const router = require('./config/router')
+const logger = require('./lib/logger')
+const router = require('./config/router')
 
 mongoose.connect(
   dbURI,
@@ -13,6 +14,12 @@ mongoose.connect(
     console.log(`Mongo is connected to '${dbURI}'`)
   }
 )
+
+app.use(bodyParser.json())
+app.use(logger)
+
+app.use(router)
+
 app.use('/*', (req, res) => res.json({ message: 'hello' }))
 
 app.listen(port, () => console.log(`App listening on port ${port}!`))
