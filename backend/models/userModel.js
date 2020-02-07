@@ -15,3 +15,5 @@ const userSchema = new mongoose.Schema({
   favoriteTrips: [{ type: mongoose.Schema.ObjectId, ref: 'Trip' }]
   // completed trips will be sorted on the front end
 })
+
+module.exports = mongoose.model('User', userSchema)
