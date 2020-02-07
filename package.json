@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "start:front": "webpack-dev-server --mode-development",
-    "start:back": "nodemon backend/index.js"
+    "start:back": "nodemon backend/index.js",
+    "seed": "node backend/db/seeds.js"
   },
   "dependencies": {
     "axios": "^0.19.2",
