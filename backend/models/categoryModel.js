@@ -8,11 +8,10 @@ const categorySchema = mongoose.Schema({
   }
 })
 
-categorySchema
-  .virtual('Trips', {
-    ref: 'Trips',
-    localField: '_id',
-    foreignField: 'category'
-  })
+categorySchema.virtual('trips', {
+  ref: 'Trip',
+  localField: '_id',
+  foreignField: 'category'
+})
 
 module.exports = mongoose.model('Category', categorySchema)
