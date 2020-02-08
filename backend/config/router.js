@@ -14,6 +14,10 @@ router.route('/categories/:id').get(categories.getCategory)
 
 router.route('/groups').get(groups.getAllGroups)
 
+router.route('/trips').get(trips.index)
+
+router.route('/trips/:id').get(trips.showTrip)
+
 router.route('/groups/:id').get(groups.getGroup)
 
 router.route('/login').post(auth.login)
