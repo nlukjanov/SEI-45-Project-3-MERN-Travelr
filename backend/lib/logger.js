@@ -1,5 +1,7 @@
 const logger = function (req, res, next) {
-  console.log(`Incoming '${req.method}' to '${req.url}'`)
+  if (process.env.NODE_ENV !== 'test') {
+    console.log(`Incoming ${req.method} to ${req.url}`)
+  }
   next()
 }
 
