@@ -23,3 +23,5 @@ app.use(router)
 app.use('/*', (req, res) => res.json({ message: 'hello' }))
 
 app.listen(port, () => console.log(`App listening on port ${port}!`))
+
+module.exports = app

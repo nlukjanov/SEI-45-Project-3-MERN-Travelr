@@ -9,7 +9,7 @@ function register(req, res) {
         .status(201)
         .json({ message: `Thank you for registering ${user.name}` })
     )
-    .catch(err => res.json(err))
+    .catch(err => res.status(422).json(err))
 }
 
 function login(req, res) {
