@@ -9,10 +9,8 @@ const tripSchema = new mongoose.Schema({
   category: { type: mongoose.Schema.ObjectId, ref: 'Category', required: true },
   description: { type: String, required: true },
   participants: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
-  budget: { type: String, required: true }
-
-
-  
+  budget: { type: String, required: true },
+  interested: [{ type: mongoose.Schema.ObjectId, ref: 'User' }]
 })
 
 module.exports = mongoose.model('Trip', tripSchema)
