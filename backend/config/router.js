@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const users = require('../controllers/authController')
+const users = require('../controllers/userController')
 const trips = require('../controllers/tripsController')
 const auth = require('../controllers/authController')
 const secureRoute = require('../lib/SecureRoute')
