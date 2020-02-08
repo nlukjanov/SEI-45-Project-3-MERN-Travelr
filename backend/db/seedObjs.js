@@ -3,22 +3,19 @@ const groupObjs = [
     name: 'The Web Pack',
     description: 'something',
     imageURL: 'some-image.jpg',
-    isPrivate: true,
-    members: []
+    isPrivate: true
   },
   {
     name: 'Travellin Crew',
     description: 'something',
     imageURL: 'some-image.jpg',
-    isPrivate: true,
-    members: []
+    isPrivate: true
   },
   {
     name: 'Phoebe\'s Flybies',
     description: 'something',
     imageURL: 'some-image.jpg',
-    isPrivate: true,
-    members: []
+    isPrivate: true
   }
 ]
 
@@ -49,6 +46,7 @@ const userObjs = [
     gender: 'Male',
     languages: 'Russian',
     profileImage: 'image.jpg',
+    travel_group: 'The Web Pack',
     organizedTrips: [],
     joinedTrips: [],
     favoriteTrips: []
@@ -64,6 +62,7 @@ const userObjs = [
     gender: 'Male',
     languages: 'Turkish',
     profileImage: 'image-2.jpg',
+    travel_group: 'The Web Pack',
     organizedTrips: [],
     joinedTrips: [],
     favoriteTrips: []
