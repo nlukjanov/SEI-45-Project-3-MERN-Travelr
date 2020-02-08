@@ -1,5 +1,6 @@
 const router = require('express').Router()
-const users = require('../controllers/authController')
+
+const users = require('../controllers/userController')
 const trips = require('../controllers/tripsController')
 const auth = require('../controllers/authController')
 const secureRoute = require('../lib/SecureRoute')
@@ -14,6 +15,10 @@ router.route('/categories').get(categories.getAllCategories)
 router.route('/categories/:id').get(categories.getCategory)
 
 router.route('/groups').get(groups.getAllGroups)
+
+router.route('/trips').get(trips.index)
+
+router.route('/trips/:id').get(trips.showTrip)
 
 router.route('/groups/:id').get(groups.getGroup)
 

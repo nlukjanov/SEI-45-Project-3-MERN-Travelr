@@ -3,7 +3,7 @@ const Trip = require('../models/tripModel')
 function index(req, res){
   Trip 
     .find()
-    .populate('trip')
+    .populate('organizer')
     .then(foundTrip => res.status(200).json(foundTrip))
     .catch(err => console.log(err))
 }
@@ -19,7 +19,7 @@ function createTrip(req, res, next){
 function showTrip(req, res){
   Trip
     .findById(req.params.id)
-    .populate('trip')
+    .populate('organizer')
     .then(foundTrip => {
       if (!foundTrip) console.log('Error occured at showTrip')
       res.status(200).json(foundTrip)
