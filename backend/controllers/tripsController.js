@@ -27,22 +27,21 @@ function showTrip(req, res){
     .catch(err => console.log(err))
 }
 
-// function destroyTrip(req, res){
-//   Trip
-//     .findById(req.body._id)
-//     .then(trip => {
-//       if (!trip) return res.status(404).json({ message: 'File not found' })
+function destroyTrip(req, res){
+  Trip
+    .findById(req.params._id)
+    .then(trip => {
+      if (!trip) return res.status(404).json({ message: 'File not found' })
 
-
-//       return trip.save()
-//     })
-//     .then(() => res.sendStatus(204))
-//     .catch(err => res.status(400).json(err))
-// }
+      return trip.save()
+    })
+    .then(() => res.sendStatus(204))
+    .catch(err => res.status(400).json(err))
+}
 
 function editTrip(req, res, next){
   Trip
-    .findById(req.body._id)
+    .findById(req.params._id)
     .then(trip => {
       if (!trip) return res.status(404).json({ message: 'File not found' })
 
@@ -54,4 +53,4 @@ function editTrip(req, res, next){
     .catch(next)
 }
 
-module.exports = { index , createTrip, showTrip, editTrip }
+module.exports = { index , createTrip, showTrip, editTrip, destroyTrip }
