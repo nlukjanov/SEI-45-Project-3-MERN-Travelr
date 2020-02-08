@@ -32,7 +32,6 @@ function destroyTrip(req, res){
     .findById(req.params._id)
     .then(trip => {
       if (!trip) return res.status(404).json({ message: 'File not found' })
-
       return trip.save()
     })
     .then(() => res.sendStatus(204))
