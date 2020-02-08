@@ -13,7 +13,12 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true }, (er
   if (err) return console.log(err)
   db.dropDatabase()
     .then(() => Group.create(groupObjs))
-    .then(() => User.create(userObjs))
+    .then((groupModels) => {
+      userObjs.map(obj => {
+        if (obj.travel_group) return obj.travel_group = groupModels.find(model => model.name === obj.travel_group)
+      })
+      return User.create(userObjs)
+    })
     .then((userModels) => {
       tripObjs.map(obj => obj.organizer = userModels.find(model => model.name === obj.organizer))
       return Catergory.create(categoryObjs)

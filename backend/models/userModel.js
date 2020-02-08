@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
   gender: { type: String, enum: ['Male', 'Female'], required: true },
   languages: { type: String },
   profileImage: { type: String, required: true },
+  travel_group: { type: mongoose.Schema.ObjectId, ref: 'Group' },
   organizedTrips: [{ type: mongoose.Schema.ObjectId, ref: 'Trip' }],
   joinedTrips: [{ type: mongoose.Schema.ObjectId, ref: 'Trip' }],
   favoriteTrips: [{ type: mongoose.Schema.ObjectId, ref: 'Trip' }]
