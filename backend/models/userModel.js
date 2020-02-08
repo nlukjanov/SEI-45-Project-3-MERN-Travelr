@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
   country: { type: String, required: true },
   city: { type: String, required: true },
   gender: { type: String, enum: ['Male', 'Female'], required: true },
-  languages: { type: String },
+  languages: { type: String, required: true },
   profileImage: { type: String, required: true },
   travel_group: { type: mongoose.Schema.ObjectId, ref: 'Group' },
   organizedTrips: [{ type: mongoose.Schema.ObjectId, ref: 'Trip' }],

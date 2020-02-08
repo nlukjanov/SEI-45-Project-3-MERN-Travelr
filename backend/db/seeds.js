@@ -3,7 +3,7 @@ const { dbURI } = require('../config/environment')
 
 const Trip = require('../models/tripModel')
 const User = require('../models/userModel')
-const Catergory = require('../models/categoryModel')
+const Category = require('../models/categoryModel')
 const Group = require('../models/groupModel')
 
 const { userObjs, categoryObjs, tripObjs, groupObjs } = require('./seedObjs')
@@ -21,7 +21,7 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true }, (er
     })
     .then((userModels) => {
       tripObjs.map(obj => obj.organizer = userModels.find(model => model.name === obj.organizer))
-      return Catergory.create(categoryObjs)
+      return Category.create(categoryObjs)
     })
     .then((catModels) => {
       tripObjs.map(obj => obj.category = catModels.find(model => model.name === obj.category))

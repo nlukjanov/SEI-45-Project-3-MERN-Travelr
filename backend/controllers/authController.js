@@ -3,14 +3,13 @@ const jwt = require('jsonwebtoken')
 const { secret } = require('../config/environment')
 
 function register(req, res) {
-  console.log(req.body)
   User.create(req.body)
     .then(user =>
       res
         .status(201)
         .json({ message: `Thank you for registering ${user.name}` })
     )
-    .catch(err => res.json(err))
+    .catch(err => res.status(422).json(err))
 }
 
 function login(req, res) {
