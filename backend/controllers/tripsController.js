@@ -29,7 +29,7 @@ function showTrip(req, res){
 
 function destroyTrip(req, res){
   Trip
-    .findByIdAndDelete(req.body._id)
+    .findByIdAndDelete(req.params.id)
     .then(() => res.sendStatus(204))
     .catch(err => res.status(400).json(err))
 }
