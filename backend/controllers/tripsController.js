@@ -1,22 +1,22 @@
 const Trip = require('../models/tripModel')
 
-function index(req, res){
+function index(req, res, next) {
   Trip 
     .find()
     .populate('organizer')
     .then(foundTrip => res.status(200).json(foundTrip))
-    .catch(err => console.log(err))
+    .catch(next)
 }
 
 function createTrip(req, res, next){
-  req.body.user = req.currentUser
+  // req.body.user = req.currentUser
   Trip
     .create(req.body)
     .then(createdTrip => res.status(201).json(createdTrip))
     .catch(next)
 }
 
-function showTrip(req, res){
+function showTrip(req, res, next){
   Trip
     .findById(req.params.id)
     .populate('organizer')
@@ -24,10 +24,17 @@ function showTrip(req, res){
       if (!foundTrip) console.log('Error occured at showTrip')
       res.status(200).json(foundTrip)
     })
-    .catch(err => console.log(err))
+    .catch(next)
 }
 
 function destroyTrip(req, res){
+  Trip 
+    .findById(req.params.id)
+    .then(trip => {
+      if (!trip) return res.sendStatus(404)
+    })
+    .catch(err => res.status(400).json(err))
+
   Trip
     .findByIdAndDelete(req.params.id)
     .then(() => res.sendStatus(204))
