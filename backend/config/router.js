@@ -32,16 +32,16 @@ router.route('/trips')
   .get(trips.index)
 
 router.route('/trips')
-  .post(trips.createTrip)
+  .post(secureRoute, trips.createTrip)
 
 router.route('/trips/:id')
   .get(trips.showTrip)
 
 router.route('/trips/:id')
-  .put(trips.editTrip)
+  .put(secureRoute, trips.editTrip)
 
 router.route('/trips/:id')
-  .delete(trips.destroyTrip)
+  .delete(secureRoute, trips.destroyTrip)
 
 // Users
 router.route('/profile')
