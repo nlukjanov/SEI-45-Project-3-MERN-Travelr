@@ -20,12 +20,21 @@ router.route('/categories')
 router.route('/categories/:id')
   .get(categories.getCategory)
 
+router.route('/categories/:id/like')
+  .get(secureRoute, categories.likeCategory)
+
 // Groups
 router.route('/groups')
   .get(groups.getAllGroups)
 
 router.route('/groups/:id')
   .get(groups.getGroup)
+
+router.route('/groups/:id/join')
+  .get(secureRoute, groups.joinGroup)
+
+router.route('/groups/:id/like')
+  .get(secureRoute, groups.likeGroup)
 
 // Trips
 router.route('/trips')
@@ -46,6 +55,7 @@ router.route('/trips/:id/join')
 // Users
 router.route('/profile')
   .get(secureRoute, users.profile)
-
+  .put(secureRoute, users.updateProfile)
+  .delete(secureRoute, users.deleteUser)
 
 module.exports = router

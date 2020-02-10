@@ -23,11 +23,35 @@ function createGroup(req, res, next) {
     .catch(next)
 }
 
+// Join or Follow
+
+function joinGroup(req, res, next) {
+  Group
+    .findById(req.params.id)
+    .then(group => {
+      if (!group) throw new Error('Not found')
+      if (group.members.some(item => item.user._id.equals(req.currentUser._id))) {
+        const foundGroup = group.members.find(item => item.user._id.equals(req.currentUser._id))
+        group.members.splice(group.members.indexOf(foundGroup), 1)
+        return group.save()
+      }
+      group.members.push({ user: req.currentUser })
+      return group.save()
+    })
+    .then(group => res.status(202).json(group))
+    .catch(next)
+}
+
 function likeGroup(req, res, next) {
   Group
     .findById(req.params.id)
     .then(group => {
       if (!group) throw new Error('Not found')
+      if (group.likes.some(item => item.user._id.equals(req.currentUser._id))) {
+        const foundLike = group.likes.find(item => item.user._id.equals(req.currentUser._id))
+        group.likes.splice(group.likes.indexOf(foundLike), 1)
+        return group.save()
+      }
       group.likes.push({ user: req.currentUser })
       return group.save()
     })
@@ -35,4 +59,4 @@ function likeGroup(req, res, next) {
     .catch(next)
 }
 
-module.exports = { getGroup, getAllGroups, createGroup, likeGroup }
+module.exports = { getGroup, getAllGroups, createGroup, likeGroup, joinGroup }
