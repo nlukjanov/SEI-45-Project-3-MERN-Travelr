@@ -13,4 +13,23 @@ function profile(req, res, next) {
     .catch(next)
 }
 
-module.exports = { profile }
+function updateProfile(req, res, next) {
+  User
+    .findById(req.currentUser._id)
+    .then(user => {
+      if (!user) throw new Error('Not found')
+      Object.assign(user, req.body)
+      return user.save()
+    })
+    .then(updatedUser => res.status(202).json(updatedUser))
+    .catch(next)
+}
+
+function deleteUser(req, res, next) {
+  User
+    .findByIdAndDelete(req.currentUser._id)
+    .then(() => res.sendStatus(204))
+    .catch(next)
+}
+
+module.exports = { profile, deleteUser, updateProfile }

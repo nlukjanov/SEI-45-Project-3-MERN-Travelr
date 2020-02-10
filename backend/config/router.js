@@ -55,6 +55,7 @@ router.route('/trips/:id/join')
 // Users
 router.route('/profile')
   .get(secureRoute, users.profile)
-
+  .put(secureRoute, users.updateProfile)
+  .delete(secureRoute, users.deleteUser)
 
 module.exports = router
