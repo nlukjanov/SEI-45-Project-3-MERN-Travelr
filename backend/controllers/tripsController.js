@@ -26,31 +26,32 @@ function showTrip(req, res, next){
     .populate('interested')
     .populate('participants')
     .populate('category')
-    .then(foundTrip => {
-      if (!foundTrip) console.log('Error occured at showTrip')
-      res.status(200).json(foundTrip)
+    .then(trip => {
+      if (!trip) return res.status(404).json({ message: 'Target not found' })
+      res.status(200).json(trip)
     })
     .catch(next)
 }
 
-// function destroyTrip(req, res){
-//   Trip
-//     .findById(req.body._id)
-//     .then(trip => {
-//       if (!trip) return res.status(404).json({ message: 'File not found' })
+function destroyTrip(req, res){
+  Trip 
+    .findById(req.params.id)
+    .then(trip => {
+      if (!trip) return res.sendStatus(404).json({ message: 'Target not found' })
+    })
+    .catch(err => res.status(400).json(err))
 
-
-//       return trip.save()
-//     })
-//     .then(() => res.sendStatus(204))
-//     .catch(err => res.status(400).json(err))
-// }
+  Trip
+    .findByIdAndDelete(req.params.id)
+    .then(() => res.sendStatus(204))
+    .catch(err => res.status(400).json(err))
+}
 
 function editTrip(req, res, next){
   Trip
-    .findById(req.body._id)
+    .findById(req.params.id)
     .then(trip => {
-      if (!trip) return res.status(404).json({ message: 'File not found' })
+      if (!trip) return res.status(404).json({ message: 'Target not found' })
 
       Object.assign(trip, req.body)
 
@@ -88,4 +89,4 @@ function interestTrip(req, res, next) {
     .catch(next)
 }
 
-module.exports = { index , createTrip, showTrip, editTrip, interestTrip, joinTrip }
+module.exports = { index , createTrip, showTrip, editTrip, interestTrip, joinTrip, destroyTrip }

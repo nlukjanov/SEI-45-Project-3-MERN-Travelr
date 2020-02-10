@@ -1,4 +1,5 @@
 process.env.NODE_ENV = 'test'
+process.env.PORT = 3000
 const chai = require('chai')
 global.expect = chai.expect
 

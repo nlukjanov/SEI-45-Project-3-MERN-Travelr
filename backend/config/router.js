@@ -1,5 +1,4 @@
 const router = require('express').Router()
-
 const users = require('../controllers/userController')
 const trips = require('../controllers/tripsController')
 const auth = require('../controllers/authController')
@@ -31,10 +30,13 @@ router.route('/groups/:id')
 // Trips
 router.route('/trips')
   .get(trips.index)
+  .post(trips.createTrip)
 
 router.route('/trips/:id')
   .get(trips.showTrip)
-
+  .put(trips.editTrip)
+  .delete(trips.destroyTrip)
+  
 router.route('/trips/:id/interested')
   .get(secureRoute, trips.interestTrip)
 
@@ -44,5 +46,6 @@ router.route('/trips/:id/join')
 // Users
 router.route('/profile')
   .get(secureRoute, users.profile)
+
 
 module.exports = router

@@ -71,7 +71,7 @@ const tripObjs = [
     startingDate: new Date(),
     endingDate: new Date(),
     category: 'Beach',
-    description: 'desciprion',
+    description: 'description',
     participants: [],
     budget: 'lots of money'
   },
@@ -81,8 +81,8 @@ const tripObjs = [
     country: 'India',
     startingDate: new Date(),
     endingDate: new Date(),
-    category: 'Safari',
-    description: 'desciprion',
+    category: 'Beach',
+    description: 'description',
     participants: [],
     budget: 'lots of money'
   },
@@ -93,7 +93,7 @@ const tripObjs = [
     startingDate: new Date(),
     endingDate: new Date(),
     category: 'Skiing',
-    description: 'desciprion',
+    description: 'description',
     participants: [],
     budget: 'lots of money'
   }
