@@ -7,23 +7,24 @@ const commentSchema = new mongoose.Schema({
   timestamps: true
 })
 
-const likeSchema = new mongoose.Schema({
+const embeddedUserSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.ObjectId, ref: 'User', required: true }
 }, {
   timestamps: true
 })
 
 const tripSchema = new mongoose.Schema({
+  name: { type: String, required: true, unique: true },
   organizer: { type: mongoose.Schema.ObjectId, ref: 'User', required: true },
   country: { type: String, required: true },
   startingDate: { type: Date, required: true },
   endingDate: { type: Date, required: true },
   category: { type: mongoose.Schema.ObjectId, ref: 'Category', required: true },
   description: { type: String, required: true },
-  participants: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
   budget: { type: String, required: true },
-  interested: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
-  likes: [ likeSchema ],
+  participants: [ embeddedUserSchema ],
+  interested: [ embeddedUserSchema ],
+  likes: [ embeddedUserSchema ],
   comments: [ commentSchema ]
 })
 

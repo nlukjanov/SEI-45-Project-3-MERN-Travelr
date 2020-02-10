@@ -30,12 +30,22 @@ router.route('/groups/:id')
 // Trips
 router.route('/trips')
   .get(trips.index)
+  .post(secureRoute, trips.createTrip)
 
 router.route('/trips/:id')
   .get(trips.showTrip)
+  .put(secureRoute, trips.editTrip)
+  .delete(secureRoute, trips.destroyTrip)
+  
+router.route('/trips/:id/interested')
+  .get(secureRoute, trips.interestTrip)
+
+router.route('/trips/:id/join')
+  .get(secureRoute, trips.joinTrip)
 
 // Users
 router.route('/profile')
   .get(secureRoute, users.profile)
+
 
 module.exports = router
