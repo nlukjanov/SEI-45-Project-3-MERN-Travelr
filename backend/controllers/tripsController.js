@@ -62,7 +62,7 @@ function editTrip(req, res, next){
 }
 
 
-// Express Interest in a Trip
+// Join or Express Interest in a Trip
 function joinTrip(req, res, next) {
   Trip
     .findById(req.params.id)
