@@ -29,18 +29,14 @@ function showTrip(req, res){
 
 function destroyTrip(req, res){
   Trip
-    .findById(req.params._id)
-    .then(trip => {
-      if (!trip) return res.status(404).json({ message: 'File not found' })
-      return trip.save()
-    })
+    .findByIdAndDelete(req.body._id)
     .then(() => res.sendStatus(204))
     .catch(err => res.status(400).json(err))
 }
 
 function editTrip(req, res, next){
   Trip
-    .findById(req.params._id)
+    .findById(req.params.id)
     .then(trip => {
       if (!trip) return res.status(404).json({ message: 'File not found' })
 
