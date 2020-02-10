@@ -21,7 +21,8 @@ function showTrip(req, res, next){
     .findById(req.params.id)
     .populate('organizer')
     .then(trip => {
-      if (!trip) return res.sendStatus(404).json({ message: 'Target not found' })
+      if (!trip) return res.status(404).json({ message: 'Target not found' })
+      res.status(200).json(trip)
     })
     .catch(next)
 }
