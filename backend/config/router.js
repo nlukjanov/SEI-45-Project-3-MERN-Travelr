@@ -30,12 +30,12 @@ router.route('/groups/:id')
 // Trips
 router.route('/trips')
   .get(trips.index)
-  .post(trips.createTrip)
+  .post(secureRoute, trips.createTrip)
 
 router.route('/trips/:id')
   .get(trips.showTrip)
-  .put(trips.editTrip)
-  .delete(trips.destroyTrip)
+  .put(secureRoute, trips.editTrip)
+  .delete(secureRoute, trips.destroyTrip)
   
 router.route('/trips/:id/interested')
   .get(secureRoute, trips.interestTrip)
