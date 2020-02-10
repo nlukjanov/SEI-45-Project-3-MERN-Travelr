@@ -4,6 +4,7 @@ const { port, dbURI } = require('./config/environment')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const logger = require('./lib/logger')
+const handleError = require('./lib/errorHandler')
 const router = require('./config/router')
 
 mongoose.connect(
@@ -19,6 +20,7 @@ app.use(bodyParser.json())
 app.use(logger)
 
 app.use(router)
+app.use(handleError)
 
 app.use('/*', (req, res) => res.json({ message: 'hello' }))
 
