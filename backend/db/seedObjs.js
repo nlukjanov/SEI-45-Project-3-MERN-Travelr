@@ -31,8 +31,6 @@ const userObjs = [
     gender: 'Male',
     languages: 'Sotho',
     profileImage: 'my-image.jpg',
-    organizedTrips: [],
-    joinedTrips: [],
     favoriteTrips: []
   },
   {
@@ -47,8 +45,6 @@ const userObjs = [
     languages: 'Russian',
     profileImage: 'image.jpg',
     travel_group: 'The Web Pack',
-    organizedTrips: [],
-    joinedTrips: [],
     favoriteTrips: []
   },
   {
@@ -63,14 +59,13 @@ const userObjs = [
     languages: 'Turkish',
     profileImage: 'image-2.jpg',
     travel_group: 'The Web Pack',
-    organizedTrips: [],
-    joinedTrips: [],
     favoriteTrips: []
   }
 ]
 
 const tripObjs = [
   {
+    name: 'An English summer on the beach',
     organizer: 'Bheki',
     country: 'United Kingdom',
     startingDate: new Date(),
@@ -81,16 +76,18 @@ const tripObjs = [
     budget: 'lots of money'
   },
   {
+    name: 'Jungle Trek',
     organizer: 'Bheki',
     country: 'India',
     startingDate: new Date(),
     endingDate: new Date(),
-    category: 'Beach',
+    category: 'Safari',
     description: 'desciprion',
     participants: [],
     budget: 'lots of money'
   },
   {
+    name: 'Skiing in the Alps',
     organizer: 'Nik',
     country: 'France',
     startingDate: new Date(),
