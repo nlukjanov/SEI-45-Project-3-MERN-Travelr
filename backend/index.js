@@ -19,7 +19,7 @@ mongoose.connect(
 app.use(bodyParser.json())
 app.use(logger)
 
-app.use(router)
+app.use('/api',router)
 app.use(handleError)
 
 app.use('/*', (req, res) => res.json({ message: 'hello' }))
