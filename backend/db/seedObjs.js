@@ -29,9 +29,8 @@ const userObjs = [
     country: 'South Africa',
     city: 'Johannesburg',
     gender: 'Male',
-    languages: 'Sotho',
-    profileImage: 'my-image.jpg',
-    favoriteTrips: []
+    languages: ['Sotho'],
+    profileImage: 'my-image.jpg'
   },
   {
     name: 'Nik',
@@ -42,10 +41,8 @@ const userObjs = [
     country: 'Russia',
     city: 'Moscow',
     gender: 'Male',
-    languages: 'Russian',
-    profileImage: 'image.jpg',
-    travel_group: 'The Web Pack',
-    favoriteTrips: []
+    languages: ['Russian'],
+    profileImage: 'image.jpg'
   },
   {
     name: 'Jean',
@@ -56,10 +53,8 @@ const userObjs = [
     country: 'Turkey',
     city: 'Istanbul',
     gender: 'Male',
-    languages: 'Turkish',
-    profileImage: 'image-2.jpg',
-    travel_group: 'The Web Pack',
-    favoriteTrips: []
+    languages: ['Turkish'],
+    profileImage: 'image-2.jpg'
   }
 ]
 

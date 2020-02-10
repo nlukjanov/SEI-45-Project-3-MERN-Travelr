@@ -68,7 +68,11 @@ function joinTrip(req, res, next) {
     .findById(req.params.id)
     .then(trip => {
       if (!trip) throw new Error('Not found')
-      if (trip.participants.some(item => item._id.equals(req.currentUser._id))) return trip
+      if (trip.participants.some(item => item.user._id.equals(req.currentUser._id))) {
+        const foundTrip = trip.participants.find(item => item.user._id.equals(req.currentUser._id))
+        trip.participants.splice(trip.participants.indexOf(foundTrip), 1)
+        return trip.save()
+      }
       trip.participants.push({ user: req.currentUser })
       return trip.save()
     })
@@ -81,7 +85,11 @@ function interestTrip(req, res, next) {
     .findById(req.params.id)
     .then(trip => {
       if (!trip) throw new Error('Not found')
-      if (trip.interested.some(item => item._id.equals(req.currentUser._id))) return trip
+      if (trip.interested.some(item => item.user._id.equals(req.currentUser._id))) {
+        const foundTrip = trip.interested.find(item => item.user._id.equals(req.currentUser._id))
+        trip.interested.splice(trip.interested.indexOf(foundTrip), 1)
+        return trip.save()
+      }
       trip.interested.push({ user: req.currentUser })
       return trip.save()
     })

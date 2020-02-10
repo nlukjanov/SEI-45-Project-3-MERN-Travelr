@@ -7,6 +7,8 @@ function profile(req, res, next) {
     .populate('travel_group')
     .populate('joinedTrips')
     .populate('favoriteTrips')
+    .populate('travel_groups')
+    .populate('favorite_categories')
     .then(user => res.status(200).json(user))
     .catch(next)
 }

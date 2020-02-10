@@ -22,9 +22,8 @@ const userSchema = new mongoose.Schema({
   country: { type: String, required: true },
   city: { type: String, required: true },
   gender: { type: String, enum: ['Male', 'Female'], required: true },
-  languages: { type: String, required: true },
+  languages: { type: Array, required: true },
   profileImage: { type: String, required: true },
-  travel_group: { type: mongoose.Schema.ObjectId, ref: 'Group' },
   likes: [ likeSchema ],
   comments: [ commentSchema ]
   // completed trips will be sorted on the front end
@@ -46,6 +45,18 @@ userSchema.virtual('favoriteTrips', {
   ref: 'Trip',
   localField: '_id',
   foreignField: 'interested.user'
+})
+
+userSchema.virtual('travel_groups', {
+  ref: 'Group',
+  localField: '_id',
+  foreignField: 'members.user'
+})
+
+userSchema.virtual('favorite_categories', {
+  ref: 'Category',
+  localField: '_id',
+  foreignField: 'likes.user'
 })
 
 userSchema.set('toJSON', { virtuals: true })

@@ -21,6 +21,11 @@ function likeCategory(req, res, next) {
     .findById(req.params.id)
     .then(category => {
       if (!category) throw new Error('Not found')
+      if (category.likes.some(item => item.user._id.equals(req.currentUser._id))) {
+        const foundLike = category.likes.find(item => item.user._id.equals(req.currentUser._id))
+        category.likes.splice(category.likes.indexOf(foundLike), 1)
+        return category.save()
+      }
       category.likes.push({ user: req.currentUser })
       return category.save()
     })
