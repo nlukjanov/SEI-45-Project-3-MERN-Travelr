@@ -5,6 +5,14 @@ import countryList from 'react-select-country-list'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
+const budget = [
+  { value: '$0 - $100', label: '$0 - $100' },
+  { value: '$100 - $300', label: '$100 - $300' },
+  { value: '$300 - $500', label: '$300 - $500' },
+  { value: '$500 - $1000', label: '$500 - $1000' },
+  { value: '$1000 - $2000', label: '$1000 - $2000' },
+  { value: '$2000+', label: '$2000+' }
+]
 class TripsIndex extends Component {
   state = {
     select: {
@@ -15,20 +23,28 @@ class TripsIndex extends Component {
       category: []
     }
   }
-  // category: { type: mongoose.Schema.ObjectId, ref: 'Category', required: true },
-  // description: { type: String, required: true },
-  // participants: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
-  // budget: { type: String, required: true },
-  // interested: [{ type: mongoose.Schema.ObjectId, ref: 'User' }]
+
+  addCategoryToState = res => {
+    const categoryArray = []
+    res.data.forEach(category => {
+      const selectCategory = {}
+      selectCategory['value'] = category.name
+      selectCategory['label'] = category.name
+      return categoryArray.push(selectCategory)
+    })
+    return categoryArray
+  }
 
   async componentDidMount() {
     try {
       const res = await axios.get('/api/categories')
-      console.log(res.data)
-      // this.setState({ ...this.state.select, select: {
-      //   ...this.state.select, 
-      //   category: res.date
-      // } })
+      this.setState({
+        ...this.state.select,
+        select: {
+          ...this.state.select,
+          category: this.addCategoryToState(res)
+        }
+      })
     } catch (err) {
       console.log(err)
     }
@@ -61,7 +77,6 @@ class TripsIndex extends Component {
           <div className='columns is-mobile is-multiline'>
             <div className='column is-12-tablet is-8-mobile is-offset-2-mobile card'>
               <div className='field'>
-                <label className='label'>Select country</label>
                 <div className='control'>
                   <Select
                     onChange={this.handleMultiChange}
@@ -69,6 +84,7 @@ class TripsIndex extends Component {
                     isMulti
                     className='basic-multi-select'
                     classNamePrefix='select'
+                    placeholder='Select Destination'
                   />
                   <DatePicker
                     dateFormat='yyyy/MMM/dd'
@@ -79,6 +95,22 @@ class TripsIndex extends Component {
                     dateFormat='yyyy/MMM/dd'
                     selected={this.state.select.endingDate}
                     onChange={this.setEndingDate}
+                  />
+                  <Select
+                    onChange={this.handleMultiChange}
+                    options={this.state.select.category}
+                    isMulti
+                    className='basic-multi-select'
+                    classNamePrefix='select'
+                    placeholder='Select Trip Type'
+                  />
+                  <Select
+                    onChange={this.handleMultiChange}
+                    options={budget}
+                    isMulti
+                    className='basic-multi-select'
+                    classNamePrefix='select'
+                    placeholder='Select Budget'
                   />
                 </div>
               </div>
