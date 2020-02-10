@@ -9,7 +9,7 @@ function index(req, res, next) {
 }
 
 function createTrip(req, res, next){
-  // req.body.user = req.currentUser
+  req.body.user = req.currentUser
   Trip
     .create(req.body)
     .then(createdTrip => res.status(201).json(createdTrip))
@@ -20,9 +20,8 @@ function showTrip(req, res, next){
   Trip
     .findById(req.params.id)
     .populate('organizer')
-    .then(foundTrip => {
-      if (!foundTrip) console.log('Error occured at showTrip')
-      res.status(200).json(foundTrip)
+    .then(trip => {
+      if (!trip) return res.sendStatus(404).json({ message: 'Target not found' })
     })
     .catch(next)
 }
@@ -31,7 +30,7 @@ function destroyTrip(req, res){
   Trip 
     .findById(req.params.id)
     .then(trip => {
-      if (!trip) return res.sendStatus(404)
+      if (!trip) return res.sendStatus(404).json({ message: 'Target not found' })
     })
     .catch(err => res.status(400).json(err))
 
@@ -45,7 +44,7 @@ function editTrip(req, res, next){
   Trip
     .findById(req.params.id)
     .then(trip => {
-      if (!trip) return res.status(404).json({ message: 'File not found' })
+      if (!trip) return res.status(404).json({ message: 'Target not found' })
 
       Object.assign(trip, req.body)
 

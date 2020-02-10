@@ -32,7 +32,7 @@ router.route('/trips')
   .get(trips.index)
 
 router.route('/trips')
-  .get(trips.createTrip)
+  .post(trips.createTrip)
 
 router.route('/trips/:id')
   .get(trips.showTrip)
