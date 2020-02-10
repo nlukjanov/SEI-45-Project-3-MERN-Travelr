@@ -21,7 +21,8 @@ class TripsIndex extends Component {
       startingDate: new Date(),
       endingDate: new Date(),
       category: []
-    }
+    },
+    trips: []
   }
 
   addCategoryToState = res => {
@@ -37,12 +38,17 @@ class TripsIndex extends Component {
 
   async componentDidMount() {
     try {
-      const res = await axios.get('/api/categories')
+      const res = await Promise.all([
+        axios.get('/api/categories'),
+        axios.get('/api/trips')
+      ])
       this.setState({
+        ...this.state,
+        trips: res[1].data,
         ...this.state.select,
         select: {
           ...this.state.select,
-          category: this.addCategoryToState(res)
+          category: this.addCategoryToState(res[0])
         }
       })
     } catch (err) {
@@ -75,7 +81,7 @@ class TripsIndex extends Component {
       <section className='section'>
         <div className='container'>
           <div className='columns is-mobile is-multiline'>
-            <div className='column is-12-tablet is-8-mobile is-offset-2-mobile card'>
+            <div className='column is-12-tablet is-12-mobile card'>
               <div className='field'>
                 <div className='control'>
                   <Select
@@ -86,34 +92,96 @@ class TripsIndex extends Component {
                     classNamePrefix='select'
                     placeholder='Select Destination'
                   />
-                  <DatePicker
-                    dateFormat='yyyy/MMM/dd'
-                    selected={this.state.select.startingDate}
-                    onChange={this.setStartingDate}
-                  />
-                  <DatePicker
-                    dateFormat='yyyy/MMM/dd'
-                    selected={this.state.select.endingDate}
-                    onChange={this.setEndingDate}
-                  />
-                  <Select
-                    onChange={this.handleMultiChange}
-                    options={this.state.select.category}
-                    isMulti
-                    className='basic-multi-select'
-                    classNamePrefix='select'
-                    placeholder='Select Trip Type'
-                  />
-                  <Select
-                    onChange={this.handleMultiChange}
-                    options={budget}
-                    isMulti
-                    className='basic-multi-select'
-                    classNamePrefix='select'
-                    placeholder='Select Budget'
-                  />
                 </div>
               </div>
+              <div className='is-mobile'>
+                <div className='field'>
+                  <div className='control'>
+                    <label className='label'>Start Date</label>
+                    <DatePicker
+                      dateFormat='yyyy/MMM/dd'
+                      selected={this.state.select.startingDate}
+                      onChange={this.setStartingDate}
+                    />
+                  </div>
+                </div>
+                <div className='field'>
+                  <div className='control'>
+                    <label className='label'>End Date</label>
+                    <DatePicker
+                      dateFormat='yyyy/MMM/dd'
+                      selected={this.state.select.endingDate}
+                      onChange={this.setEndingDate}
+                    />
+                  </div>
+                </div>
+                <div className='field'>
+                  <div className='control'>
+                    <Select
+                      onChange={this.handleMultiChange}
+                      options={this.state.select.category}
+                      isMulti
+                      className='basic-multi-select'
+                      classNamePrefix='select'
+                      placeholder='Select Trip Type'
+                    />
+                  </div>
+                </div>
+                <div className='field'>
+                  <div className='control'>
+                    <Select
+                      onChange={this.handleMultiChange}
+                      options={budget}
+                      isMulti
+                      className='basic-multi-select'
+                      classNamePrefix='select'
+                      placeholder='Select Budget'
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className='container'></div>
+            <div className='column is-12-tablet is-12-mobile card'>
+              {this.state.trips.map(trip => {
+                return (
+                  <div
+                    key={trip._id}
+                    className='column'
+                  >
+                    <div>
+                      <div className='card'>
+                        <div className='card-header'>
+                          <h4 className='card-header-title'>
+                            <div>{trip.name}</div>
+                            <div>{trip.organizer.name}</div>
+                          </h4>
+                        </div>
+                        <div className='card-image'>
+                          <div>
+                            {trip.country}
+                          </div>
+                          <div>
+                            {trip.category.name}
+                          </div>
+                          <div>
+                            {trip.budget}
+                          </div>
+                          <div>
+                            {trip.description}
+                          </div>
+                          <div>
+                            {trip.startingDate}
+                          </div>
+                          <div>
+                            {trip.endingDate}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
             </div>
           </div>
         </div>
