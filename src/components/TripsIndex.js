@@ -104,38 +104,50 @@ class TripsIndex extends Component {
   }
 
   handleFiltering = () => {
+    const {
+      startingDate,
+      endingDate,
+      category,
+      budget,
+      countries
+    } = this.state.select
     const filteredTrips = this.state.trips.filter(trip => {
       const countriesMatch =
-        this.state.select.countries.length === 0
+        countries.length === 0
           ? true
-          : trip.countries.some(country =>
-            this.state.select.countries.includes(country)
-          )
-      console.log(trip)
-      console.log(typeof trip.startingDate)
-      console.log(this.state.select.startingDate)
-      const startingDateMatch = this.state.select.startingDate ? true : trip.startingDate > this.state.select.startingDate
-      // const endingDateMatch =
-      //   trip.endingDateMatch < this.state.select.endingDateMatch
+          : trip.countries.some(country => countries.includes(country))
 
-      const categoryMatch = !this.state.select.category
-        ? true
-        : trip.category.name === this.state.select.category
+      const dateMatch = () => {
+        if (startingDate && !endingDate) {
+          if (Date.parse(startingDate) <= Date.parse(trip.startingDate))
+            return true
+        } else if (endingDate && !startingDate) {
+          if (Date.parse(endingDate) >= Date.parse(trip.startingDate))
+            return true
+        } else if (startingDate && endingDate) {
+          if (
+            Date.parse(startingDate) <= Date.parse(trip.startingDate) &&
+            Date.parse(endingDate) >= Date.parse(trip.startingDate)
+          )
+            return true
+        }
+      }
+
+      const categoryMatch = !category ? true : trip.category.name === category
 
       const budgetMatch =
-        this.state.select.budget.length === 0
+        budget.length === 0
           ? true
-          : trip.budget.some(budget =>
-            this.state.select.budget.includes(budget)
-          )
-      if (countriesMatch && categoryMatch && budgetMatch && startingDateMatch) return trip
+          : trip.budget.some(budget => budget.includes(budget))
+      if (countriesMatch && categoryMatch && budgetMatch && dateMatch())
+        return trip
     })
     console.log(filteredTrips)
   }
 
   render() {
     // console.log(this.state)
-    // if (!this.state.trip) return null
+    // if (!this.state.trips) return null
     return (
       <section className='section'>
         <div className='container'>
@@ -234,8 +246,12 @@ class TripsIndex extends Component {
                           <div>{trip.category.name}</div>
                           <div>{trip.budget}</div>
                           <div>{trip.description}</div>
-                          <div>{moment(trip.startingDate).format('Do MMM YYYY')}</div>
-                          <div>{moment(trip.endingDate).format('Do MMM YYYY')}</div>
+                          <div>
+                            {moment(trip.startingDate).format('Do MMM YYYY')}
+                          </div>
+                          <div>
+                            {moment(trip.endingDate).format('Do MMM YYYY')}
+                          </div>
                         </div>
                       </div>
                     </div>
