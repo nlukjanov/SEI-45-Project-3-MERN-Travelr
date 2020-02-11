@@ -64,34 +64,34 @@ describe('testing registration controller: POST to /register', () => {
   })
 
   it('should return 422 if password does not match password confirmation', done => {
-    api.post('/register').send(testDataNotMatchingPasswords).end((err, res) => {
+    api.post('/api/register').send(testDataNotMatchingPasswords).end((err, res) => {
       expect(res.status).to.eq(422)
       done()
     })
   })
 
   it('should return 422 if email already exists', done => {
-    api.post('/register').send(testDataDuplicateEmail).end((err, res) => {
+    api.post('/api/register').send(testDataDuplicateEmail).end((err, res) => {
       expect(res.status).to.eq(422)
       done()
     })
   })
 
   it('should return 201 if passwords match', done => {
-    api.post('/register').send(testDataCorrect).end((err, res) => {
+    api.post('/api/register').send(testDataCorrect).end((err, res) => {
       expect(res.status).to.eq(201)
       done()
     })
   })
 
   it('should return an object', done => {
-    api.post('/register').send(testDataCorrect).end((err, res) => {
+    api.post('/api/register').send(testDataCorrect).end((err, res) => {
       expect(res.body).to.be.an('object')
       done()
     })
   })
   it('should return an object with message key', done => {
-    api.post('/register').send(testDataCorrect).end((err, res) => {
+    api.post('/api/register').send(testDataCorrect).end((err, res) => {
       expect(res.body).to.contains.keys(['message'])
       done()
     })

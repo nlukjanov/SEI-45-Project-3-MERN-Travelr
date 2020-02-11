@@ -21,8 +21,6 @@ const groupSchema = new mongoose.Schema({
   members: [ embeddedUserSchema ],
   likes: [ embeddedUserSchema ],
   comments: [ commentSchema ]
-}, {
-  toJSON: { virtuals: true }
 })
 
 module.exports = mongoose.model('Group', groupSchema)

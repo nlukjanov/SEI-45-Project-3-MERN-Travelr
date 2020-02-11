@@ -12,7 +12,7 @@ const testUserData = {
   country: 'Russia',
   city: 'Moscow',
   gender: 'Male',
-  languages: 'Russian',
+  languages: ['Russian'],
   profileImage: 'image.jpg',
   organizedTrips: [],
   joinedTrips: [],
@@ -38,7 +38,7 @@ describe('testing profile controller GET to /myprofile', () => {
 
   it('should return status 401 without a token', done => {
     api
-      .get('/profile')
+      .get('/api/profile')
       .end((err, res) => {
         expect(res.status).to.eq(401)
         done()
@@ -47,7 +47,7 @@ describe('testing profile controller GET to /myprofile', () => {
 
   it('should return status 200 with correct token', done => {
     api
-      .get('/profile')
+      .get('/api/profile')
       .set('Authorization', `Bearer ${token}`)
       .end((err, res) => {
         expect(res.status).to.eq(200)
@@ -57,7 +57,7 @@ describe('testing profile controller GET to /myprofile', () => {
 
   it('should return an object', done => {
     api
-      .get('/profile')
+      .get('/api/profile')
       .set('Authorization', `Bearer ${token}`)
       .end((err, res) => {
         expect(res.body).to.be.an('object')
@@ -67,7 +67,7 @@ describe('testing profile controller GET to /myprofile', () => {
 
   it('should return an object with correct keys', done => {
     api
-      .get('/profile')
+      .get('/api/profile')
       .set('Authorization', `Bearer ${token}`)
       .end((err, res) => {
         expect(res.body).to.contains.keys(Object.keys(currentUser._doc))
@@ -78,7 +78,7 @@ describe('testing profile controller GET to /myprofile', () => {
 
   it('should return an object with correct values data types', done => {
     api
-      .get('/profile')
+      .get('/api/profile')
       .set('Authorization', `Bearer ${token}`)
       .end((err, res) => {
         expect(res.body.name).to.be.a('string')
@@ -88,7 +88,7 @@ describe('testing profile controller GET to /myprofile', () => {
         expect(res.body.country).to.be.a('string')
         expect(res.body.city).to.be.a('string')
         expect(res.body.gender).to.be.a('string')
-        expect(res.body.languages).to.be.a('string')
+        expect(res.body.languages).to.be.an('array')
         expect(res.body.profileImage).to.be.a('string')
         expect(res.body.organizedTrips).to.be.an('array')
         expect(res.body.joinedTrips).to.be.an('array')
