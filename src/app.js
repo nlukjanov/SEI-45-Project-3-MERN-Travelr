@@ -6,6 +6,8 @@ import './styles/main.scss'
 
 import Navbar from './components/Navbar'
 import Home from './components/Home'
+import Register from './components/auth/Register'
+import Login from './components/auth/Login'
 
 
 class App extends React.Component {
@@ -18,8 +20,8 @@ class App extends React.Component {
             <Route exact path='/' component={Home}></Route>
             <Route exact path='/trips/new' component={Home}></Route>
             <Route exact path='/groups/new' component={Home}></Route>
-            <Route exact path='/register' component={Home}></Route>
-            <Route exact path='/login' component={Home}></Route>
+            <Route exact path='/auth/register' component={Register}></Route>
+            <Route exact path='/auth/login' component={Login}></Route>
             <Route exact path='/myaccount' component={Home}></Route>
           </Switch>
         </main>

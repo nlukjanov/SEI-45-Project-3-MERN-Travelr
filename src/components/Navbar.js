@@ -17,10 +17,10 @@ class Navbar extends Component {
           </Link>
         </div>
         <div className='navbar-end'>
-          <Link className='navbar-item' to='/register'>
+          <Link className='navbar-item' to='/auth/register'>
             Register
           </Link>
-          <Link className='navbar-item' to='/login'>
+          <Link className='navbar-item' to='/auth/login'>
             Login
           </Link>
           <Link className='navbar-item' to='/myaccount'>
