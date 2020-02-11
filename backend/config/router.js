@@ -31,6 +31,7 @@ router.route('/groups')
 router.route('/groups/:id')
   .get(groups.getGroup)
   .put(secureRoute, groups.updateGroup)
+  .delete(secureRoute, groups.deleteGroup)
 
 router.route('/groups/:id/join')
   .get(secureRoute, groups.joinGroup)

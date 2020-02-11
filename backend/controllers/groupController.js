@@ -35,9 +35,20 @@ function updateGroup(req, res, next) {
         Object.assign(group, req.body)
         return group.save()
       }
-      return res.status(401).json({ message: 'GET OUTTA HERE!!!' })
+      throw new Error('Unauthorized')
     })
     .then(updatedGroup => res.status(202).json(updatedGroup))
+    .catch(next)
+}
+
+function deleteGroup(req, res, next) {
+  Group
+    .findById(req.params.id)
+    .then(group => {
+      if (!group) throw new Error('Not found')
+      if (!group.members[0].user._id.equals(req.currentUser._id)) throw new Error('Unauthorized')
+      group.remove().then(() => res.sendStatus(204))
+    })
     .catch(next)
 }
 
@@ -46,6 +57,7 @@ function updateGroup(req, res, next) {
 function joinGroup(req, res, next) {
   Group
     .findById(req.params.id)
+    .populate('members.user')
     .then(group => {
       if (!group) throw new Error('Not found')
       if (group.members.some(item => item.user._id.equals(req.currentUser._id))) {
@@ -77,4 +89,4 @@ function likeGroup(req, res, next) {
     .catch(next)
 }
 
-module.exports = { getGroup, getAllGroups, createGroup, likeGroup, joinGroup, updateGroup }
+module.exports = { getGroup, getAllGroups, createGroup, likeGroup, joinGroup, updateGroup, deleteGroup }
