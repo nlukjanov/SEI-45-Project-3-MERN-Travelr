@@ -62,35 +62,35 @@ const tripObjs = [
   {
     name: 'An English summer on the beach',
     organizer: 'Bheki',
-    country: 'United Kingdom',
-    startingDate: new Date(),
-    endingDate: new Date(),
+    countries: ['United Kingdom'],
+    startingDate: new Date('2020-03-01'),
+    endingDate: new Date('2020-03-05'),
     category: 'Beach',
     description: 'description',
     participants: [],
-    budget: 'lots of money'
+    budget: ['$0 - $100']
   },
   {
     name: 'Jungle Trek',
     organizer: 'Bheki',
-    country: 'India',
-    startingDate: new Date(),
-    endingDate: new Date(),
+    countries: ['India'],
+    startingDate: new Date('2020-06-10'),
+    endingDate: new Date('2020-06-20'),
     category: 'Beach',
     description: 'description',
     participants: [],
-    budget: 'lots of money'
+    budget: ['$500 - $1000']
   },
   {
     name: 'Skiing in the Alps',
     organizer: 'Nik',
-    country: 'France',
-    startingDate: new Date(),
-    endingDate: new Date(),
+    countries: ['France', 'Italy'],
+    startingDate: new Date('2020-03-25'),
+    endingDate: new Date('2020-03-30'),
     category: 'Skiing',
     description: 'description',
     participants: [],
-    budget: 'lots of money'
+    budget: ['$500 - $1000']
   }
 ]
 
