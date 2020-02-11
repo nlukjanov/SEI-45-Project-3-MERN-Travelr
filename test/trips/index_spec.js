@@ -115,7 +115,7 @@ describe('testing trip controller get all trips GET /index', () => {
     api.get('/api/trips').end((err, res) => {
       res.body.forEach(trip => {
         expect(trip.organizer).to.be.an('object')
-        expect(trip.country).to.be.a('string')
+        expect(trip.countries).to.be.an('array')
         expect(trip.startingDate).to.be.a('string')
         expect(trip.endingDate).to.be.a('string')
         expect(trip.category).to.be.an('object')

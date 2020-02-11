@@ -62,7 +62,7 @@ const tripObjs = [
   {
     name: 'An English summer on the beach',
     organizer: 'Bheki',
-    country: 'United Kingdom',
+    countries: ['United Kingdom'],
     startingDate: new Date(),
     endingDate: new Date(),
     category: 'Beach',
@@ -73,7 +73,7 @@ const tripObjs = [
   {
     name: 'Jungle Trek',
     organizer: 'Bheki',
-    country: 'India',
+    countries: ['India', 'Thailand', 'Indonesia'],
     startingDate: new Date(),
     endingDate: new Date(),
     category: 'Beach',
@@ -84,7 +84,7 @@ const tripObjs = [
   {
     name: 'Skiing in the Alps',
     organizer: 'Nik',
-    country: 'France',
+    countries: ['France', 'Switzerland'],
     startingDate: new Date(),
     endingDate: new Date(),
     category: 'Skiing',
