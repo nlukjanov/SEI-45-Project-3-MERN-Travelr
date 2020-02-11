@@ -7,6 +7,7 @@ import './styles/main.scss'
 import Navbar from './components/Navbar'
 import Home from './components/Home'
 import MyAccount from './components/MyAccount'
+import NewTrip from './components/NewTrip'
 
 
 class App extends React.Component {
@@ -17,7 +18,7 @@ class App extends React.Component {
           <Navbar />
           <Switch>
             <Route exact path='/' component={Home}></Route>
-            <Route exact path='/trips/new' component={Home}></Route>
+            <Route exact path='/trips/new' component={NewTrip}></Route>
             <Route exact path='/groups/new' component={Home}></Route>
             <Route exact path='/register' component={Home}></Route>
             <Route exact path='/login' component={Home}></Route>

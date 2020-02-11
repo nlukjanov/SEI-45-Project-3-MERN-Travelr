@@ -76,6 +76,12 @@ class TripsIndex extends Component {
     })
   }
 
+  // handleMultiChange = selected => {
+  //   const selectedCountries = selected ? selected.map(item => item.value) : []
+  //   const formData = { ...this.state.formData, breakfastOrder }
+  //   this.setState({ formData })
+  // }
+
   render() {
     return (
       <section className='section'>
