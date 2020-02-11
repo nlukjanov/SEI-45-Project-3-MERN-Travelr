@@ -73,7 +73,7 @@ const tripObjs = [
   {
     name: 'Jungle Trek',
     organizer: 'Bheki',
-    countries: ['India'],
+    countries: ['India', 'Thailand', 'Indonesia'],
     startingDate: new Date('2020-06-10'),
     endingDate: new Date('2020-06-20'),
     category: 'Beach',
