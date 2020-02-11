@@ -17,7 +17,7 @@ function updateProfile(req, res, next) {
   User
     .findById(req.currentUser._id)
     .then(user => {
-      if (!user) throw new Error('Not found')
+      if (!user) throw new Error('Unauthorized')
       Object.assign(user, req.body)
       return user.save()
     })
