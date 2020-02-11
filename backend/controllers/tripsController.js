@@ -11,8 +11,10 @@ function index(req, res, next) {
     .catch(next)
 }
 
-function createTrip(req, res, next){
-  req.body.user = req.currentUser
+function createTrip(req, res, next) {
+  req.body.organizer = req.currentUser
+  if (!req.body.countries || req.body.countries.length === 0) throw new Error('Not found')
+
   Trip
     .create(req.body)
     .then(createdTrip => res.status(201).json(createdTrip))
@@ -27,40 +29,35 @@ function showTrip(req, res, next){
     .populate('participants')
     .populate('category')
     .then(trip => {
-      if (!trip) return res.status(404).json({ message: 'Target not found' })
+      if (!trip) throw new Error('Not found')
       res.status(200).json(trip)
     })
     .catch(next)
 }
 
-function destroyTrip(req, res){
-  Trip 
+function destroyTrip(req, res, next){
+  Trip
     .findById(req.params.id)
     .then(trip => {
-      if (!trip) return res.sendStatus(404).json({ message: 'Target not found' })
+      if (!trip) throw new Error('Not found')
+      if (!trip.organizer._id.equals(req.currentUser._id)) throw new Error('Unauthorized')
+      trip.remove().then(() => res.sendStatus(204))
     })
-    .catch(err => res.status(400).json(err))
-
-  Trip
-    .findByIdAndDelete(req.params.id)
-    .then(() => res.sendStatus(204))
-    .catch(err => res.status(400).json(err))
+    .catch(next)
 }
 
 function editTrip(req, res, next){
   Trip
     .findById(req.params.id)
     .then(trip => {
-      if (!trip) return res.status(404).json({ message: 'Target not found' })
-
+      if (!trip) throw new Error('Not found')
+      if (!trip.organizer._id.equals(req.currentUser._id)) throw new Error('Unauthorized')
       Object.assign(trip, req.body)
-
       return trip.save()
     })
     .then(trip => res.status(202).json(trip))
     .catch(next)
 }
-
 
 // Join or Express Interest in a Trip
 function joinTrip(req, res, next) {

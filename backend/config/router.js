@@ -26,9 +26,12 @@ router.route('/categories/:id/like')
 // Groups
 router.route('/groups')
   .get(groups.getAllGroups)
+  .post(secureRoute, groups.createGroup)
 
 router.route('/groups/:id')
   .get(groups.getGroup)
+  .put(secureRoute, groups.updateGroup)
+  .delete(secureRoute, groups.deleteGroup)
 
 router.route('/groups/:id/join')
   .get(secureRoute, groups.joinGroup)

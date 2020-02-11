@@ -8,6 +8,7 @@ import Navbar from './components/Navbar'
 import Home from './components/Home'
 import Register from './components/auth/Register'
 import Login from './components/auth/Login'
+import MyAccount from './components/MyAccount'
 
 
 class App extends React.Component {

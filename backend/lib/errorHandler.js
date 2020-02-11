@@ -13,6 +13,10 @@ function handleError(err, req, res, next) {
     return res.status(404).json({ message: 'We couldn\'t find what you were looking 🤷‍♂️' })
   } 
 
+  if (err.message === 'Unauthorized') {
+    return res.status(401).json({ message: 'You\'re unauthorized. GET OUT!!!' })
+  } 
+
   if (err.name === 'CastError') {
     const formattedErrors = {}
 

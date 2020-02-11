@@ -3,7 +3,7 @@ const Group = require('../models/groupModel')
 function getGroup(req, res, next) {
   Group
     .findById(req.params.id)
-    .populate('members')
+    .populate('members.user')
     .then(travelGroup => travelGroup ? res.status(200).json(travelGroup) : res.status(404).json({ message: 'Error 404 - Groups Not Found' }))
     .catch(next)
 }
@@ -11,7 +11,7 @@ function getGroup(req, res, next) {
 function getAllGroups(req, res, next) {
   Group
     .find()
-    .populate('members')
+    .populate('members.user')
     .then(travelGroups => travelGroups ? res.status(200).json(travelGroups) : res.status(404).json({ message: 'Error 404 - Groups not found' }))
     .catch(next)
 }
@@ -19,7 +19,36 @@ function getAllGroups(req, res, next) {
 function createGroup(req, res, next) {
   Group
     .create(req.body)
+    .then(newGroup => {
+      newGroup.members.push({ user: req.currentUser })
+      return newGroup.save()
+    })
     .then(newGroup => res.status(201).json(newGroup))
+    .catch(next)
+}
+
+function updateGroup(req, res, next) {
+  Group
+    .findById(req.params.id)
+    .then(group => {
+      if (group.members.some(item => item.user._id.equals(req.currentUser._id))) {
+        Object.assign(group, req.body)
+        return group.save()
+      }
+      throw new Error('Unauthorized')
+    })
+    .then(updatedGroup => res.status(202).json(updatedGroup))
+    .catch(next)
+}
+
+function deleteGroup(req, res, next) {
+  Group
+    .findById(req.params.id)
+    .then(group => {
+      if (!group) throw new Error('Not found')
+      if (!group.members[0].user._id.equals(req.currentUser._id)) throw new Error('Unauthorized')
+      group.remove().then(() => res.sendStatus(204))
+    })
     .catch(next)
 }
 
@@ -28,6 +57,7 @@ function createGroup(req, res, next) {
 function joinGroup(req, res, next) {
   Group
     .findById(req.params.id)
+    .populate('members.user')
     .then(group => {
       if (!group) throw new Error('Not found')
       if (group.members.some(item => item.user._id.equals(req.currentUser._id))) {
@@ -59,4 +89,4 @@ function likeGroup(req, res, next) {
     .catch(next)
 }
 
-module.exports = { getGroup, getAllGroups, createGroup, likeGroup, joinGroup }
+module.exports = { getGroup, getAllGroups, createGroup, likeGroup, joinGroup, updateGroup, deleteGroup }

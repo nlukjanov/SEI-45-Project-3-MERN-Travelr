@@ -33,6 +33,7 @@ describe('testing trip controller get all trips GET /index', () => {
       .then(category => {
         return Trip.create(
           {
+            name: 'Trip 1',
             organizer: createdUser,
             country: 'United Kingdom',
             startingDate: new Date(),
@@ -43,6 +44,7 @@ describe('testing trip controller get all trips GET /index', () => {
             budget: 'lots of money'
           },
           {
+            name: 'Trip 2',
             organizer: createdUser,
             country: 'India',
             startingDate: new Date(),
@@ -53,6 +55,7 @@ describe('testing trip controller get all trips GET /index', () => {
             budget: 'lots of money'
           },
           {
+            name: 'Trip 3',
             organizer: createdUser,
             country: 'France',
             startingDate: new Date(),
@@ -76,21 +79,21 @@ describe('testing trip controller get all trips GET /index', () => {
   })
 
   it('should return a 200 status', done => {
-    api.get('/trips').end((err, res) => {
+    api.get('/api/trips').end((err, res) => {
       expect(res.status).to.eq(200)
       done()
     })
   })
 
   it('should return an array', done => {
-    api.get('/trips').end((err, res) => {
+    api.get('/api/trips').end((err, res) => {
       expect(res.body).to.be.an('array')
       done()
     })
   })
 
   it('should return an array of objects', done => {
-    api.get('/trips').end((err, res) => {
+    api.get('/api/trips').end((err, res) => {
 
       res.body.forEach(trip => {
         expect(trip).to.be.an('object')
@@ -100,7 +103,7 @@ describe('testing trip controller get all trips GET /index', () => {
   })
 
   it('should return an array of objects with correct keys', done => {
-    api.get('/trips').end((err, res) => {
+    api.get('/api/trips').end((err, res) => {
       res.body.forEach(trip => {
         expect(trip).to.contains.keys(Object.keys(createdTrip))
       })
@@ -109,10 +112,10 @@ describe('testing trip controller get all trips GET /index', () => {
   })
 
   it('should return an array of objects with correct keys and values data types', done => {
-    api.get('/trips').end((err, res) => {
+    api.get('/api/trips').end((err, res) => {
       res.body.forEach(trip => {
         expect(trip.organizer).to.be.an('object')
-        expect(trip.country).to.be.a('string')
+        expect(trip.countries).to.be.an('array')
         expect(trip.startingDate).to.be.a('string')
         expect(trip.endingDate).to.be.a('string')
         expect(trip.category).to.be.an('object')
