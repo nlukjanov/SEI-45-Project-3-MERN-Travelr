@@ -6,6 +6,7 @@ import './styles/main.scss'
 
 import Navbar from './components/Navbar'
 import Home from './components/Home'
+import MyAccount from './components/MyAccount'
 
 
 class App extends React.Component {
@@ -20,7 +21,7 @@ class App extends React.Component {
             <Route exact path='/groups/new' component={Home}></Route>
             <Route exact path='/register' component={Home}></Route>
             <Route exact path='/login' component={Home}></Route>
-            <Route exact path='/myaccount' component={Home}></Route>
+            <Route exact path='/myaccount' component={MyAccount}></Route>
           </Switch>
         </main>
       </BrowserRouter>

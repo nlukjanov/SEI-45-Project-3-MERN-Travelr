@@ -22,8 +22,6 @@ app.use(logger)
 app.use('/api',router)
 app.use(handleError)
 
-app.use('/*', (req, res) => res.json({ message: 'hello' }))
-
 app.listen(port, () => console.log(`App listening on port ${port}!`))
 
 module.exports = app
