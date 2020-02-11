@@ -52,6 +52,7 @@ class TripsIndex extends Component {
       this.setState({
         ...this.state,
         trips: res[1].data,
+        filteredTrips: res[1].data,
         categories: this.addCategoriesToState(res[0])
       })
     } catch (err) {
@@ -104,13 +105,7 @@ class TripsIndex extends Component {
   }
 
   handleFiltering = () => {
-    const {
-      startingDate,
-      endingDate,
-      category,
-      budget,
-      countries
-    } = this.state.select
+    const { startingDate, endingDate, category, countries } = this.state.select
     const filteredTrips = this.state.trips.filter(trip => {
       const countriesMatch =
         countries.length === 0
@@ -130,19 +125,23 @@ class TripsIndex extends Component {
             Date.parse(endingDate) >= Date.parse(trip.startingDate)
           )
             return true
+        } else if (!startingDate && !endingDate) {
+          return true
         }
       }
 
       const categoryMatch = !category ? true : trip.category.name === category
 
       const budgetMatch =
-        budget.length === 0
+        this.state.select.budget.length === 0
           ? true
-          : trip.budget.some(budget => budget.includes(budget))
+          : trip.budget.some(budget =>
+              this.state.select.budget.includes(budget)
+            )
       if (countriesMatch && categoryMatch && budgetMatch && dateMatch())
         return trip
     })
-    console.log(filteredTrips)
+    this.setState({ ...this.state, filteredTrips })
   }
 
   render() {
@@ -224,7 +223,7 @@ class TripsIndex extends Component {
             </div>
             <div className='container'></div>
             <div className='column is-12-tablet is-12-mobile card'>
-              {this.state.trips.map(trip => {
+              {this.state.filteredTrips.map(trip => {
                 return (
                   <div key={trip._id} className='column'>
                     <div>
