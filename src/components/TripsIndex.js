@@ -4,6 +4,7 @@ import Select from 'react-select'
 import countryList from 'react-select-country-list'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+
 const moment = require('moment')
 
 const budget = [
@@ -16,6 +17,7 @@ const budget = [
 ]
 
 const countriesList = countryList().getData()
+
 class TripsIndex extends Component {
   state = {
     select: {

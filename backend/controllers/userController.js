@@ -27,7 +27,8 @@ function updateProfile(req, res, next) {
 
 function deleteUser(req, res, next) {
   User
-    .findByIdAndDelete(req.currentUser._id)
+    .findById(req.currentUser._id)
+    .then(user => user.remove())
     .then(() => res.sendStatus(204))
     .catch(next)
 }
