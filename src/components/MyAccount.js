@@ -16,20 +16,8 @@ class MyAccount extends Component {
     })
   }
 
-  // name: { type: String, required: true },
-  // email: { type: String, required: true, unique: true },
-  // password: { type: String, required: true },
-  // dob: { type: Date, required: true },
-  // country: { type: String, required: true },
-  // city: { type: String, required: true },
-  // gender: { type: String, enum: ['Male', 'Female'], required: true },
-  // languages: { type: Array, required: true },
-  // profileImage: { type: String, required: true },
-  // likes: [ likeSchema ],
-  // comments: [ commentSchema ]
-
   render() {
-    const {dob, country, city, gender, languages} = this.state.user
+    const { dob, country, city, gender, languages } = this.state.user
     return (
       <section className='is-fullheight-with-navbar'>
         <div className='hero is-medium is-primary is-bold'>
@@ -40,7 +28,8 @@ class MyAccount extends Component {
               </div>
               <div className='column is-7 is-offset-1'>
                 <div className='container'>{dob}</div>
-                <div className='container'>{country}</div>
+                <div className='container'>{country}</div> 
+                {/* add map to country */}
                 <div className='container'>{city}</div>
                 <div className='container'>{gender}</div>
                 <div className='container'>{languages}</div>
