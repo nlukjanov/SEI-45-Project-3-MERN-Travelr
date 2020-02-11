@@ -12,7 +12,7 @@ function getCategory(req, res, next) {
   Category
     .findById(req.params.id)
     .populate('trips-in-category')
-    .then(category => category ? res.status(200).json(category) : res.json('You done fucked up'))
+    .then(category => category ? res.status(200).json(category) : new Error('Not found'))
     .catch(next)
 }
 

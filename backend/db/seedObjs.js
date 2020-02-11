@@ -76,7 +76,7 @@ const tripObjs = [
     countries: ['India', 'Thailand', 'Indonesia'],
     startingDate: new Date(),
     endingDate: new Date(),
-    category: 'Beach',
+    category: 'Safari',
     description: 'description',
     participants: [],
     budget: 'lots of money'

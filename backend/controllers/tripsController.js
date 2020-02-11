@@ -4,8 +4,8 @@ function index(req, res, next) {
   Trip 
     .find()
     .populate('organizer')
-    .populate('interested')
-    .populate('participants')
+    .populate('interested.user')
+    .populate('participants.user')
     .populate('category')
     .then(foundTrip => res.status(200).json(foundTrip))
     .catch(next)
@@ -25,8 +25,8 @@ function showTrip(req, res, next){
   Trip
     .findById(req.params.id)
     .populate('organizer')
-    .populate('interested')
-    .populate('participants')
+    .populate('interested.user')
+    .populate('participants.user')
     .populate('category')
     .then(trip => {
       if (!trip) throw new Error('Not found')
