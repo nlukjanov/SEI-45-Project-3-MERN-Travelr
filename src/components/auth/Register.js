@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import Select  from 'react-select'
-import { Redirect } from 'react-router-dom'
-import Home from '../Home'
 
 const options = [
   { value: 'english', label: 'English' },
@@ -48,7 +46,7 @@ class Register extends Component {
     try {
       const res = await axios.post('http://localhost:8000/api/register',this.state.credentials)
       if (res.status === 201){
-        this.props.history.push('/')
+        this.props.history.push('/auth/login')
       }
       
     } catch (error) {

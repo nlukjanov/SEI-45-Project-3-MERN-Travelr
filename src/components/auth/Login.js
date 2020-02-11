@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import Select  from 'react-select'
-import { Redirect } from 'react-router-dom'
-import Home from '../Home'
+import Auth from '../../lib/authHelper'
 
 class Login extends Component {
 
@@ -23,6 +21,7 @@ class Login extends Component {
     try {
       const res = await axios.post('http://localhost:8000/api/login',this.state.credentials)
       if (res.status === 202){
+        Auth.setToken(res.data.token)
         this.props.history.push('/')
       }
       
