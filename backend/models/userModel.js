@@ -85,8 +85,4 @@ userSchema.pre('save', function hashPassword(next) {
   next()
 })
 
-userSchema.pre('remove', function(next) {
-  this.model('Group').remove({ 'members.user._id': this._id }, next)
-})
-
 module.exports = mongoose.model('User', userSchema)
