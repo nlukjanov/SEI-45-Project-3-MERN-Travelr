@@ -93,14 +93,15 @@ class NewTrip extends Component {
 
   handleSubmit = async e => {
     e.preventDefault()
+    const tripId = this.props.match.params.id
     try {
       const res = await axios.post(
-        '/api/trips',
+        `/api/trips/${tripId}`,
         this.state.trip,
         { headers: { Authorization: `Bearer ${Auth.getToken('token')}` } }
       )
       console.log(res.data)
-      // this.props.history.push(`/cheeses/${res.data._id}`)
+      // this.props.history.push(`/api/trips/${res.data._id}`)
     } catch (error) {
       console.log(error.res)
     }
