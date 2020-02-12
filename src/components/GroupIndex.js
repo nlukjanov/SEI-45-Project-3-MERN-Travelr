@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
-import axios from 'axios'
 
 class GroupIndex extends Component {
   state = {
-    groups: [],
+    groups: null,
     filteredGroups: []
   }
+
   async componentDidMount() {
+    const { propsData } = this.props
     try {
-      const res = await axios.get('/api/groups')
-      this.setState({ groups: res.data, filteredGroups: res.data })
+      this.setState({ groups: propsData.groups, filteredGroups: propsData.groups })
     } catch (err) {
       console.log(err)
     }
@@ -24,7 +24,7 @@ class GroupIndex extends Component {
   }
 
   render() {
-    console.log(this.state)
+    const groupData = this.state.groups ? this.state : this.props.propsData
     return (
       <section className='section'>
         <div className='container'>
@@ -53,7 +53,7 @@ class GroupIndex extends Component {
               </div>
             </div>
             <div className='column is-12-tablet is-8-mobile is-offset-2-mobile card'>
-              {this.state.filteredGroups.map(group => {
+              {groupData.filteredGroups.map(group => {
                 return (
                   <div key={group._id} className='column'>
                     <div>

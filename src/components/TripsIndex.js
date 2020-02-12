@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import axios from 'axios'
 import Select from 'react-select'
 import countryList from 'react-select-country-list'
 import DatePicker from 'react-datepicker'
@@ -31,36 +30,13 @@ class TripsIndex extends Component {
     startingDate: new Date(),
     endingDate: new Date(),
     categories: [],
-    trips: [],
+    trips: null,
     filteredTrips: []
   }
 
-  addCategoriesToState = res => {
-    const categoriesArray = []
-    res.data.forEach(category => {
-      const selectCategory = {}
-      selectCategory['value'] = category.name
-      selectCategory['label'] = category.name
-      return categoriesArray.push(selectCategory)
-    })
-    return categoriesArray
-  }
-
   async componentDidMount() {
-    try {
-      const res = await Promise.all([
-        axios.get('/api/categories'),
-        axios.get('/api/trips')
-      ])
-      this.setState({
-        ...this.state,
-        trips: res[1].data,
-        filteredTrips: res[1].data,
-        categories: this.addCategoriesToState(res[0])
-      })
-    } catch (err) {
-      console.log(err)
-    }
+    const { propsData } = this.props
+    this.setState({ ...this.state, ...propsData })
   }
 
   setStartingDate = date => {
@@ -139,8 +115,8 @@ class TripsIndex extends Component {
         this.state.select.budget.length === 0
           ? true
           : trip.budget.some(budget =>
-              this.state.select.budget.includes(budget)
-            )
+            this.state.select.budget.includes(budget)
+          )
       if (countriesMatch && categoryMatch && budgetMatch && dateMatch())
         return trip
     })
@@ -148,14 +124,15 @@ class TripsIndex extends Component {
   }
 
   render() {
-    // console.log(this.state)
-    if (!this.state.trips) return null
+    // console.log('State:', this.state, 'Props:', this.props.propsData)
+    const tripData = this.state.trips ? this.state : this.props.propsData
     return (
       <section className='section'>
         <div className='container'>
           <div className='columns is-mobile is-multiline'>
             <div className='column is-12-tablet is-12-mobile card'>
               <div className='field'>
+                <h2 className='title'>Search for Trips</h2>
                 <div className='control'>
                   <Select
                     name='countries'
@@ -174,7 +151,7 @@ class TripsIndex extends Component {
                     <label className='label'>Start Date</label>
                     <DatePicker
                       dateFormat='yyyy/MMM/dd'
-                      selected={this.state.select.startingDate}
+                      selected={tripData.select.startingDate}
                       onChange={this.setStartingDate}
                     />
                   </div>
@@ -184,7 +161,7 @@ class TripsIndex extends Component {
                     <label className='label'>End Date</label>
                     <DatePicker
                       dateFormat='yyyy/MMM/dd'
-                      selected={this.state.select.endingDate}
+                      selected={tripData.select.endingDate}
                       onChange={this.setEndingDate}
                     />
                   </div>
@@ -194,7 +171,7 @@ class TripsIndex extends Component {
                     <Select
                       name='category'
                       onChange={this.handleCategorySelection}
-                      options={this.state.categories}
+                      options={tripData.categories}
                       className='basic-single'
                       classNamePrefix='select'
                       placeholder='Select Trip Type'
@@ -226,7 +203,7 @@ class TripsIndex extends Component {
             </div>
             <div className='container'></div>
             <div className='column is-12-tablet is-12-mobile card'>
-              {this.state.filteredTrips.map(trip => {
+              {tripData.trips.map(trip => {
                 return (
                   <div key={trip._id} className='column'>
                     <Link to={`/trips/${trip._id}`}>

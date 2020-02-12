@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router-dom'
+import Auth from '../lib/authHelper'
 
 class Navbar extends Component {
 
@@ -9,6 +10,10 @@ class Navbar extends Component {
 
   toggleNavbar = () => {
     this.setState({ isNavbarOpen: !this.state.isNavbarOpen })
+  }
+
+  logoutUser = () => {
+    Auth.logout()
   }
   
   render() {
@@ -26,11 +31,12 @@ class Navbar extends Component {
           </div>
           <div className={`navbar-menu ${isNavbarOpen ? 'is-active' : ''}`}>
             <div className='navbar-end'>
-              <Link className='navbar-item' to='/trips/new'>Create New Trip</Link>
-              <Link className='navbar-item' to='/groups/new'>Create New Group</Link>
-              <Link className='navbar-item' to='/auth/register'>Register</Link>
-              <Link className='navbar-item' to='/auth/login'>Login</Link>
-              <Link className='navbar-item' to='/myaccount'>My Account</Link>
+              {Auth.isAuthenticated() && <Link className='navbar-item' to='/trips/new'>Create New Trip</Link>}
+              {Auth.isAuthenticated() && <Link className='navbar-item' to='/groups/new'>Create New Group</Link>}
+              {!Auth.isAuthenticated() && <Link className='navbar-item' to='/auth/register'>Register</Link>}
+              {!Auth.isAuthenticated() && <Link className='navbar-item' to='/auth/login'>Login</Link>}
+              {Auth.isAuthenticated() && <Link className='navbar-item' to='/myaccount'>My Account</Link>}
+              {Auth.isAuthenticated() && <Link className='navbar-item' to='/' onClick={this.logoutUser}>Logout</Link>}
             </div>
           </div>
         </div>
