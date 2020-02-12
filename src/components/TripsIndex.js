@@ -5,6 +5,8 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { Link } from 'react-router-dom'
 
+import Auth from '../lib/authHelper'
+
 const moment = require('moment')
 
 const budget = [
@@ -206,7 +208,7 @@ class TripsIndex extends Component {
               {tripData.filteredTrips.map(trip => {
                 return (
                   <div key={trip._id} className='column'>
-                    <Link to={`/trips/${trip._id}`}>
+                    <Link to={`${Auth.isAuthenticated() ? `/trips/${trip._id}` : '/auth/register'}`}>
                       <div className='card'>
                         <div className='card-header'>
                           <h4 className='card-header-title'>

@@ -16,6 +16,7 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true }, (er
     .then(() => User.create(userObjs))
     .then((userModels) => {
       tripObjs.map(obj => obj.organizer = userModels.find(model => model.name === obj.organizer))
+      tripObjs[1].participants.push({ user: userModels[1] })
       return Category.create(categoryObjs)
     })
     .then((catModels) => {
