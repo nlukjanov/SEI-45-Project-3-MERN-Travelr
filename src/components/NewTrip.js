@@ -68,26 +68,6 @@ class NewTrip extends Component {
     })
   }
 
-  setStartingDate = date => {
-    this.setState({
-      ...this.state.trip,
-      trip: {
-        ...this.state.trip,
-        startingDate: date
-      }
-    })
-  }
-
-  setEndingDate = date => {
-    this.setState({
-      ...this.state.trip,
-      trip: {
-        ...this.state.trip,
-        endingDate: date
-      }
-    })
-  }
-
   handleSubmit = async e => {
     e.preventDefault()
     try {

@@ -18,13 +18,16 @@ class MyAccount extends Component {
 
   render() {
     const { dob, country, city, gender, languages } = this.state.user
+    console.log(this.state.user)
     return (
       <section className='is-fullheight-with-navbar'>
         <div className='hero is-medium is-primary is-bold'>
           <div className='hero-body'>
             <div className='columns'>
               <div className='column is-4'>
-                <figure>{this.state.user.profileImage}</figure>
+                <figure className='image is-square'>
+                  <img src={this.state.user.profileImage} alt="profile image"/>
+                </figure>
               </div>
               <div className='column is-7 is-offset-1'>
                 <div className='container'>{dob}</div>
@@ -32,7 +35,7 @@ class MyAccount extends Component {
                 {/* add map to country */}
                 <div className='container'>{city}</div>
                 <div className='container'>{gender}</div>
-                <div className='container'>{languages}</div>
+                <div className='container'>Languages Spoken: {languages}</div>
               </div>
             </div>
           </div>
@@ -48,7 +51,7 @@ class MyAccount extends Component {
               <Tab>Trips Interested In</Tab>
               <Tab>Completed Trips</Tab>
             </TabList>
-            <TabPanel>Tab1</TabPanel>
+            <TabPanel><JoinedTrips /></TabPanel>
             <TabPanel>Tab 2</TabPanel>
             <TabPanel>Tab 3</TabPanel>
             <TabPanel>Tab 4</TabPanel>
