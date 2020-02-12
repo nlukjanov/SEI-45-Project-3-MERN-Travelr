@@ -95,7 +95,7 @@ class NewTrip extends Component {
     e.preventDefault()
     const tripId = this.props.match.params.id
     try {
-      const res = await axios.post(
+      const res = await axios.put(
         `/api/trips/${tripId}`,
         this.state.trip,
         { headers: { Authorization: `Bearer ${Auth.getToken('token')}` } }

@@ -3,7 +3,7 @@ import axios from 'axios'
 import Auth from '../lib/authHelper'
 import ImageUpload from './ImageUpload'
 
-class NewGroup extends Component {
+class EditGroup extends Component {
   state = {
     group: {
       name: '',
@@ -12,6 +12,19 @@ class NewGroup extends Component {
       isPrivate: false
     }
   }
+
+  async componentDidMount() {
+    const groupId = this.props.match.params.id
+    try {
+      const res = await axios.get(`/api/groups/${groupId}`)
+      this.setState({
+        group: res.data
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  
 
   handleChange = ({ target: { name, value, type, checked } }) => {
     const newValue = type === 'checkbox' ? checked : value
@@ -23,8 +36,9 @@ class NewGroup extends Component {
 
   handleSubmit = async e => {
     e.preventDefault()
+    const groupId = this.props.match.params.id
     try {
-      const res = await axios.post('/api/groups/', this.state.group, {
+      const res = await axios.put(`/api/groups/${groupId}`, this.state.group, {
         headers: { Authorization: `Bearer ${Auth.getToken()}` }
       })
       // this.props.history.push(`/api/groups/${res.data._id}`)
@@ -35,6 +49,7 @@ class NewGroup extends Component {
 
   render() {
     console.log(this.state)
+    if (!this.state.group) return null
     return (
       <section className='section'>
         <div className='container'>
@@ -43,7 +58,7 @@ class NewGroup extends Component {
               onSubmit={this.handleSubmit}
               className='column is-6 is-offset-3'
             >
-              <h2 className='title'>Create New Group</h2>
+              <h2 className='title'>Edit Group</h2>
               <div className='field'>
                 <label className='label'>Name your group</label>
                 <div className='control'>
@@ -105,4 +120,4 @@ class NewGroup extends Component {
   }
 }
 
-export default NewGroup
+export default EditGroup
