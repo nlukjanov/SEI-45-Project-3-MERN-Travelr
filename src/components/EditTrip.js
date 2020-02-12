@@ -28,17 +28,20 @@ class NewTrip extends Component {
       description: '',
       budget: []
     },
-    categories: [],
-    errors: {}
+    categories: []
   }
 
   async componentDidMount() {
+    const tripId = this.props.match.params.id
     try {
-      const res = await axios.get('/api/categories')
-      console.log(res.data)
+      const res = await Promise.all([
+        axios.get('/api/categories'),
+        axios.get(`/api/trips/${tripId}`)
+      ]) 
       this.setState({
         ...this.state,
-        categories: res.data
+        categories: res[0].data,
+        trip: res[1].data
       })
     } catch (err) {
       console.log(err)
@@ -90,33 +93,59 @@ class NewTrip extends Component {
 
   handleSubmit = async e => {
     e.preventDefault()
+    const tripId = this.props.match.params.id
     try {
-      const res = await axios.post(
-        '/api/trips',
+      const res = await axios.put(
+        `/api/trips/${tripId}`,
         this.state.trip,
-        { headers: { Authorization: `Bearer ${Auth.getToken()}` } }
+        { headers: { Authorization: `Bearer ${Auth.getToken('token')}` } }
       )
       console.log(res.data)
-      this.props.history.push('/')
+      // this.props.history.push(`/api/trips/${res.data._id}`)
     } catch (error) {
-      console.log(error)
-      this.setState({ errors: { message: error.response.data.message } })
+      console.log(error.res)
     }
+  }
+
+  createTripCountriesSelect = trip => {
+    const tripCountriesArray = []
+    trip.countries.forEach(country => {
+      const tripCountriesObject = {}
+      tripCountriesObject.label = country
+      tripCountriesObject.value = country
+      tripCountriesArray.push(tripCountriesObject)
+    })
+    console.log(tripCountriesArray)
+    return tripCountriesArray
+  }
+
+  createTripBudgetSelect = trip => {
+    const tripBudgetArray = []
+    trip.budget.map(budget => {
+      const tripBudgetObject = {}
+      console.log(budget)
+      tripBudgetObject.label = budget
+      tripBudgetObject.value = budget
+      tripBudgetArray.push(tripBudgetObject)
+    })
+    console.log(tripBudgetArray)
+    return tripBudgetArray
   }
 
   render() {
     console.log(this.state)
+    if (!this.state) return null
     return (
       <section className='section'>
         <div className='container'>
           <div className='columns'>
             <form onSubmit={this.handleSubmit} className='column is-6 is-offset-3'>
-              <h2 className='title'>Create New Trip</h2>
+              <h2 className='title'>Edit Your Trip</h2>
               <div className='field'>
                 <label className='label'>Make a name for your trip</label>
                 <div className='control'>
                   <input
-                    className={`input ${this.state.errors.message ? 'is-danger' : ''}`}
+                    className='input'
                     placeholder='Name'
                     name='name'
                     onChange={this.handleChange}
@@ -130,6 +159,7 @@ class NewTrip extends Component {
                     name='countries'
                     onChange={this.handleCountriesSelection}
                     options={countriesList}
+                    value={this.createTripCountriesSelect(this.state.trip)}
                     isMulti
                     className='basic-multi-select'
                     classNamePrefix='select'
@@ -142,7 +172,7 @@ class NewTrip extends Component {
                   <label className='label'>Start Date</label>
                   <DatePicker
                     dateFormat='dd/MMM/yyyy'
-                    selected={this.state.trip.startingDate}
+                    selected={Date.parse(this.state.trip.startingDate)}
                     onChange={this.setStartingDate}
                     maxDate={this.state.trip.endingDate}
                   />
@@ -153,7 +183,7 @@ class NewTrip extends Component {
                   <label className='label'>End Date</label>
                   <DatePicker
                     dateFormat='dd/MMM/yyyy'
-                    selected={this.state.trip.endingDate}
+                    selected={Date.parse(this.state.trip.endingDate)}
                     onChange={this.setEndingDate}
                     minDate={this.state.trip.startingDate}
                   />
@@ -190,6 +220,7 @@ class NewTrip extends Component {
                     name='budget'
                     onChange={this.handleBudgetSelection}
                     options={budget}
+                    value={this.createTripBudgetSelect(this.state.trip)}
                     isMulti
                     className='basic-multi-select'
                     classNamePrefix='select'

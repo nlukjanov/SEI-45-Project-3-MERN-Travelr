@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import axios from 'axios'
 import Select from 'react-select'
 import countryList from 'react-select-country-list'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import { Link } from 'react-router-dom'
 
 const moment = require('moment')
 
@@ -30,35 +30,13 @@ class TripsIndex extends Component {
     startingDate: new Date(),
     endingDate: new Date(),
     categories: [],
-    trips: [],
+    trips: null,
     filteredTrips: []
   }
 
-  addCategoriesToState = res => {
-    const categoriesArray = []
-    res.data.forEach(category => {
-      const selectCategory = {}
-      selectCategory['value'] = category.name
-      selectCategory['label'] = category.name
-      return categoriesArray.push(selectCategory)
-    })
-    return categoriesArray
-  }
-
   async componentDidMount() {
-    try {
-      const res = await Promise.all([
-        axios.get('/api/categories'),
-        axios.get('/api/trips')
-      ])
-      this.setState({
-        ...this.state,
-        trips: res[1].data,
-        categories: this.addCategoriesToState(res[0])
-      })
-    } catch (err) {
-      console.log(err)
-    }
+    const { propsData } = this.props
+    this.setState({ ...this.state, ...propsData })
   }
 
   setStartingDate = date => {
@@ -106,44 +84,55 @@ class TripsIndex extends Component {
   }
 
   handleFiltering = () => {
+    const { startingDate, endingDate, category, countries } = this.state.select
     const filteredTrips = this.state.trips.filter(trip => {
       const countriesMatch =
-        this.state.select.countries.length === 0
+        countries.length === 0
           ? true
-          : trip.countries.some(country =>
-            this.state.select.countries.includes(country)
+          : trip.countries.some(country => countries.includes(country))
+
+      const dateMatch = () => {
+        if (startingDate && !endingDate) {
+          if (Date.parse(startingDate) <= Date.parse(trip.startingDate))
+            return true
+        } else if (endingDate && !startingDate) {
+          if (Date.parse(endingDate) >= Date.parse(trip.startingDate))
+            return true
+        } else if (startingDate && endingDate) {
+          if (
+            Date.parse(startingDate) <= Date.parse(trip.startingDate) &&
+            Date.parse(endingDate) >= Date.parse(trip.startingDate)
           )
-      console.log(trip)
-      console.log(typeof trip.startingDate)
-      console.log(trip.startingDate)
-      console.log(typeof this.state.select.startingDate)
-      console.log(this.state.select.startingDate.toString())
-      const startingDateMatch = this.state.select.startingDate ? true : trip.startingDate > this.state.select.startingDate
-      // const endingDateMatch =
-      //   trip.endingDateMatch < this.state.select.endingDateMatch
-      const categoryMatch = !this.state.select.category
-        ? true
-        : trip.category.name === this.state.select.category
+            return true
+        } else if (!startingDate && !endingDate) {
+          return true
+        }
+      }
+
+      const categoryMatch = !category ? true : trip.category.name === category
+
       const budgetMatch =
         this.state.select.budget.length === 0
           ? true
           : trip.budget.some(budget =>
             this.state.select.budget.includes(budget)
           )
-      if (countriesMatch && categoryMatch && budgetMatch && startingDateMatch) return trip
+      if (countriesMatch && categoryMatch && budgetMatch && dateMatch())
+        return trip
     })
-    console.log(filteredTrips)
+    this.setState({ ...this.state, filteredTrips })
   }
 
   render() {
-    // console.log(this.state)
-    // if (!this.state.trip) return null
+    // console.log('State:', this.state, 'Props:', this.props.propsData)
+    const tripData = this.state.trips ? this.state : this.props.propsData
     return (
       <section className='section'>
         <div className='container'>
           <div className='columns is-mobile is-multiline'>
             <div className='column is-12-tablet is-12-mobile card'>
               <div className='field'>
+                <h2 className='title'>Search for Trips</h2>
                 <div className='control'>
                   <Select
                     name='countries'
@@ -162,7 +151,7 @@ class TripsIndex extends Component {
                     <label className='label'>Start Date</label>
                     <DatePicker
                       dateFormat='yyyy/MMM/dd'
-                      selected={this.state.select.startingDate}
+                      selected={tripData.select.startingDate}
                       onChange={this.setStartingDate}
                     />
                   </div>
@@ -172,7 +161,7 @@ class TripsIndex extends Component {
                     <label className='label'>End Date</label>
                     <DatePicker
                       dateFormat='yyyy/MMM/dd'
-                      selected={this.state.select.endingDate}
+                      selected={tripData.select.endingDate}
                       onChange={this.setEndingDate}
                     />
                   </div>
@@ -182,7 +171,7 @@ class TripsIndex extends Component {
                     <Select
                       name='category'
                       onChange={this.handleCategorySelection}
-                      options={this.state.categories}
+                      options={tripData.categories}
                       className='basic-single'
                       classNamePrefix='select'
                       placeholder='Select Trip Type'
@@ -214,10 +203,10 @@ class TripsIndex extends Component {
             </div>
             <div className='container'></div>
             <div className='column is-12-tablet is-12-mobile card'>
-              {this.state.trips.map(trip => {
+              {tripData.trips.map(trip => {
                 return (
                   <div key={trip._id} className='column'>
-                    <div>
+                    <Link to={`/trips/${trip._id}`}>
                       <div className='card'>
                         <div className='card-header'>
                           <h4 className='card-header-title'>
@@ -236,11 +225,15 @@ class TripsIndex extends Component {
                           <div>{trip.category.name}</div>
                           <div>{trip.budget}</div>
                           <div>{trip.description}</div>
-                          <div>{moment(trip.startingDate).format('Do MMM YYYY')}</div>
-                          <div>{moment(trip.endingDate).format('Do MMM YYYY')}</div>
+                          <div>
+                            {moment(trip.startingDate).format('Do MMM YYYY')}
+                          </div>
+                          <div>
+                            {moment(trip.endingDate).format('Do MMM YYYY')}
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   </div>
                 )
               })}

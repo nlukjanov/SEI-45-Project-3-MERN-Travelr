@@ -1,11 +1,70 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 import TripsIndex from './TripsIndex'
 import GroupIndex from './GroupIndex'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 
 class Home extends Component {
-  state = { tabIndex: 0 }
+
+  state = { 
+    tabIndex: 0,
+    trips: [],
+    categories: [],
+    groupsData: {
+      groups: null,
+      filteredGroups: []
+    },
+    tripsData: {
+      select: {
+        countries: [],
+        startingDate: '',
+        endingDate: '',
+        category: '',
+        budget: []
+      },
+      startingDate: new Date(),
+      endingDate: new Date(),
+      categories: [],
+      trips: null,
+      filteredTrips: []
+    }  
+  }
+
+  async componentDidMount() {
+    try {
+      const res = await Promise.all([
+        axios.get('/api/groups'),
+        axios.get('/api/categories'),
+        axios.get('/api/trips')
+      ])
+      const { groupsData, tripsData } = this.state
+      groupsData.groups = res[0].data
+      groupsData.filteredGroups = res[0].data
+
+      tripsData.categories = this.setTripCategories(res[1].data)
+      tripsData.trips = res[2].data
+      tripsData.filteredTrips = res[2].data
+
+      this.setState({ ...this.state, groupsData, tripsData })
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  setTripCategories = res => {
+    const categoriesArray = []
+    res.forEach(category => {
+      const selectCategory = {}
+      selectCategory['value'] = category.name
+      selectCategory['label'] = category.name
+      return categoriesArray.push(selectCategory)
+    })
+    return categoriesArray
+  }
+
   render() {
+    // console.log(this.state)
+    if (!this.state.tripsData.trips || !this.state.groupsData.groups) return null
     return (
       <section className='is-fullheight-with-navbar'>
         <div className='hero is-medium is-primary is-bold'>
@@ -25,8 +84,8 @@ class Home extends Component {
               <Tab>Trips</Tab>
               <Tab>Groups</Tab>
             </TabList>
-            <TabPanel><TripsIndex /></TabPanel>
-            <TabPanel><GroupIndex /></TabPanel>
+            <TabPanel><TripsIndex propsData={this.state.tripsData}/></TabPanel>
+            <TabPanel><GroupIndex propsData={this.state.groupsData}/></TabPanel>
           </Tabs>
         </div>
       </section>

@@ -59,7 +59,13 @@ userSchema.virtual('favorite_categories', {
   foreignField: 'likes.user'
 })
 
-userSchema.set('toJSON', { virtuals: true })
+userSchema.set('toJSON', { 
+  virtuals: true,
+  transform(doc, json) {
+    delete json.password
+    return json
+  } 
+})
 
 userSchema.methods.validatePassword = function validatePassword(password) {
   return bcrypt.compareSync(password, this.password)
