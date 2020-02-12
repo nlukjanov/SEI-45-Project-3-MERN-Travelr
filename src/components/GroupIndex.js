@@ -19,7 +19,6 @@ class GroupIndex extends Component {
     const filteredGroups = this.state.groups.filter(group => {
       return group.name.toLowerCase().includes(value.toLowerCase())
     })
-    console.log(filteredGroups)
     this.setState({ filteredGroups })
   }
 

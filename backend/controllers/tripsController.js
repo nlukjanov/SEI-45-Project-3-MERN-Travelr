@@ -17,7 +17,12 @@ function createTrip(req, res, next) {
 
   Trip
     .create(req.body)
+    .then(createdTrip => {
+      createdTrip.participants.push({ user: req.currentUser })
+      return createdTrip.save()
+    })
     .then(createdTrip => res.status(201).json(createdTrip))
+    
     .catch(next)
 }
 
