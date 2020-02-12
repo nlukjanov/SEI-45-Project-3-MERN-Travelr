@@ -21,23 +21,14 @@ class NewTrip extends Component {
   state = {
     trip: {
       name: '',
-      organizer: '5e412088c1d5de88dc520a92', // should be taken from req.currentUser
       countries: [],
-      startingDate: new Date(),
-      endingDate: new Date(),
+      startingDate: '',
+      endingDate: '',
       category: '',
       description: '',
-      budget: ''
+      budget: []
     },
     categories: []
-  }
-
-  addCategoryToState = res => {
-    const categoryArray = []
-    res.data.forEach(category => {
-      return categoryArray.push(category.name)
-    })
-    return categoryArray
   }
 
   async componentDidMount() {
@@ -151,6 +142,7 @@ class NewTrip extends Component {
                     dateFormat='dd/MMM/yyyy'
                     selected={this.state.trip.startingDate}
                     onChange={this.setStartingDate}
+                    maxDate={this.state.trip.endingDate}
                   />
                 </div>
               </div>
@@ -161,6 +153,7 @@ class NewTrip extends Component {
                     dateFormat='dd/MMM/yyyy'
                     selected={this.state.trip.endingDate}
                     onChange={this.setEndingDate}
+                    minDate={this.state.trip.startingDate}
                   />
                 </div>
               </div>
