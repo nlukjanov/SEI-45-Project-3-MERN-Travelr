@@ -91,11 +91,9 @@ class NewTrip extends Component {
   handleSubmit = async e => {
     e.preventDefault()
     try {
-      const res = await axios.post(
-        '/api/trips',
-        this.state.trip,
-        { headers: { Authorization: `Bearer ${Auth.getToken()}` } }
-      )
+      const res = await axios.post('/api/trips', this.state.trip, {
+        headers: { Authorization: `Bearer ${Auth.getToken()}` }
+      })
       console.log(res.data)
       this.props.history.push('/')
     } catch (error) {
@@ -106,17 +104,23 @@ class NewTrip extends Component {
 
   render() {
     console.log(this.state)
+    console.log(Date.parse(this.state.trip.startingDate))
     return (
       <section className='section'>
         <div className='container'>
           <div className='columns'>
-            <form onSubmit={this.handleSubmit} className='column is-6 is-offset-3'>
+            <form
+              onSubmit={this.handleSubmit}
+              className='column is-6 is-offset-3'
+            >
               <h2 className='title'>Create New Trip</h2>
               <div className='field'>
                 <label className='label'>Make a name for your trip</label>
                 <div className='control'>
                   <input
-                    className={`input ${this.state.errors.message ? 'is-danger' : ''}`}
+                    className={`input ${
+                      this.state.errors.message ? 'is-danger' : ''
+                    }`}
                     placeholder='Name'
                     name='name'
                     onChange={this.handleChange}
@@ -140,23 +144,28 @@ class NewTrip extends Component {
               <div className='field'>
                 <div className='control'>
                   <label className='label'>Start Date</label>
-                  <DatePicker
-                    dateFormat='dd/MMM/yyyy'
-                    selected={this.state.trip.startingDate}
-                    onChange={this.setStartingDate}
-                    maxDate={this.state.trip.endingDate}
-                  />
+                  <input
+                    className='button'
+                    type='date'
+                    name='startingDate'
+                    onChange={this.handleChange}
+                    value={this.state.trip.startingDate}
+                    min={new Date()}
+                    max={this.state.trip.endingDate}
+                  ></input>
                 </div>
               </div>
               <div className='field'>
                 <div className='control'>
                   <label className='label'>End Date</label>
-                  <DatePicker
-                    dateFormat='dd/MMM/yyyy'
-                    selected={this.state.trip.endingDate}
-                    onChange={this.setEndingDate}
-                    minDate={this.state.trip.startingDate}
-                  />
+                  <input
+                    className='button'
+                    type='date'
+                    name='endingDate'
+                    onChange={this.handleChange}
+                    value={this.state.trip.endingDate}
+                    min={this.state.trip.startingDate}
+                  ></input>
                 </div>
               </div>
               <div className='field'>
