@@ -130,7 +130,7 @@ class TripsIndex extends Component {
   }
 
   render() {
-    // console.log('State:', this.state, 'Props:', this.props.propsData)
+    console.log('State:', this.state.filteredTrips, 'Props:', this.props.propsData.filteredTrips)
     const tripData = this.state.trips ? this.state : this.props.propsData
     return (
       <section className='section'>

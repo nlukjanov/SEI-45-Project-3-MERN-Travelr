@@ -31,11 +31,9 @@ function updateGroup(req, res, next) {
   Group
     .findById(req.params.id)
     .then(group => {
-      if (group.members.some(item => item.user._id.equals(req.currentUser._id))) {
-        Object.assign(group, req.body)
-        return group.save()
-      }
-      throw new Error('Unauthorized')
+      if (!group.members.some(item => item.user._id.equals(req.currentUser._id))) throw new Error('Unauthorized')
+      Object.assign(group, req.body)
+      return group.save()
     })
     .then(updatedGroup => res.status(202).json(updatedGroup))
     .catch(next)
