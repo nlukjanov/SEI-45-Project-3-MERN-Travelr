@@ -15,6 +15,12 @@ class Navbar extends Component {
   logoutUser = () => {
     Auth.logout()
   }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+      this.setState({ isNavbarOpen: false })
+    }
+  }
   
   render() {
     const { isNavbarOpen } = this.state
