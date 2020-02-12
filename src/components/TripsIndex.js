@@ -4,6 +4,7 @@ import Select from 'react-select'
 import countryList from 'react-select-country-list'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+
 const moment = require('moment')
 
 const budget = [
@@ -16,6 +17,7 @@ const budget = [
 ]
 
 const countriesList = countryList().getData()
+
 class TripsIndex extends Component {
   state = {
     select: {
@@ -113,15 +115,15 @@ class TripsIndex extends Component {
           )
       console.log(trip)
       console.log(typeof trip.startingDate)
-      console.log(this.state.select.startingDate)
+      console.log(trip.startingDate)
+      console.log(typeof this.state.select.startingDate)
+      console.log(this.state.select.startingDate.toString())
       const startingDateMatch = this.state.select.startingDate ? true : trip.startingDate > this.state.select.startingDate
       // const endingDateMatch =
       //   trip.endingDateMatch < this.state.select.endingDateMatch
-
       const categoryMatch = !this.state.select.category
         ? true
         : trip.category.name === this.state.select.category
-
       const budgetMatch =
         this.state.select.budget.length === 0
           ? true
