@@ -22,6 +22,7 @@ function createTrip(req, res, next) {
       return createdTrip.save()
     })
     .then(createdTrip => res.status(201).json(createdTrip))
+    
     .catch(next)
 }
 

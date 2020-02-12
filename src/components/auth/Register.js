@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import Select  from 'react-select'
+import Select from 'react-select'
+import ImageUpload from '../ImageUpload'
 
 const options = [
   { value: 'english', label: 'English' },
@@ -32,23 +33,23 @@ class Register extends Component {
     this.setState({ credentials: data })
   }
 
-  handleMultiSelect = (lang) => {
-    if (!lang) return this.setState({ credentials: { ...this.state.credentials, languages: [] } })
-    const newlanguages = lang.map(language => (
-      language.value
-    ))
-    const data = { ...this.state.credentials, languages: newlanguages }
+  handleMultiSelect = lang => {
+    if (!lang)
+      return this.setState({
+        credentials: { ...this.state.credentials, languages: [] }
+      })
+    const newLanguages = lang.map(language => language.value)
+    const data = { ...this.state.credentials, languages: newLanguages }
     this.setState({ credentials: data })
   }
 
-  handleSubmit =  async (e) => {
+  handleSubmit = async e => {
     e.preventDefault()
     try {
-      const res = await axios.post('http://localhost:8000/api/register',this.state.credentials)
-      if (res.status === 201){
+      const res = await axios.post('/api/register', this.state.credentials)
+      if (res.status === 201) {
         this.props.history.push('/auth/login')
       }
-      
     } catch (error) {
       console.log(error)
     }
@@ -57,45 +58,98 @@ class Register extends Component {
   render() {
     return (
       <>
-      <div className="container">
-        <p className="label">Register</p>
-        <div className="control">
-          <form onSubmit={this.handleSubmit}>
-            <input className="input" type="text" name="name" placeholder="Full Name" onChange={this.handleChange}></input>
-            <br />
-            <input className="input" type="text" name="email" placeholder="E-mail" onChange={this.handleChange}></input>
-            <br />
-            <input className="input" type="text" name="password" placeholder="Password" onChange={this.handleChange}></input>
-            <br />
-            <input className="input"  type="text" name="passwordConfirmation" placeholder="Confirm password" onChange={this.handleChange}></input>
-            <br />
-            <input className="input"  type="date" name="dob" placeholder="Date of Birth " onChange={this.handleChange}></input>
-            <br />
-            <input className="input"  type="text" name="country" placeholder="Country" onChange={this.handleChange}></input>
-            <br />
-            <input className="input"  type="text" name="city" placeholder="City" onChange={this.handleChange}></input>
-            <br />
-            <label>Gender</label>
-            <br />
-            <select name="gender" onChange={this.handleChange}>
-              <option disabled>Select a Gender</option>
-              <option>Male</option>
-              <option>Female</option>
-            </select>
-            <br />
-            <label>Languages</label>
-            <br />
-            <Select  name="languages" isMulti options={options} className="basic-multi-select" onChange={this.handleMultiSelect} />
-            <br />
-            <label>Profile Image</label>
-            <br />
-            <input className="input" type="text" name="profileImage" placeholder="Profile Image(link)" onChange={this.handleChange}/>
-            <br />
-            <br />
-            <button>Join Travelr</button>
-          </form>
-        </div>
-      </div>
+        <section className='section'>
+          <div className='container'>
+            <p className='label'>Register</p>
+            <div className='control'>
+              <form onSubmit={this.handleSubmit}>
+                <input
+                  className='input'
+                  type='text'
+                  name='name'
+                  placeholder='Full Name'
+                  onChange={this.handleChange}
+                ></input>
+                <br />
+                <input
+                  className='input'
+                  type='text'
+                  name='email'
+                  placeholder='E-mail'
+                  onChange={this.handleChange}
+                ></input>
+                <br />
+                <input
+                  className='input'
+                  type='text'
+                  name='password'
+                  placeholder='Password'
+                  onChange={this.handleChange}
+                ></input>
+                <br />
+                <input
+                  className='input'
+                  type='text'
+                  name='passwordConfirmation'
+                  placeholder='Confirm password'
+                  onChange={this.handleChange}
+                ></input>
+                <br />
+                <input
+                  className='button'
+                  type='date'
+                  name='dob'
+                  placeholder='Date of Birth '
+                  onChange={this.handleChange}
+                ></input>
+                <br />
+                <input
+                  className='input'
+                  type='text'
+                  name='country'
+                  placeholder='Country'
+                  onChange={this.handleChange}
+                ></input>
+                <br />
+                <input
+                  className='input'
+                  type='text'
+                  name='city'
+                  placeholder='City'
+                  onChange={this.handleChange}
+                ></input>
+                <br />
+                <label>Gender</label>
+                <br />
+                <select name='gender' onChange={this.handleChange}>
+                  <option disabled>Select a Gender</option>
+                  <option>Male</option>
+                  <option>Female</option>
+                </select>
+                <br />
+                <label>Languages</label>
+                <br />
+                <Select
+                  name='languages'
+                  isMulti
+                  options={options}
+                  className='basic-multi-select'
+                  onChange={this.handleMultiSelect}
+                />
+                <br />
+                <label>Profile Image</label>
+                <ImageUpload
+                  handleChange={this.handleChange}
+                  fieldName='profileImage'
+                  labelClassName='my-class'
+                />
+                <br />
+                <br />
+                <button className='button'>Join Travelr</button>
+              </form>
+            </div>
+          </div>
+        </section>
       </>
     )
   }
