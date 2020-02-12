@@ -4,6 +4,7 @@ import Select from 'react-select'
 import countryList from 'react-select-country-list'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import { Link } from 'react-router-dom'
 
 const moment = require('moment')
 
@@ -148,7 +149,7 @@ class TripsIndex extends Component {
 
   render() {
     // console.log(this.state)
-    // if (!this.state.trips) return null
+    if (!this.state.trips) return null
     return (
       <section className='section'>
         <div className='container'>
@@ -228,7 +229,7 @@ class TripsIndex extends Component {
               {this.state.filteredTrips.map(trip => {
                 return (
                   <div key={trip._id} className='column'>
-                    <div>
+                    <Link to={`/trips/${trip._id}`}>
                       <div className='card'>
                         <div className='card-header'>
                           <h4 className='card-header-title'>
@@ -255,7 +256,7 @@ class TripsIndex extends Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   </div>
                 )
               })}
