@@ -15,7 +15,7 @@ function handleError(err, req, res, next) {
 
   if (err.message === 'Unauthorized') {
     return res.status(401).json({ message: 'You\'re unauthorized. GET OUT!!!' })
-  } 
+  }
 
   if (err.name === 'CastError') {
     const formattedErrors = {}

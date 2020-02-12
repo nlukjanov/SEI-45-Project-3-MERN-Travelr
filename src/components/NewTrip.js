@@ -29,7 +29,8 @@ class NewTrip extends Component {
       description: '',
       budget: ''
     },
-    categories: []
+    categories: [],
+    errors: {}
   }
 
   addCategoryToState = res => {
@@ -102,12 +103,13 @@ class NewTrip extends Component {
       const res = await axios.post(
         '/api/trips',
         this.state.trip,
-        { headers: { Authorization: `Bearer ${Auth.getToken('token')}` } }
+        { headers: { Authorization: `Bearer ${Auth.getToken()}` } }
       )
       console.log(res.data)
-      // this.props.history.push(`/cheeses/${res.data._id}`)
+      this.props.history.push('/')
     } catch (error) {
-      console.log(error.res)
+      console.log(error)
+      this.setState({ errors: { message: error.response.data.message } })
     }
   }
 
@@ -123,7 +125,7 @@ class NewTrip extends Component {
                 <label className='label'>Make a name for your trip</label>
                 <div className='control'>
                   <input
-                    className='input'
+                    className={`input ${this.state.errors.message ? 'is-danger' : ''}`}
                     placeholder='Name'
                     name='name'
                     onChange={this.handleChange}
