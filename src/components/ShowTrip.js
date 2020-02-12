@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import MapGL, { Marker, Popup } from 'react-map-gl'
+import Geocoder from 'react-map-gl-geocoder'
 
+
+const mapboxToken = process.env.MAPBOX_ACCESS_TOKEN
+console.log(mapboxToken)
 class ShowTrip extends Component {
 
   state = {
@@ -29,6 +34,11 @@ class ShowTrip extends Component {
       likes: [],
       comments: [],
       __v: 0
+    },
+    viewport: {
+      latitude: 0,
+      longitude: 0,
+      zoom: 7
     }
   }
 
@@ -55,6 +65,23 @@ class ShowTrip extends Component {
     }
     console.log(age)
     return age
+  }
+
+  mapRef = React.createRef()
+  handleViewportChange = (viewport) => {
+    this.setState({
+      viewport: { ...this.state.viewport, ...viewport }
+    })
+  }
+
+  handleGeocoderViewportChange = (viewport) => {
+    const geocoderDefaultOverrides = { transitionDuration: 3000 }
+    this.setState({ viewport: { latitude: viewport.latitude, longitude: viewport.longitude, zoom: viewport.zoom } })
+
+    return this.handleViewportChange({
+      ...viewport,
+      ...geocoderDefaultOverrides
+    })
   }
 
   render() {
@@ -125,6 +152,23 @@ class ShowTrip extends Component {
               return user + ', '
             })}</label>
             <br />
+          </div>
+          <div>
+            <MapGL
+              mapboxApiAccessToken={mapboxToken}
+              ref={this.mapRef}
+              {...this.state.viewport}
+              height={'60vh'}
+              width={'40vh'}
+              mapStyle="mapbox://styles/mapbox/streets-v11"
+              onViewportChange={this.handleViewportChange}>
+              <Geocoder
+                mapRef={this.mapRef}
+                onViewportChange={this.handleGeocoderViewportChange}
+                mapboxApiAccessToken={mapboxToken}
+              />
+              {/* Use <Marker /> here to mark things on map  */}
+            </MapGL>
           </div>
         </section>
       </div>

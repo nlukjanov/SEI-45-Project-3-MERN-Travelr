@@ -48,6 +48,9 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       { from: './src/assets', to: 'assets' }
+    ]),
+    new webpack.EnvironmentPlugin([
+      'MAPBOX_ACCESS_TOKEN'
     ])
   ]
 }
