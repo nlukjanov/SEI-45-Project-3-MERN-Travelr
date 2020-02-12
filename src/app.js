@@ -10,6 +10,7 @@ import Register from './components/auth/Register'
 import Login from './components/auth/Login'
 import MyAccount from './components/MyAccount'
 import NewTrip from './components/NewTrip'
+import ShowTrip from './components/ShowTrip'
 
 
 class App extends React.Component {
@@ -21,6 +22,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path='/' component={Home}></Route>
             <Route exact path='/trips/new' component={NewTrip}></Route>
+            <Route exact path='/trips/:id' component={ShowTrip}></Route>
             <Route exact path='/groups/new' component={Home}></Route>
             <Route exact path='/auth/register' component={Register}></Route>
             <Route exact path='/auth/login' component={Login}></Route>
