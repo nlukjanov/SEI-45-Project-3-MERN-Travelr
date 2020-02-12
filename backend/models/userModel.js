@@ -1,6 +1,9 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 
+const Trip = require('./tripModel')
+const Group = require('./groupModel')
+
 const commentSchema = new mongoose.Schema({
   text: { type: String, required: true },
   user: { type: mongoose.Schema.ObjectId, ref: 'User', required: true }
@@ -88,6 +91,28 @@ userSchema.pre('save', function hashPassword(next) {
   if (this.isModified('password')) {
     this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(0))
   }
+  next()
+})
+
+userSchema.pre('remove', function(next) {
+  console.log('Deleting user...')
+
+  Trip
+    .deleteMany({ organizer: { _id: this._id } })
+    .then(() => console.log('Oh well'))
+    .catch(err => console.log(err))
+  
+  Group
+    .find()
+    .then(groups => {
+      groups.forEach(group => {
+        group.members = group.members.filter(member => !member.user._id.equals(this._id))
+        return group.save()
+      })
+      console.log('And finally...', groups)
+    })
+    .catch(err => console.log(err))
+  
   next()
 })
 

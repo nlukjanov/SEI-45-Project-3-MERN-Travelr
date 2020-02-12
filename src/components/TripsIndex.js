@@ -124,7 +124,7 @@ class TripsIndex extends Component {
   }
 
   render() {
-    // console.log('State:', this.state, 'Props:', this.props.propsData)
+    console.log('State:', this.state.filteredTrips, 'Props:', this.props.propsData.filteredTrips)
     const tripData = this.state.trips ? this.state : this.props.propsData
     return (
       <section className='section'>
@@ -203,7 +203,7 @@ class TripsIndex extends Component {
             </div>
             <div className='container'></div>
             <div className='column is-12-tablet is-12-mobile card'>
-              {tripData.trips.map(trip => {
+              {tripData.filteredTrips.map(trip => {
                 return (
                   <div key={trip._id} className='column'>
                     <Link to={`/trips/${trip._id}`}>
