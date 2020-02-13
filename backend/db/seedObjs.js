@@ -73,7 +73,7 @@ const tripObjs = [
   },
   {
     name: 'Jungle Trek',
-    organizer: 'Bheki',
+    organizer: 'Can',
     countries: ['India', 'Thailand', 'Indonesia'],
     startingDate: new Date('2020-06-10'),
     endingDate: new Date('2020-06-20'),
@@ -102,7 +102,7 @@ const tripObjs = [
     startingDate: new Date('2020-01-10'),
     endingDate: new Date('2020-01-20'),
     category: 'Skiing',
-    description: 'description',
+    description: 'Skiing week in France, plan to go to Tignes, but flexible',
     participants: [],
     interested: [],
     budget: ['$500 - $1000']
@@ -114,10 +114,22 @@ const tripObjs = [
     startingDate: new Date('2020-02-01'),
     endingDate: new Date('2020-02-10'),
     category: 'Skiing',
-    description: 'description',
+    description: '10 days of skiing in Italy. Would like to go to Campitello Di Fassa',
     participants: [],
     interested: [],
     budget: ['$500 - $1000']
+  },
+  {
+    name: 'Surfing trip in Morocco',
+    organizer: 'Nik',
+    countries: ['Morocco'],
+    startingDate: new Date('2020-04-15'),
+    endingDate: new Date('2020-04-30'),
+    category: 'Other',
+    description: 'Want to go catch some waves, weather should be already warm. But the water is always cold! Remember to take wetsuit.',
+    participants: [],
+    interested: [],
+    budget: ['$300 - $500', '$500 - $1000']
   }
 ]
 

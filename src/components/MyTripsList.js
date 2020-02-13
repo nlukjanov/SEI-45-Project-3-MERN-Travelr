@@ -5,10 +5,10 @@ var moment = require('moment')
 const MyTripList = ({ data }) => {
   if (!data) return null
   return (
-    <section className='section'>
+    <section className=''>
       {data.map(trip => {
         return (
-          <div key={trip._id} className='container card'>
+          <div key={trip._id} className='container card box'>
             <Link to={`/trips/${trip._id}`} className='container columns'>
               <div className='column is-4'>{trip.name}</div>
               <div className='column is-3'>{trip.countries.join(', ')}</div>

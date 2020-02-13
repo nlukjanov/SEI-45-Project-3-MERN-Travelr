@@ -29,6 +29,7 @@ class MyAccount extends Component {
     if (!this.state.user) return null
     if (!this.state.user.dob) return null
     const {
+      name,
       dob,
       country,
       city,
@@ -39,52 +40,74 @@ class MyAccount extends Component {
       favoriteTrips
     } = this.state.user
     return (
-      <section className='is-fullheight-with-navbar'>
-        <div className='hero is-small is-primary is-bold'>
-          <div className='hero-body is-small'>
-            <div className='columns'>
-              <div className='column is-4'>
-                <figure className='image is-square'>
-                  <img src={this.state.user.profileImage} alt='profile image' />
-                </figure>
+      <section className='section'>
+        <div className='hero is-small'>
+          <div className='columns columns-padding'>
+            <div className='column is-4'>
+              <figure className='image profile-image'>
+                <img
+                  className='is-rounded'
+                  src={this.state.user.profileImage}
+                  alt='profile image'
+                />
+              </figure>
+            </div>
+            <div className='column is-3 is-offset-1 flex-container'>
+              <div className='container'>Name:</div>
+              <div className='container'>Age:</div>
+              <div className='container'>Country:</div>
+              <div className='container'>City:</div>
+              <div className='container'>Gender:</div>
+              <div className='container'>Languages spoken:</div>
+            </div>
+            <div className='column is-3 flex-container'>
+              <div className='container'>{name}</div>
+              <div className='container'>
+                {moment().diff(`${dob}`, 'years')}
               </div>
-              <div className='column is-7 is-offset-1'>
-                <div className='container'>
-                  {moment().diff(`${dob}`, 'years')}
-                </div>
-                <div className='container'>{country}</div>
-                <div className='container'>{city}</div>
-                <div className='container'>{gender}</div>
-                <div className='container'>Languages Spoken: {languages}</div>
+              <div className='container'>{country}</div>
+              <div className='container'>{city}</div>
+              <div className='container'>{gender}</div>
+              <div className='container'>
+                {languages.map((language, index) => {
+                  return <span key={index}>{`${language} `}</span>
+                })}
               </div>
             </div>
           </div>
         </div>
-        <div>
-          <Tabs
-            selectedIndex={this.state.tabIndex}
-            onSelect={tabIndex => this.setState({ tabIndex })}
-          >
-            <TabList className='tabs is-fullwidth is-centered'>
-              <Tab className='button'>Organized Trips</Tab>
-              <Tab className='button'>Joined Trip</Tab>
-              <Tab className='button'>Trips Interested In</Tab>
-              <Tab className='button'>Completed Trips</Tab>
-            </TabList>
-            <TabPanel>
-              <MyTripList data={organizedTrips} />
-            </TabPanel>
-            <TabPanel>
-              <MyTripList data={joinedTrips} />
-            </TabPanel>
-            <TabPanel>
-              <MyTripList data={favoriteTrips} />
-            </TabPanel>
-            <TabPanel>
-              <MyTripList data={this.completedTrips(organizedTrips)} />
-            </TabPanel>
-          </Tabs>
-        </div>
+        <Tabs
+          className='columns-padding'
+          selectedIndex={this.state.tabIndex}
+          onSelect={tabIndex => this.setState({ tabIndex })}
+        >
+          <TabList className='tabs is-fullwidth is-centered'>
+            <Tab className='has-text-centered' selectedClassName={'active-tab'}>
+              Organized Trips
+            </Tab>
+            <Tab className='has-text-centered' selectedClassName={'active-tab'}>
+              Joined Trip
+            </Tab>
+            <Tab className='has-text-centered' selectedClassName={'active-tab'}>
+              Trips Interested In
+            </Tab>
+            <Tab className='has-text-centered' selectedClassName={'active-tab'}>
+              Completed Trips
+            </Tab>
+          </TabList>
+          <TabPanel>
+            <MyTripList data={organizedTrips} />
+          </TabPanel>
+          <TabPanel>
+            <MyTripList data={joinedTrips} />
+          </TabPanel>
+          <TabPanel>
+            <MyTripList data={favoriteTrips} />
+          </TabPanel>
+          <TabPanel>
+            <MyTripList data={this.completedTrips(organizedTrips)} />
+          </TabPanel>
+        </Tabs>
       </section>
     )
   }
