@@ -19,3 +19,27 @@
   top: 0;
   opacity: 0;
 }
+
+.flex-container {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+.columns-padding {
+  padding: 20px 0;
+}
+
+.section-padding {
+  padding: 2rem 0;
+}
+
+.profile-image {
+  width: 256px;
+  height: 256px;
+}
+
+.active-tab {
+  border-bottom: 1px solid #3273dc;
+  color: #3273dc;
+}
