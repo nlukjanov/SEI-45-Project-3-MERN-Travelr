@@ -6,6 +6,7 @@ function index(req, res, next) {
     .populate('organizer')
     .populate('interested.user')
     .populate('participants.user')
+    .populate('comments.user')
     .populate('category')
     .then(foundTrip => res.status(200).json(foundTrip))
     .catch(next)
@@ -32,6 +33,7 @@ function showTrip(req, res, next) {
     .populate('organizer')
     .populate('interested.user')
     .populate('participants.user')
+    .populate('comments.user')
     .populate('category')
     .then(trip => {
       if (!trip) throw new Error('Not found')
@@ -99,4 +101,16 @@ function interestTrip(req, res, next) {
     .catch(next)
 }
 
-module.exports = { index , createTrip, showTrip, editTrip, interestTrip, joinTrip, destroyTrip }
+function makeTripComment(req, res, next) {
+  Trip
+    .findById(req.params.id)
+    .then(trip => {
+      if (!trip) throw new Error('Not found')
+      trip.comments.push({ user: req.currentUser, text: req.body.text })
+      return trip.save()
+    })
+    .then(trip => res.status(202).json(trip))
+    .catch(next)
+}
+
+module.exports = { index , createTrip, showTrip, editTrip, interestTrip, joinTrip, destroyTrip, makeTripComment }

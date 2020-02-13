@@ -3,12 +3,12 @@ import axios from 'axios'
 import Auth from '../../lib/authHelper'
 
 class Login extends Component {
-
   state = {
     credentials: {
       email: '',
       password: ''
-    }
+    },
+    error: ''
   }
 
   handleChange = ({ target: { name, value } }) => {
@@ -16,37 +16,60 @@ class Login extends Component {
     this.setState({ credentials: data })
   }
 
-  handleSubmit =  async (e) => {
+  handleSubmit = async e => {
     e.preventDefault()
     try {
-      const res = await axios.post('http://localhost:8000/api/login',this.state.credentials)
-      if (res.status === 202){
-        Auth.setToken(res.data.token)
-        this.props.history.push('/')
-      }
-      
+      const res = await axios.post('api/login', this.state.credentials)
+      Auth.setToken(res.data.token)
+      this.props.history.push('/')
     } catch (error) {
-      console.log(error)
+      this.setState({ error: 'Incorrect Credentials' })
     }
   }
 
   render() {
     return (
-      <>
-      <div className="container">
-        <p className="label">Login</p>
-        <div className="control">
-          <form onSubmit={this.handleSubmit}>
-            <br />
-            <input className="input" type="text" name="email" placeholder="E-mail" onChange={this.handleChange}></input>
-            <br />
-            <input className="input" type="text" name="password" placeholder="Password" onChange={this.handleChange}></input>
-            <br />
-            <button>Login</button>
-          </form>
+      <section className='section'>
+        <div className='container'>
+          <div className='columns'>
+            <form
+              onSubmit={this.handleSubmit}
+              className='column is-half is-offset-one-quarter'
+            >
+              <h2 className='title'>Login</h2>
+              <div className='field'>
+                <label className='label'>Email</label>
+                <div className='control'>
+                  <input
+                    className={`input ${this.state.error ? 'is-danger' : ''}`}
+                    name='email'
+                    placeholder='Email'
+                    onChange={this.handleChange}
+                  />
+                </div>
+              </div>
+              <div className='field'>
+                <label className='label'>Password</label>
+                <div className='control'>
+                  <input
+                    className={`input ${this.state.error ? 'is-danger' : ''}`}
+                    type='password'
+                    name='password'
+                    placeholder='Password'
+                    onChange={this.handleChange}
+                  />
+                </div>
+                {this.state.error && (
+                  <small className='help is-danger'>{this.state.error}</small>
+                )}
+              </div>
+              <button type='submit' className='button is-primary is-fullwidth'>
+                Login
+              </button>
+            </form>
+          </div>
         </div>
-      </div>
-      </>
+      </section>
     )
   }
 }
