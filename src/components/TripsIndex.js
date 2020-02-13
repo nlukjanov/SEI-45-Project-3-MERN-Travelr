@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Select from 'react-select'
 import countryList from 'react-select-country-list'
-import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { Link } from 'react-router-dom'
 
@@ -27,8 +26,8 @@ class TripsIndex extends Component {
       category: '',
       budget: []
     },
-    startingDate: new Date(),
-    endingDate: new Date(),
+    startingDate: '',
+    endingDate: '',
     categories: [],
     trips: null,
     filteredTrips: []
@@ -123,8 +122,15 @@ class TripsIndex extends Component {
     this.setState({ ...this.state, filteredTrips })
   }
 
+  handleChange = ({ target: { name, value } }) => {
+    this.setState({
+      ...this.state,
+      select: { ...this.state.select, [name]: value }
+    })
+  }
+
   render() {
-    // console.log('State:', this.state, 'Props:', this.props.propsData)
+    console.log('State:', this.state.filteredTrips, 'Props:', this.props.propsData.filteredTrips)
     const tripData = this.state.trips ? this.state : this.props.propsData
     return (
       <section className='section'>
@@ -149,21 +155,28 @@ class TripsIndex extends Component {
                 <div className='field'>
                   <div className='control'>
                     <label className='label'>Start Date</label>
-                    <DatePicker
-                      dateFormat='yyyy/MMM/dd'
-                      selected={tripData.select.startingDate}
-                      onChange={this.setStartingDate}
-                    />
+                    <input
+                      className='button'
+                      type='date'
+                      name='startingDate'
+                      onChange={this.handleChange}
+                      value={tripData.select.startingDate}
+                      min={moment(new Date()).format('YYYY-MM-DD')}
+                      max={tripData.select.endingDate}
+                    ></input>
                   </div>
                 </div>
                 <div className='field'>
                   <div className='control'>
                     <label className='label'>End Date</label>
-                    <DatePicker
-                      dateFormat='yyyy/MMM/dd'
-                      selected={tripData.select.endingDate}
-                      onChange={this.setEndingDate}
-                    />
+                    <input
+                      className='button'
+                      type='date'
+                      name='endingDate'
+                      onChange={this.handleChange}
+                      value={tripData.select.endingDate}
+                      min={tripData.select.startingDate}
+                    ></input>
                   </div>
                 </div>
                 <div className='field'>
@@ -201,9 +214,8 @@ class TripsIndex extends Component {
                 </div>
               </div>
             </div>
-            <div className='container'></div>
             <div className='column is-12-tablet is-12-mobile card'>
-              {tripData.trips.map(trip => {
+              {tripData.filteredTrips.map(trip => {
                 return (
                   <div key={trip._id} className='column'>
                     <Link to={`/trips/${trip._id}`}>

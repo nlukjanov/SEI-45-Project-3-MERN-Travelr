@@ -18,7 +18,7 @@ function secureRoute(req, res, next) {
       req.currentUser = user
       next()
     })
-    .catch(err => res.status(401).json({ message: 'Unauthorized' }))
+    .catch(err => res.status(401).json({ message: 'Unauthorized', err }))
 }
 
 module.exports = secureRoute

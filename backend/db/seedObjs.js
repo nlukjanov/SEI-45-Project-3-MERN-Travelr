@@ -37,7 +37,7 @@ const userObjs = [
     email: 'nik@email.com',
     password: 'pass',
     passwordConfirmation: 'pass',
-    dob: new Date(),
+    dob: new Date('1988-01-01'),
     country: 'Russia',
     city: 'Moscow',
     gender: 'Male',
@@ -68,6 +68,7 @@ const tripObjs = [
     category: 'Beach',
     description: 'description',
     participants: [],
+    interested: [],
     budget: ['$0 - $100']
   },
   {
@@ -79,6 +80,7 @@ const tripObjs = [
     category: 'Beach',
     description: 'description',
     participants: [],
+    interested: [],
     budget: ['$500 - $1000']
   },
   {
@@ -90,6 +92,31 @@ const tripObjs = [
     category: 'Skiing',
     description: 'description',
     participants: [],
+    interested: [],
+    budget: ['$500 - $1000']
+  },
+  {
+    name: 'Skiing in France',
+    organizer: 'Nik',
+    countries: ['France'],
+    startingDate: new Date('2020-01-10'),
+    endingDate: new Date('2020-01-20'),
+    category: 'Skiing',
+    description: 'description',
+    participants: [],
+    interested: [],
+    budget: ['$500 - $1000']
+  },
+  {
+    name: 'Skiing in Italy',
+    organizer: 'Nik',
+    countries: ['Italy'],
+    startingDate: new Date('2020-02-01'),
+    endingDate: new Date('2020-02-10'),
+    category: 'Skiing',
+    description: 'description',
+    participants: [],
+    interested: [],
     budget: ['$500 - $1000']
   }
 ]
@@ -103,6 +130,9 @@ const categoryObjs = [
   },
   {
     name: 'Safari'
+  },
+  {
+    name: 'Other'
   }
 ]
 

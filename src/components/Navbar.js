@@ -15,6 +15,12 @@ class Navbar extends Component {
   logoutUser = () => {
     Auth.logout()
   }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+      this.setState({ isNavbarOpen: false })
+    }
+  }
   
   render() {
     const { isNavbarOpen } = this.state
@@ -33,8 +39,8 @@ class Navbar extends Component {
             <div className='navbar-end'>
               {Auth.isAuthenticated() && <Link className='navbar-item' to='/trips/new'>Create New Trip</Link>}
               {Auth.isAuthenticated() && <Link className='navbar-item' to='/groups/new'>Create New Group</Link>}
-              {!Auth.isAuthenticated() && <Link className='navbar-item' to='/auth/register'>Register</Link>}
-              {!Auth.isAuthenticated() && <Link className='navbar-item' to='/auth/login'>Login</Link>}
+              {!Auth.isAuthenticated() && <Link className='navbar-item' to='/register'>Register</Link>}
+              {!Auth.isAuthenticated() && <Link className='navbar-item' to='/login'>Login</Link>}
               {Auth.isAuthenticated() && <Link className='navbar-item' to='/myaccount'>My Account</Link>}
               {Auth.isAuthenticated() && <Link className='navbar-item' to='/' onClick={this.logoutUser}>Logout</Link>}
             </div>

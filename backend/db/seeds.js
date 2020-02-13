@@ -8,21 +8,31 @@ const Group = require('../models/groupModel')
 
 const { userObjs, categoryObjs, tripObjs, groupObjs } = require('./seedObjs')
 
-
-mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true }, (err, db) => {
-  if (err) return console.log(err)
-  db.dropDatabase()
-    .then(() => Group.create(groupObjs))
-    .then(() => User.create(userObjs))
-    .then((userModels) => {
-      tripObjs.map(obj => obj.organizer = userModels.find(model => model.name === obj.organizer))
-      return Category.create(categoryObjs)
-    })
-    .then((catModels) => {
-      tripObjs.map(obj => obj.category = catModels.find(model => model.name === obj.category))
-      return Trip.create(tripObjs)
-    })
-    .then(() => console.log('Data successfully created!'))
-    .catch((err) => console.log('SOMETHING IS VERY WRONG!!!', err))
-    .finally(() => mongoose.connection.close())
-})
+mongoose.connect(
+  dbURI,
+  { useNewUrlParser: true, useUnifiedTopology: true },
+  (err, db) => {
+    if (err) return console.log(err)
+    db.dropDatabase()
+      .then(() => Group.create(groupObjs))
+      .then(() => User.create(userObjs))
+      .then(userModels => {
+        tripObjs.map(obj => obj.organizer = userModels.find(model => model.name === obj.organizer))
+        
+        tripObjs[2].participants.push({ user: userModels[1] })
+        tripObjs[3].participants.push({ user: userModels[1] })
+        tripObjs[4].participants.push({ user: userModels[1] })
+        tripObjs[0].interested.push({ user: userModels[1] })
+        tripObjs[1].interested.push({ user: userModels[1] })
+        tripObjs[2].interested.push({ user: userModels[1] })
+        return Category.create(categoryObjs)
+      })
+      .then(catModels => {
+        tripObjs.map(obj => obj.category = catModels.find(model => model.name === obj.category))
+        return Trip.create(tripObjs)
+      })
+      .then(() => console.log('Data successfully created!'))
+      .catch(err => console.log('SOMETHING IS VERY WRONG!!!', err))
+      .finally(() => mongoose.connection.close())
+  }
+)

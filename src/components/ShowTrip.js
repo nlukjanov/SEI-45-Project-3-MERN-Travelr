@@ -99,7 +99,7 @@ class ShowTrip extends Component {
   }
 
   render() {
-    if (!this.state.data.organizer.name){
+    if (Object.keys(this.state.data.organizer).some(key => this.state.data.organizer[key] === '')) {
       return null
     }
     return (
@@ -162,8 +162,8 @@ class ShowTrip extends Component {
             <br />
             <label>Description: {this.state.data.description}</label>
             <br />
-            <div>Participants {this.state.data.participants.map( user => {
-              return <div key={user.user.id}> <img src={user.user.profileImage} /> <br /> {user.user.name}</div> 
+            <div>Participants {this.state.data.participants.map( participant => {
+              return <div key={participant.user.id}> <img src={participant.user.profileImage} /> <br /> {participant.user.name}</div> 
             })}</div>
             <br />
             <form onSubmit={this.handleJoin}>
