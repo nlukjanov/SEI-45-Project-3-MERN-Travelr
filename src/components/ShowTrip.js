@@ -12,9 +12,7 @@ class ShowTrip extends Component {
       budget: [],
       participants: [],
       interested: [],
-      organizer: {
-        languages: []
-      },
+      organizer: null,
       country: '',
       startingDate: '',
       endingDate: '',
@@ -38,10 +36,8 @@ class ShowTrip extends Component {
     }
   }
 
-  async getTripData() {
-    const res = await axios.get(
-      `http://localhost:8000/api/trips/${this.props.match.params.id}`
-    )
+  getTripData = async () => {
+    const res = await axios.get(`/api/trips/${this.props.match.params.id}`)
     this.setState({ data: res.data })
   }
 
@@ -97,14 +93,7 @@ class ShowTrip extends Component {
   }
 
   render() {
-    if (
-      Object.keys(this.state.data.organizer).some(
-        key => this.state.data.organizer[key] === ''
-      )
-    ) {
-      return null
-    }
-    console.log(this.state)
+    if (!this.state.data.organizer) return null
     return (
       <div>
         <section className='container'>
