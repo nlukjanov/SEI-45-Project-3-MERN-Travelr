@@ -11,7 +11,7 @@ const commentSchema = new mongoose.Schema({
   timestamps: true
 })
 
-const likeSchema = new mongoose.Schema({
+const embeddedUserSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.ObjectId, ref: 'User', required: true }
 }, {
   timestamps: true
@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
   gender: { type: String, enum: ['Male', 'Female'], required: true },
   languages: { type: Array, required: true },
   profileImage: { type: String, required: true },
-  likes: [ likeSchema ],
+  likes: [ embeddedUserSchema ],
   comments: [ commentSchema ]
   // completed trips will be sorted on the front end
 })

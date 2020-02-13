@@ -3,6 +3,13 @@ const User = require('../models/userModel')
 function getAllUsers(req, res, next) {
   User
     .find()
+    .populate('organizedTrips')
+    .populate('travel_group')
+    .populate('joinedTrips')
+    .populate('favoriteTrips')
+    .populate('travel_groups')
+    .populate('favorite_categories')
+    .populate('likes.user')
     .then(users => res.status(200).json(users))
     .catch(next)
 }
@@ -10,6 +17,13 @@ function getAllUsers(req, res, next) {
 function getUser(req, res, next) {
   User
     .findById(req.params.id)
+    .populate('organizedTrips')
+    .populate('travel_group')
+    .populate('joinedTrips')
+    .populate('favoriteTrips')
+    .populate('travel_groups')
+    .populate('favorite_categories')
+    .populate('likes.user')
     .then(user => res.status(200).json(user))
     .catch(next)
 }
@@ -23,6 +37,7 @@ function profile(req, res, next) {
     .populate('favoriteTrips')
     .populate('travel_groups')
     .populate('favorite_categories')
+    .populate('likes.user')
     .then(user => res.status(200).json(user))
     .catch(next)
 }
