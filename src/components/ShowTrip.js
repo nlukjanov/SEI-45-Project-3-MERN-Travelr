@@ -2,38 +2,24 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import MapGL, { Marker, Popup } from 'react-map-gl'
 import Geocoder from 'react-map-gl-geocoder'
-
+import Auth from '../lib/authHelper'
 
 const mapboxToken = process.env.MAPBOX_ACCESS_TOKEN
-console.log(mapboxToken)
 class ShowTrip extends Component {
-
   state = {
     data: {
       countries: [],
       budget: [],
       participants: [],
       interested: [],
-      organizer: {
-        languages: [],
-        name: '',
-        email: '',
-        dob: '',
-        country: '',
-        city: '',
-        gender: '',
-        profileImage: ''
-      },
+      organizer: {},
       country: '',
       startingDate: '',
       endingDate: '',
-      category: {
-        name: ''
-      },
+      category: {},
       description: '',
       likes: [],
-      comments: [],
-      __v: 0
+      comments: []
     },
     viewport: {
       latitude: 0,
@@ -42,17 +28,19 @@ class ShowTrip extends Component {
     }
   }
 
-
   async componentDidMount() {
     try {
-      const res = await axios.get(`http://localhost:8000/api/trips/${this.props.match.params.id}`)
-      if (res.status === 200){
-        this.setState({ data: res.data })
-        console.log(this.state.data)
-      }
+      this.getTripData()
     } catch (error) {
       console.log(error)
     }
+  }
+
+  async getTripData() {
+    const res = await axios.get(
+      `http://localhost:8000/api/trips/${this.props.match.params.id}`
+    )
+    this.setState({ data: res.data })
   }
 
   calculateAge() {
@@ -68,15 +56,21 @@ class ShowTrip extends Component {
   }
 
   mapRef = React.createRef()
-  handleViewportChange = (viewport) => {
+  handleViewportChange = viewport => {
     this.setState({
       viewport: { ...this.state.viewport, ...viewport }
     })
   }
 
-  handleGeocoderViewportChange = (viewport) => {
+  handleGeocoderViewportChange = viewport => {
     const geocoderDefaultOverrides = { transitionDuration: 3000 }
-    this.setState({ viewport: { latitude: viewport.latitude, longitude: viewport.longitude, zoom: viewport.zoom } })
+    this.setState({
+      viewport: {
+        latitude: viewport.latitude,
+        longitude: viewport.longitude,
+        zoom: viewport.zoom
+      }
+    })
 
     return this.handleViewportChange({
       ...viewport,
@@ -84,14 +78,31 @@ class ShowTrip extends Component {
     })
   }
 
+  handleJoin = async () => {
+    console.log(this.props.match.params.id)
+    try {
+      const res = await axios.get(
+        `/api/trips/${this.props.match.params.id}/join`,
+        {
+          headers: { Authorization: `Bearer ${Auth.getToken()}` }
+        }
+      )
+      this.getTripData()
+      console.log(res)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   render() {
-    if (!this.state.data.organizer.name){
+    if (!this.state.data.organizer.name) {
       return null
     }
+    console.log(this.state)
     return (
       <div>
-        <section className="container">
-          <div className="container">
+        <section className='container'>
+          <div className='container'>
             <div>
               <img src={this.state.data.organizer.profileImage} />
             </div>
@@ -107,35 +118,43 @@ class ShowTrip extends Component {
               <br />
               <label>Email: {this.state.data.organizer.email}</label>
               <br />
-              <label>Country of Origin: {this.state.data.organizer.country}</label>
+              <label>
+                Country of Origin: {this.state.data.organizer.country}
+              </label>
               <br />
-              <label>Spoken languages: {this.state.data.organizer.languages.map( (lang, index) => {
-                if (this.state.data.organizer.languages.length - 1 === index){
-                  return lang
-                }
-                return lang + ', '
-              })}</label>
+              <label>
+                Spoken languages:{' '}
+                {this.state.data.organizer.languages.map((lang, index) => {
+                  if (
+                    this.state.data.organizer.languages.length - 1 ===
+                    index
+                  ) {
+                    return lang
+                  }
+                  return lang + ', '
+                })}
+              </label>
               <br />
             </div>
           </div>
         </section>
-        <section className="container">
+        <section className='container'>
           <div>
             <label>Title: {this.state.data.name}</label>
             <br />
-            <label>Countries: {this.state.data.countries.map((country, index) => {
-              if (this.state.data.countries.length - 1 === index){
-                return country
-              }
-              return country + ', '
-            })}</label>
+            <label>Countries:</label>
+            <div>
+              {this.state.data.countries.map((country, index) => {
+                return <div key={index}>{country}</div>
+              })}
+            </div>
             <br />
-            <label>Budget: {this.state.data.budget.map((budget, index) => {
-              if (this.state.data.budget.length - 1 === index){
-                return budget
-              }
-              return budget + ', '
-            })}</label>
+            <label>
+              Budget:{' '}
+              {this.state.data.budget.map((budget, index) => {
+                return <div key={index}>{budget}</div>
+              })}
+            </label>
             <br />
             <label>Starting Date: {this.state.data.startingDate}</label>
             <br />
@@ -145,12 +164,16 @@ class ShowTrip extends Component {
             <br />
             <label>Description: {this.state.data.description}</label>
             <br />
-            <label>Participants: {this.state.data.participants.map((user, index) => {
-              if (this.state.data.participants.length - 1 === index){
-                return user
-              }
-              return user + ', '
-            })}</label>
+            <button onClick={this.handleJoin} className='button'>
+              Join the Trip
+            </button>
+            <br />
+            <label>Participants:</label>
+            <div>
+              {this.state.data.participants.map(participant => {
+                return <div key={participant._id}>{participant.user.name}</div>
+              })}
+            </div>
             <br />
           </div>
           <div>
@@ -160,8 +183,9 @@ class ShowTrip extends Component {
               {...this.state.viewport}
               height={'60vh'}
               width={'40vh'}
-              mapStyle="mapbox://styles/mapbox/streets-v11"
-              onViewportChange={this.handleViewportChange}>
+              mapStyle='mapbox://styles/mapbox/streets-v11'
+              onViewportChange={this.handleViewportChange}
+            >
               <Geocoder
                 mapRef={this.mapRef}
                 onViewportChange={this.handleGeocoderViewportChange}
