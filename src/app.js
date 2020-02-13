@@ -15,6 +15,7 @@ import EditTrip from './components/EditTrip'
 import NewGroup from './components/NewGroup'
 import EditGroup from './components/EditGroup'
 import SecureRouteFront from './lib/SecureRouteFront'
+import ShowGroup from './components/ShowGroup'
 
 class App extends React.Component {
   render() {
@@ -29,6 +30,7 @@ class App extends React.Component {
             <Route path='/trips/:id' component={ShowTrip}></Route>
             <SecureRouteFront path='/groups/:id/edit' component={EditGroup} />
             <SecureRouteFront path='/groups/new' component={NewGroup} />
+            <Route path='/groups/:id' component={ShowGroup} />
             <Route path='/register' component={Register}></Route>
             <Route path='/login' component={Login}></Route>
             <SecureRouteFront path='/myaccount' component={MyAccount} />
