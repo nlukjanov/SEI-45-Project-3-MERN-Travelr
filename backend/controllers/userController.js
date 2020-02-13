@@ -1,5 +1,19 @@
 const User = require('../models/userModel')
 
+function getAllUsers(req, res, next) {
+  User
+    .find()
+    .then(users => res.status(200).json(users))
+    .catch(next)
+}
+
+function getUser(req, res, next) {
+  User
+    .findById(req.params.id)
+    .then(user => res.status(200).json(user))
+    .catch(next)
+}
+
 function profile(req, res, next) {
   // add populate to user
   User.findById(req.currentUser._id)
@@ -33,4 +47,4 @@ function deleteUser(req, res, next) {
     .catch(next)
 }
 
-module.exports = { profile, deleteUser, updateProfile }
+module.exports = { profile, deleteUser, updateProfile, getUser, getAllUsers }
