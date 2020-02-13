@@ -65,6 +65,10 @@ router.route('/trips/:id/join')
 router.route('/trips/:id/comment')
   .post(secureRoute, trips.makeTripComment)
 
+router.route('/trips/:id/:commentId/comment')
+  .put(secureRoute, trips.editTripComment)
+  .delete(secureRoute, trips.deleteTripComment)
+
 // Users
 router.route('/profile')
   .get(secureRoute, users.profile)
@@ -82,5 +86,9 @@ router.route('/users/:id/like')
 
 router.route('/users/:id/comment')
   .post(secureRoute, users.makeUserComment)
+
+router.route('/users/:id/:commentId/comment')
+  .put(secureRoute, users.editUserComment)
+  .delete(secureRoute, users.deleteUserComment)
 
 module.exports = router
