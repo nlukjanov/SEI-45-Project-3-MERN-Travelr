@@ -12,7 +12,7 @@ const groupObjs = [
     isPrivate: true
   },
   {
-    name: "Phoebe's Flybies",
+    name: 'Phoebe\'s Flybies',
     description: 'something',
     imageURL: 'some-image.jpg',
     isPrivate: true

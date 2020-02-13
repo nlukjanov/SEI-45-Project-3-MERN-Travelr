@@ -17,12 +17,8 @@ mongoose.connect(
       .then(() => Group.create(groupObjs))
       .then(() => User.create(userObjs))
       .then(userModels => {
-        tripObjs.map(
-          obj =>
-            (obj.organizer = userModels.find(
-              model => model.name === obj.organizer
-            ))
-        )
+        tripObjs.map(obj => obj.organizer = userModels.find(model => model.name === obj.organizer))
+        
         tripObjs[2].participants.push({ user: userModels[1] })
         tripObjs[3].participants.push({ user: userModels[1] })
         tripObjs[4].participants.push({ user: userModels[1] })
@@ -32,12 +28,7 @@ mongoose.connect(
         return Category.create(categoryObjs)
       })
       .then(catModels => {
-        tripObjs.map(
-          obj =>
-            (obj.category = catModels.find(
-              model => model.name === obj.category
-            ))
-        )
+        tripObjs.map(obj => obj.category = catModels.find(model => model.name === obj.category))
         return Trip.create(tripObjs)
       })
       .then(() => console.log('Data successfully created!'))

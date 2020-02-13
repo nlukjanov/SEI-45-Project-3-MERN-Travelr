@@ -95,16 +95,25 @@ class ShowTrip extends Component {
   }
 
   render() {
-    if (!this.state.data.organizer.name) {
+    if (
+      Object.keys(this.state.data.organizer).some(
+        key => this.state.data.organizer[key] === ''
+      )
+    ) {
       return null
     }
     console.log(this.state)
     return (
       <div>
         <section className='container'>
-          <div className='container'>
-            <div>
-              <img src={this.state.data.organizer.profileImage} />
+          <div>
+            <div className='tile is-parent'>
+              <div className='tile is-child notification is-info'>
+                <img
+                  className='image is-4by3'
+                  src={this.state.data.organizer.profileImage}
+                />
+              </div>
             </div>
             <br />
             <div>
@@ -139,6 +148,7 @@ class ShowTrip extends Component {
           </div>
         </section>
         <section className='container'>
+          <h3>Trip</h3>
           <div>
             <label>Title: {this.state.data.name}</label>
             <br />
@@ -171,10 +181,14 @@ class ShowTrip extends Component {
             <label>Participants:</label>
             <div>
               {this.state.data.participants.map(participant => {
-                return <div key={participant._id}>{participant.user.name}</div>
+                return (
+                  <div key={participant.user.id}>
+                    <img src={participant.user.profileImage} /> <br />{' '}
+                    {participant.user.name}
+                  </div>
+                )
               })}
             </div>
-            <br />
           </div>
           <div>
             <MapGL

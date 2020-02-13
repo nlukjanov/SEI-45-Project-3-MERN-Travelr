@@ -26,7 +26,7 @@ function createTrip(req, res, next) {
     .catch(next)
 }
 
-function showTrip(req, res, next){
+function showTrip(req, res, next) {
   Trip
     .findById(req.params.id)
     .populate('organizer')
@@ -40,7 +40,7 @@ function showTrip(req, res, next){
     .catch(next)
 }
 
-function destroyTrip(req, res, next){
+function destroyTrip(req, res, next) {
   Trip
     .findById(req.params.id)
     .then(trip => {
