@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import MapGL, { Marker, Popup } from 'react-map-gl'
 import Geocoder from 'react-map-gl-geocoder'
+import Auth from '../lib/authHelper'
 
 
 const mapboxToken = process.env.MAPBOX_ACCESS_TOKEN
-console.log(mapboxToken)
 class ShowTrip extends Component {
 
   state = {
@@ -55,6 +55,8 @@ class ShowTrip extends Component {
     }
   }
 
+  
+
   calculateAge() {
     const dob = new Date(this.state.data.organizer.dob)
     const today = new Date()
@@ -84,6 +86,18 @@ class ShowTrip extends Component {
     })
   }
 
+  handleJoin = async (e) => {
+    e.preventDefault()
+    const res = await axios.get(`http://localhost:8000/api/trips/${this.props.match.params.id}/join`, { headers: {
+      Authorization: `Bearer ${Auth.getToken()}`
+    } })
+    if (res.status !== 401){
+      this.props.history.push('/')
+
+    }
+    
+  }
+
   render() {
     if (!this.state.data.organizer.name){
       return null
@@ -91,9 +105,11 @@ class ShowTrip extends Component {
     return (
       <div>
         <section className="container">
-          <div className="container">
-            <div>
-              <img src={this.state.data.organizer.profileImage} />
+          <div>
+            <div className="tile is-parent">
+              <div className="tile is-child notification is-info">
+                <img className="image is-4by3" src={this.state.data.organizer.profileImage} />
+              </div>
             </div>
             <br />
             <div>
@@ -120,6 +136,7 @@ class ShowTrip extends Component {
           </div>
         </section>
         <section className="container">
+          <h3>Trip</h3>
           <div>
             <label>Title: {this.state.data.name}</label>
             <br />
@@ -145,13 +162,13 @@ class ShowTrip extends Component {
             <br />
             <label>Description: {this.state.data.description}</label>
             <br />
-            <label>Participants: {this.state.data.participants.map((user, index) => {
-              if (this.state.data.participants.length - 1 === index){
-                return user
-              }
-              return user + ', '
-            })}</label>
+            <div>Participants {this.state.data.participants.map( user => {
+              return <div key={user.user.id}> <img src={user.user.profileImage} /> <br /> {user.user.name}</div> 
+            })}</div>
             <br />
+            <form onSubmit={this.handleJoin}>
+              <button>Join Trip</button>
+            </form>
           </div>
           <div>
             <MapGL
