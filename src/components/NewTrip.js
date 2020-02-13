@@ -29,7 +29,7 @@ class NewTrip extends Component {
       budget: []
     },
     categories: [],
-    errors: {}
+    errors: null
   }
 
   async componentDidMount() {
@@ -41,6 +41,7 @@ class NewTrip extends Component {
       })
     } catch (err) {
       console.log(err)
+      // this.setState({ errors: err.response.data.errors })
     }
   }
 
@@ -76,11 +77,12 @@ class NewTrip extends Component {
       this.props.history.push('/')
     } catch (error) {
       console.log(error)
-      this.setState({ errors: { message: error.response.data.message } })
+      this.setState({ errors: error.response.data.errors })
     }
   }
 
   render() {
+    console.log(this.state.errors)
     return (
       <section className='section'>
         <div className='container'>
@@ -95,7 +97,7 @@ class NewTrip extends Component {
                 <div className='control'>
                   <input
                     className={`input ${
-                      this.state.errors.message ? 'is-danger' : ''
+                      this.state.errors ? 'is-danger' : ''
                     }`}
                     placeholder='Name'
                     name='name'

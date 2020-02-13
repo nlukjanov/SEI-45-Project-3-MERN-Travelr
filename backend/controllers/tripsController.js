@@ -14,7 +14,7 @@ function index(req, res, next) {
 
 function createTrip(req, res, next) {
   req.body.organizer = req.currentUser
-  if (!req.body.countries || req.body.countries.length === 0) throw new Error('CastError')
+  if (!req.body.countries || req.body.countries.length === 0) throw new Error('ValidationError')
 
   Trip
     .create(req.body)
