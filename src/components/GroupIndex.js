@@ -29,7 +29,7 @@ class GroupIndex extends Component {
     const groupData = this.state.groups ? this.state : this.props.propsData
     return (
       <section className='section'>
-        <div className='container'>
+        <div className='container transparent'>
           <div className='columns is-mobile is-multiline'>
             <div className='column is-12-tablet is-8-mobile is-offset-2-mobile card'>
               <div className='field'>
@@ -45,12 +45,6 @@ class GroupIndex extends Component {
                       />
                     </div>
                   </div>
-                  <button
-                    type='submit'
-                    className='button is-primary is-fullwidth'
-                  >
-                    Submit
-                  </button>
                 </div>
               </div>
             </div>

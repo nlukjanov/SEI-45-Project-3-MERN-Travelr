@@ -66,23 +66,23 @@ class Home extends Component {
     // console.log(this.state)
     if (!this.state.tripsData.trips || !this.state.groupsData.groups) return null
     return (
-      <section className='is-fullheight-with-navbar'>
-        <div className='hero is-medium is-primary is-bold'>
+      <section className='is-fullheight-with-navbar background'>
+        <div className='hero is-medium is-bold'>
           <div className='hero-body'>
-            <div className='container has-text-centered'>
-              <h1 className='title'>Travelr</h1>
-              <h2 className='subtitle'>Find your travel partner</h2>
+            <div className='container has-text-centered plate'>
+              <h1 className='title header-title'>Travelr</h1>
+              <h2 className='subtitle header-subtitle'>Never travel alone</h2>
             </div>
           </div>
         </div>
-        <div>
+        <div className=''>
           <Tabs
             selectedIndex={this.state.tabIndex}
             onSelect={tabIndex => this.setState({ tabIndex })}
           >
             <TabList className='tabs is-fullwidth is-centered'>
-              <Tab>Trips</Tab>
-              <Tab>Groups</Tab>
+              <Tab className='has-text-centered tab-select' selectedClassName={'active-tab'}>Trips</Tab>
+              <Tab className='has-text-centered tab-select' selectedClassName={'active-tab'}>Groups</Tab>
             </TabList>
             <TabPanel><TripsIndex propsData={this.state.tripsData}/></TabPanel>
             <TabPanel><GroupIndex propsData={this.state.groupsData}/></TabPanel>

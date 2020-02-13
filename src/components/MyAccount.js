@@ -52,7 +52,7 @@ class MyAccount extends Component {
                 />
               </figure>
             </div>
-            <div className='column is-3 is-offset-1 flex-container'>
+            <div className='column is-3 is-offset-1 flex-container-column'>
               <div className='container'>Name:</div>
               <div className='container'>Age:</div>
               <div className='container'>Country:</div>
@@ -60,7 +60,7 @@ class MyAccount extends Component {
               <div className='container'>Gender:</div>
               <div className='container'>Languages spoken:</div>
             </div>
-            <div className='column is-3 flex-container'>
+            <div className='column is-3 flex-container-column'>
               <div className='container'>{name}</div>
               <div className='container'>
                 {moment().diff(`${dob}`, 'years')}
@@ -70,7 +70,7 @@ class MyAccount extends Component {
               <div className='container'>{gender}</div>
               <div className='container'>
                 {languages.map((language, index) => {
-                  return <span key={index}>{`${language} `}</span>
+                  return <span key={index}>{`${language.charAt(0).toUpperCase() + language.slice(1)} `}</span>
                 })}
               </div>
             </div>
@@ -82,16 +82,16 @@ class MyAccount extends Component {
           onSelect={tabIndex => this.setState({ tabIndex })}
         >
           <TabList className='tabs is-fullwidth is-centered'>
-            <Tab className='has-text-centered' selectedClassName={'active-tab'}>
+            <Tab className='has-text-centered tab-pointer' selectedClassName={'active-tab'}>
               Organized Trips
             </Tab>
-            <Tab className='has-text-centered' selectedClassName={'active-tab'}>
+            <Tab className='has-text-centered tab-pointer' selectedClassName={'active-tab'}>
               Joined Trip
             </Tab>
-            <Tab className='has-text-centered' selectedClassName={'active-tab'}>
+            <Tab className='has-text-centered tab-pointer' selectedClassName={'active-tab'}>
               Trips Interested In
             </Tab>
-            <Tab className='has-text-centered' selectedClassName={'active-tab'}>
+            <Tab className='has-text-centered tab-pointer' selectedClassName={'active-tab'}>
               Completed Trips
             </Tab>
           </TabList>

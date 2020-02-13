@@ -1,3 +1,15 @@
+@import url('https://fonts.googleapis.com/css?family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Modak&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Lemonada|Sriracha&display=swap');
+
+* {
+  font-family: 'Sriracha', cursive;
+}
+
+button.button, input.input, select.input, textarea.textarea, input.button {
+  font-family: 'Lemonada', cursive;
+}
+
 .upload-btn-wrapper {
   position: relative;
   overflow: hidden;
@@ -10,9 +22,10 @@
   background-color: white;
   padding: 20px 20px;
   font-size: 14px;
+  font-family: 'Lemonada', cursive;
 }
 
-.upload-btn-wrapper input[type=file] {
+.upload-btn-wrapper input[type='file'] {
   font-size: 100px;
   position: absolute;
   left: 0;
@@ -20,10 +33,28 @@
   opacity: 0;
 }
 
-.flex-container {
+.flex-container-column {
   display: flex;
   justify-content: space-around;
   flex-direction: column;
+}
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  button:first-of-type{
+    margin-right: 10px;
+  }
+  button:last-of-type{
+    margin-left: 10px;
+  }
+  button {
+    flex: 1;
+  }
+  .field {
+    flex: 1;
+  }
 }
 
 .columns-padding {
@@ -31,6 +62,7 @@
 }
 
 .section-padding {
+  margin: 0 auto;
   padding: 2rem 0;
 }
 
@@ -43,4 +75,41 @@
 .active-tab {
   border-bottom: 1px solid #3273dc;
   color: #3273dc;
+}
+
+.tab-select {
+  cursor: pointer;
+  font-size: 36px;
+  font-family: 'Modak', cursive;
+  color: white;
+}
+
+.trips-block {
+  margin-top: 50px;
+  font-size: 24px;
+}
+
+.plate {
+  background-color: black;
+  opacity: 0.5
+}
+
+.header-title {
+  font-size: 72px;
+  font-family: 'Pacifico', cursive;
+  color: white;
+}
+
+.header-subtitle {
+  font-size: 36px;
+  font-family: 'Pacifico', cursive;
+  color: white;
+}
+
+.background {
+  background-image: url('../../src/assets/back1.jpg');
+}
+
+.transparent {
+  opacity: 0.9;
 }

@@ -123,7 +123,7 @@ class NewTrip extends Component {
                 <div className='control'>
                   <label className='label'>Start Date</label>
                   <input
-                    className='button'
+                    className='input'
                     type='date'
                     name='startingDate'
                     onChange={this.handleChange}
@@ -137,7 +137,7 @@ class NewTrip extends Component {
                 <div className='control'>
                   <label className='label'>End Date</label>
                   <input
-                    className='button'
+                    className='input'
                     type='date'
                     name='endingDate'
                     onChange={this.handleChange}
@@ -150,7 +150,7 @@ class NewTrip extends Component {
                 <label className='label'>Category</label>
                 <div className='control'>
                   <select
-                    className='select'
+                    className='input'
                     placeholder='Category'
                     name='category'
                     onChange={this.handleChange}

@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
 import Select from 'react-select'
 import countryList from 'react-select-country-list'
-import 'react-datepicker/dist/react-datepicker.css'
-import { Link } from 'react-router-dom'
-
-import Auth from '../lib/authHelper'
+import MyTripList from './MyTripsList'
 
 const moment = require('moment')
 
@@ -124,6 +121,10 @@ class TripsIndex extends Component {
     this.setState({ ...this.state, filteredTrips })
   }
 
+  handleResetFilter = () => {
+    this.setState({ ...this.state, filteredTrips: this.state.trips })
+  }
+
   handleChange = ({ target: { name, value } }) => {
     this.setState({
       ...this.state,
@@ -132,15 +133,20 @@ class TripsIndex extends Component {
   }
 
   render() {
-    console.log('State:', this.state.filteredTrips, 'Props:', this.props.propsData.filteredTrips)
+    console.log(
+      'State:',
+      this.state.filteredTrips,
+      'Props:',
+      this.props.propsData.filteredTrips
+    )
     const tripData = this.state.trips ? this.state : this.props.propsData
     return (
-      <section className='section'>
+      <section className='section transparent'>
         <div className='container'>
           <div className='columns is-mobile is-multiline'>
-            <div className='column is-12-tablet is-12-mobile card'>
+            <div className='column is-12-tablet is-8-mobile is-offset-2-mobile card'>
               <div className='field'>
-                <h2 className='title'>Search for Trips</h2>
+                <h2 className='title has-text-centered'>Search for Trips</h2>
                 <div className='control'>
                   <Select
                     name='countries'
@@ -153,7 +159,7 @@ class TripsIndex extends Component {
                   />
                 </div>
               </div>
-              <div className='is-mobile'>
+              <div className='flex-container'>
                 <div className='field'>
                   <div className='control'>
                     <label className='label'>Start Date</label>
@@ -181,8 +187,9 @@ class TripsIndex extends Component {
                     ></input>
                   </div>
                 </div>
-                <div className='field'>
+                <div className='field select'>
                   <div className='control'>
+                    <label className='label'>Trip Type</label>
                     <Select
                       name='category'
                       onChange={this.handleCategorySelection}
@@ -193,8 +200,9 @@ class TripsIndex extends Component {
                     />
                   </div>
                 </div>
-                <div className='field'>
+                <div className='field select'>
                   <div className='control'>
+                    <label className='label'>Budget</label>
                     <Select
                       name='budget'
                       onChange={this.handleBudgetSelection}
@@ -206,51 +214,24 @@ class TripsIndex extends Component {
                     />
                   </div>
                 </div>
-                <div className='field'>
-                  <button
-                    onClick={this.handleFiltering}
-                    className='button is-fullwidth'
-                  >
+              </div>
+              <div className='field'>
+                <div className='flex-container'>
+                  <button onClick={this.handleFiltering} className='button'>
                     Search
+                  </button>
+                  <button onClick={this.handleResetFilter} className='button'>
+                    Clear Filter
                   </button>
                 </div>
               </div>
             </div>
-            <div className='column is-12-tablet is-12-mobile card'>
-              {tripData.filteredTrips.map(trip => {
-                return (
-                  <div key={trip._id} className='column'>
-                    <Link to={Auth.isAuthenticated() ? `/groups/${trip._id}` : '/register'}>
-                      <div className='card'>
-                        <div className='card-header'>
-                          <h4 className='card-header-title'>
-                            <div>{trip.name}</div>
-                          </h4>
-                          <h4 className='card-header-title'>
-                            <div>{trip.organizer.name}</div>
-                          </h4>
-                        </div>
-                        <div>
-                          <div>
-                            {trip.countries.map((country, i) => {
-                              return <div key={i}>{country}</div>
-                            })}
-                          </div>
-                          <div>{trip.category.name}</div>
-                          <div>{trip.budget}</div>
-                          <div>{trip.description}</div>
-                          <div>
-                            {moment(trip.startingDate).format('Do MMM YYYY')}
-                          </div>
-                          <div>
-                            {moment(trip.endingDate).format('Do MMM YYYY')}
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                  </div>
-                )
-              })}
+            <div className='container trips-block'>
+              <div className='columns is-mobile is-multiline'>
+                <div className='column is-12-tablet is-8-mobile is-offset-2-mobile card'>
+                  <MyTripList data={tripData.filteredTrips} />
+                </div>
+              </div>
             </div>
           </div>
         </div>
