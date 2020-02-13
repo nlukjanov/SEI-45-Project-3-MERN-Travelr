@@ -12,7 +12,9 @@ class ShowTrip extends Component {
       budget: [],
       participants: [],
       interested: [],
-      organizer: {},
+      organizer: {
+        languages: []
+      },
       country: '',
       startingDate: '',
       endingDate: '',

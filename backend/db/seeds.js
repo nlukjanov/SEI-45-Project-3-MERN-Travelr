@@ -19,12 +19,20 @@ mongoose.connect(
       .then(userModels => {
         tripObjs.map(obj => obj.organizer = userModels.find(model => model.name === obj.organizer))
         
+        tripObjs[0].participants.push({ user: userModels[0] })
+        tripObjs[0].participants.push({ user: userModels[1] })
+        tripObjs[1].participants.push({ user: userModels[2] })
+        tripObjs[1].participants.push({ user: userModels[1] })
         tripObjs[2].participants.push({ user: userModels[1] })
+        tripObjs[2].participants.push({ user: userModels[2] })
         tripObjs[3].participants.push({ user: userModels[1] })
         tripObjs[4].participants.push({ user: userModels[1] })
+        tripObjs[5].participants.push({ user: userModels[1] })
         tripObjs[0].interested.push({ user: userModels[1] })
-        tripObjs[1].interested.push({ user: userModels[1] })
-        tripObjs[2].interested.push({ user: userModels[1] })
+        tripObjs[1].interested.push({ user: userModels[0] })
+        tripObjs[2].interested.push({ user: userModels[2] })
+        tripObjs[3].interested.push({ user: userModels[2] })
+        tripObjs[4].interested.push({ user: userModels[0] })
         return Category.create(categoryObjs)
       })
       .then(catModels => {
