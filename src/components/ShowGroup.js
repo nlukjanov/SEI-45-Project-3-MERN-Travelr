@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import moment from 'moment'
 
 
 class ShowGroup extends Component {
@@ -29,6 +30,25 @@ class ShowGroup extends Component {
     this.setState({ data: res.data })
   }
 
+  showComments({ _id, user, text, createdAt, handleCommentDelete }) {
+    return (
+      <div key={_id} className='box'>
+        <article className='media'>
+          <div className='media-content'>
+            <div className='content'>
+              <strong>{user.username}</strong>{' '}
+              <small>{moment(createdAt).format('MMM Do YYYY')}</small>
+              <p>{text}</p>
+            </div>
+          </div>
+          <div className='media-right'>
+            <button onClick={handleCommentDelete} className='delete'></button>
+          </div>
+        </article>
+      </div>
+    )
+  }
+
 
   render() {
     return (
@@ -44,20 +64,20 @@ class ShowGroup extends Component {
         </section>
         <section>
           <br />
-          <div className='columns is-vcentered'>
-            <div className=' column notification is-info'>
+          <div className='columns is-vcentered' style={{ marginTop: '100px' }}>
+            <div className=' column notification is-warning'>
               <h3 className='bd-notification is-half has-text-centered'>Description</h3>
               <div>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ullamcorper magna a quam rutrum, vel rhoncus mauris consequat. Quisque non sollicitudin est. Vestibulum ultrices, odio ac consectetur vestibulum, quam nisl venenatis tortor, id placerat nibh libero dapibus lorem. Vestibulum pulvinar et quam ac mollis. Vestibulum vulputate dolor sit amet purus rutrum scelerisque. Fusce in neque scelerisque, euismod libero sed, malesuada massa. Etiam posuere convallis ex a rhoncus. Donec dignissim pharetra iaculis. Vivamus ut orci ante. Ut mi elit, iaculis ac convallis vel, sodales non dolor. Sed fermentum nisi at luctus tristique. Fusce mollis consectetur justo, id iaculis purus aliquam quis. Proin sagittis tempus risus, non porta dui tristique hendrerit. Proin nec felis id nulla cursus scelerisque.
+                {this.state.data.description}
               </div>
             </div>
-            <div className='column notification is-danger'>
-              <h3 className='bd-notification is-half has-text-centered'>Members</h3>
+            <div className='column notification is-danger has-text-centered'>
+              <h3 className='bd-notification is-half'>Members</h3>
               <div>
                 {this.state.data.members.map(member => (
                   <div key={member.user.id} style={{ display: 'inline-block' }}>
                     <figure className='image'>
-                      <img style={{ width: '100px', height: '100px' } } src={member.user.profileImage} /> <br />{' '}
+                      <img style={{ width: '100px', height: '100px', marginLeft: '10px' } } src={member.user.profileImage} /> <br />{' '}
                       {member.user.name}
                     </figure>
                   </div>
@@ -66,10 +86,21 @@ class ShowGroup extends Component {
             </div>
           </div>
         </section>
+        <section className='section'>
+          <div className='container'>
+            <div className='columm notification box'>
+              {this.showComments}
+            </div>
+            <div>
+              <div>
+
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     )
   }
-
 
 }
 
