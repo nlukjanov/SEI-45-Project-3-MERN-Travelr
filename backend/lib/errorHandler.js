@@ -1,14 +1,18 @@
 function handleError(err, req, res, next) {
+  console.log(err)
   if (err.name === 'ValidationError') {
     const formattedErrors = {}
 
     for (const key in err.errors) {
-      formattedErrors[key] = err.errors[key].message
+      if (key === 'profileImage') {
+        formattedErrors[key] = 'Please upload image'
+      } else if (key === 'passwordConfirmation') {
+        formattedErrors[key] = 'Passwords do not match'
+      } else {
+        formattedErrors[key] = 'This field is required'
+      }
     }
-
-    console.log(formattedErrors)
-    formattedErrors.message = 'Can\'t accept that, try again'
-    return res.status(404).json(formattedErrors)
+    return res.status(422).json({ message: 'Can\'t accept that, try again', errors: formattedErrors })
   }
 
   if (err.message === 'Not found') {
