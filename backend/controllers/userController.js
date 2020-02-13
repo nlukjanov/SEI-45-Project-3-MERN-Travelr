@@ -96,4 +96,51 @@ function makeUserComment(req, res, next) {
     .catch(next)
 }
 
-module.exports = { profile, deleteUser, updateProfile, getUser, getAllUsers, likeUser, makeUserComment }
+function editUserComment(req, res, next) {
+  User
+    .findById(req.params.id)
+    .populate('comments.user')
+    .then(user => {
+      if (!user) throw new Error('Not found')
+      user.comments.map(comment => {
+        if (comment._id.equals(req.params.commentId) && comment.user._id.equals(req.currentUser._id)) {
+          console.log(req.body.text)
+          comment.text = req.body.text
+          return comment.save()
+        }
+      })
+      return user.save()
+    })
+    .then(user => res.status(201).json(user))
+    .catch(next)
+}
+
+function deleteUserComment(req, res, next) {
+  User
+    .findById(req.params.id)
+    .populate('comments.user')
+    .then(user => {
+      if (!user) throw new Error('Not found')
+      user.comments.map(comment => {
+        if (comment._id.equals(req.params.commentId) && comment.user._id.equals(req.currentUser._id)) {
+          user.comments.splice(user.comments.indexOf(comment), 1)
+          return
+        }
+      })
+      return user.save()
+    })
+    .then(user => res.status(204).json(user))
+    .catch(next)
+}
+
+module.exports = { 
+  profile, 
+  deleteUser, 
+  updateProfile, 
+  getUser, 
+  getAllUsers, 
+  likeUser, 
+  makeUserComment,
+  editUserComment,
+  deleteUserComment 
+}

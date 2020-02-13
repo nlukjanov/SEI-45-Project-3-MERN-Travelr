@@ -113,4 +113,52 @@ function makeTripComment(req, res, next) {
     .catch(next)
 }
 
-module.exports = { index , createTrip, showTrip, editTrip, interestTrip, joinTrip, destroyTrip, makeTripComment }
+function editTripComment(req, res, next) {
+  Trip
+    .findById(req.params.id)
+    .populate('comments.user')
+    .then(trip => {
+      if (!trip) throw new Error('Not found')
+      trip.comments.map(comment => {
+        if (comment._id.equals(req.params.commentId) && comment.user._id.equals(req.currentUser._id)) {
+          console.log(req.body.text)
+          comment.text = req.body.text
+          return comment.save()
+        }
+      })
+      return trip.save()
+    })
+    .then(trip => res.status(201).json(trip))
+    .catch(next)
+}
+
+function deleteTripComment(req, res, next) {
+  Trip
+    .findById(req.params.id)
+    .populate('comments.user')
+    .then(trip => {
+      if (!trip) throw new Error('Not found')
+      trip.comments.map(comment => {
+        if (comment._id.equals(req.params.commentId) && comment.user._id.equals(req.currentUser._id)) {
+          trip.comments.splice(trip.comments.indexOf(comment), 1)
+          return
+        }
+      })
+      return trip.save()
+    })
+    .then(trip => res.status(204).json(trip))
+    .catch(next)
+}
+
+module.exports = { 
+  index , 
+  createTrip, 
+  showTrip,
+  editTrip,
+  interestTrip, 
+  joinTrip, 
+  destroyTrip, 
+  makeTripComment,
+  editTripComment,
+  deleteTripComment
+}
