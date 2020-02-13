@@ -61,4 +61,13 @@ router.route('/profile')
   .put(secureRoute, users.updateProfile)
   .delete(secureRoute, users.deleteUser)
 
+router.route('/users')
+  .get(users.getAllUsers)
+
+router.route('/users/:id')
+  .get(users.getUser)
+
+router.route('/users/:id/like')
+  .get(secureRoute, users.likeUser)
+
 module.exports = router
