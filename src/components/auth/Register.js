@@ -4,12 +4,12 @@ import Select from 'react-select'
 import ImageUpload from '../ImageUpload'
 
 const options = [
-  { value: 'english', label: 'English' },
-  { value: 'french', label: 'French' },
-  { value: 'german', label: 'German' },
-  { value: 'russian', label: 'Russian' },
-  { value: 'japanese', label: 'Japanese' },
-  { value: 'turkish', label: 'Turkish' }
+  { value: 'English', label: 'English' },
+  { value: 'French', label: 'French' },
+  { value: 'German', label: 'German' },
+  { value: 'Russian', label: 'Russian' },
+  { value: 'Japanese', label: 'Japanese' },
+  { value: 'Turkish', label: 'Turkish' }
 ]
 
 class Register extends Component {
