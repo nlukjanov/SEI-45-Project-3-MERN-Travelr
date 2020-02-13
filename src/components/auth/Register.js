@@ -49,14 +49,14 @@ class Register extends Component {
     try {
       const res = await axios.post('/api/register', this.state.credentials)
       this.props.history.push('/login')
+      console.log('response', res.data)
     } catch (error) {
-      console.log(error)
-      this.setState({ errors: error })
+      this.setState({ errors: error.response.data.errors })
     }
   }
 
   render() {
-    console.log(this.state)
+    // if (this.state.errors) console.log(this.state.errors)
     return (
       <section className='section'>
         <div className='container'>
@@ -67,11 +67,11 @@ class Register extends Component {
             >
               <h2 className='title'>Register</h2>
               <div className='field'>
-                <label className='label'>Username</label>
+                <label className='label'>Name</label>
                 <div className='control'>
                   <input
                     className={`input ${
-                      this.state.errors.username ? 'is-danger' : ''
+                      this.state.errors.name ? 'is-danger' : ''
                     }`}
                     type='text'
                     name='name'
@@ -79,9 +79,9 @@ class Register extends Component {
                     onChange={this.handleChange}
                   ></input>
                 </div>
-                {this.state.errors.username && (
+                {this.state.errors.name && (
                   <small className='help is-danger'>
-                    {this.state.errors.username}
+                    {this.state.errors.name}
                   </small>
                 )}
               </div>
