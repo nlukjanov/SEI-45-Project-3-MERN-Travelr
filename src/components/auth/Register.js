@@ -48,7 +48,7 @@ class Register extends Component {
     try {
       const res = await axios.post('/api/register', this.state.credentials)
       if (res.status === 201) {
-        this.props.history.push('/auth/login')
+        this.props.history.push('/login')
       }
     } catch (error) {
       console.log(error)

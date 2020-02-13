@@ -85,7 +85,7 @@ class ShowTrip extends Component {
   }
 
   render() {
-    if (!this.state.data.organizer.name){
+    if (Object.keys(this.state.data.organizer).some(key => this.state.data.organizer[key] === '')) {
       return null
     }
     return (
@@ -145,11 +145,12 @@ class ShowTrip extends Component {
             <br />
             <label>Description: {this.state.data.description}</label>
             <br />
-            <label>Participants: {this.state.data.participants.map((user, index) => {
+            <label>Participants: {this.state.data.participants.map((obj, index) => {
               if (this.state.data.participants.length - 1 === index){
-                return user
+                return (
+                  <label>{obj.user.name}</label>
+                )
               }
-              return user + ', '
             })}</label>
             <br />
           </div>

@@ -12,7 +12,7 @@ const groupObjs = [
     isPrivate: true
   },
   {
-    name: "Phoebe's Flybies",
+    name: 'Phoebe\'s Flybies',
     description: 'something',
     imageURL: 'some-image.jpg',
     isPrivate: true
@@ -42,7 +42,7 @@ const userObjs = [
     city: 'Moscow',
     gender: 'Male',
     languages: ['Russian'],
-    profileImage: 'image.jpg',
+    profileImage: 'image.jpg'
   },
   {
     name: 'Jean',
