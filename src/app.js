@@ -30,8 +30,8 @@ class App extends React.Component {
             <Route path='/groups/:id/edit' component={EditGroup}></Route>
             <Route path='/groups/new' component={NewGroup}></Route>
             <Route path='/trips/:id' component={ShowTrip} />
-            <Route exact path='/auth/register' component={Register}></Route>
-            <Route exact path='/auth/login' component={Login}></Route>
+            <Route exact path='/register' component={Register}></Route>
+            <Route exact path='/login' component={Login}></Route>
             <Route exact path='/myaccount' component={MyAccount}></Route>
           </Switch>
         </main>
