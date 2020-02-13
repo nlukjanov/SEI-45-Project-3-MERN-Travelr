@@ -48,7 +48,6 @@ class EditGroup extends Component {
   }
 
   render() {
-    console.log(this.state)
     if (!this.state.group) return null
     return (
       <section className='section'>

@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import axios from 'axios'
 import Auth from '../lib/authHelper'
+import MyTripList from './MyTripsList'
+var moment = require('moment')
 
 class MyAccount extends Component {
   state = { tabIndex: 0, user: {} }
@@ -16,44 +18,96 @@ class MyAccount extends Component {
     })
   }
 
+  completedTrips = trips => {
+    if (!trips) return null
+    return trips.filter(trip => {
+      return Date.parse(trip.endingDate) < Date.now()
+    })
+  }
+
   render() {
-    const { dob, country, city, gender, languages } = this.state.user
+    if (!this.state.user) return null
+    if (!this.state.user.dob) return null
+    const {
+      name,
+      dob,
+      country,
+      city,
+      gender,
+      languages,
+      organizedTrips,
+      joinedTrips,
+      favoriteTrips
+    } = this.state.user
     return (
-      <section className='is-fullheight-with-navbar'>
-        <div className='hero is-medium is-primary is-bold'>
-          <div className='hero-body'>
-            <div className='columns'>
-              <div className='column is-4'>
-                <figure>{this.state.user.profileImage}</figure>
+      <section className='section'>
+        <div className='hero is-small'>
+          <div className='columns columns-padding'>
+            <div className='column is-4'>
+              <figure className='image profile-image'>
+                <img
+                  className='is-rounded'
+                  src={this.state.user.profileImage}
+                  alt='profile image'
+                />
+              </figure>
+            </div>
+            <div className='column is-3 is-offset-1 flex-container'>
+              <div className='container'>Name:</div>
+              <div className='container'>Age:</div>
+              <div className='container'>Country:</div>
+              <div className='container'>City:</div>
+              <div className='container'>Gender:</div>
+              <div className='container'>Languages spoken:</div>
+            </div>
+            <div className='column is-3 flex-container'>
+              <div className='container'>{name}</div>
+              <div className='container'>
+                {moment().diff(`${dob}`, 'years')}
               </div>
-              <div className='column is-7 is-offset-1'>
-                <div className='container'>{dob}</div>
-                <div className='container'>{country}</div> 
-                {/* add map to country */}
-                <div className='container'>{city}</div>
-                <div className='container'>{gender}</div>
-                <div className='container'>{languages}</div>
+              <div className='container'>{country}</div>
+              <div className='container'>{city}</div>
+              <div className='container'>{gender}</div>
+              <div className='container'>
+                {languages.map((language, index) => {
+                  return <span key={index}>{`${language} `}</span>
+                })}
               </div>
             </div>
           </div>
         </div>
-        <div>
-          <Tabs
-            selectedIndex={this.state.tabIndex}
-            onSelect={tabIndex => this.setState({ tabIndex })}
-          >
-            <TabList className='tabs is-fullwidth is-centered'>
-              <Tab>Created Trips</Tab>
-              <Tab>Joined Trip</Tab>
-              <Tab>Trips Interested In</Tab>
-              <Tab>Completed Trips</Tab>
-            </TabList>
-            <TabPanel>Tab1</TabPanel>
-            <TabPanel>Tab 2</TabPanel>
-            <TabPanel>Tab 3</TabPanel>
-            <TabPanel>Tab 4</TabPanel>
-          </Tabs>
-        </div>
+        <Tabs
+          className='columns-padding'
+          selectedIndex={this.state.tabIndex}
+          onSelect={tabIndex => this.setState({ tabIndex })}
+        >
+          <TabList className='tabs is-fullwidth is-centered'>
+            <Tab className='has-text-centered' selectedClassName={'active-tab'}>
+              Organized Trips
+            </Tab>
+            <Tab className='has-text-centered' selectedClassName={'active-tab'}>
+              Joined Trip
+            </Tab>
+            <Tab className='has-text-centered' selectedClassName={'active-tab'}>
+              Trips Interested In
+            </Tab>
+            <Tab className='has-text-centered' selectedClassName={'active-tab'}>
+              Completed Trips
+            </Tab>
+          </TabList>
+          <TabPanel>
+            <MyTripList data={organizedTrips} />
+          </TabPanel>
+          <TabPanel>
+            <MyTripList data={joinedTrips} />
+          </TabPanel>
+          <TabPanel>
+            <MyTripList data={favoriteTrips} />
+          </TabPanel>
+          <TabPanel>
+            <MyTripList data={this.completedTrips(organizedTrips)} />
+          </TabPanel>
+        </Tabs>
       </section>
     )
   }

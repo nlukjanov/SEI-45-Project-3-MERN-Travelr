@@ -25,11 +25,11 @@ const userObjs = [
     email: 'bheki@email.com',
     password: 'pass',
     passwordConfirmation: 'pass',
-    dob: new Date(),
+    dob: new Date('2000-02-20'),
     country: 'South Africa',
     city: 'Johannesburg',
     gender: 'Male',
-    languages: ['Sotho'],
+    languages: ['Sotho', 'English'],
     profileImage: 'my-image.jpg'
   },
   {
@@ -37,23 +37,23 @@ const userObjs = [
     email: 'nik@email.com',
     password: 'pass',
     passwordConfirmation: 'pass',
-    dob: new Date(),
+    dob: new Date('1988-01-01'),
     country: 'Russia',
     city: 'Moscow',
     gender: 'Male',
-    languages: ['Russian'],
+    languages: ['Russian', 'English'],
     profileImage: 'image.jpg'
   },
   {
-    name: 'Jean',
-    email: 'jean@email.com',
+    name: 'Can',
+    email: 'can@email.com',
     password: 'pass',
     passwordConfirmation: 'pass',
-    dob: new Date(),
+    dob: new Date('1996-01-31'),
     country: 'Turkey',
     city: 'Istanbul',
     gender: 'Male',
-    languages: ['Turkish'],
+    languages: ['Turkish', 'English'],
     profileImage: 'image-2.jpg'
   }
 ]
@@ -66,31 +66,70 @@ const tripObjs = [
     startingDate: new Date('2020-03-01'),
     endingDate: new Date('2020-03-05'),
     category: 'Beach',
-    description: 'description',
+    description: 'Let us go by the see and have some fun! The weather should be nice!',
     participants: [],
-    budget: ['$0 - $100']
+    interested: [],
+    budget: ['$0 - $100', '$100 - $300']
   },
   {
     name: 'Jungle Trek',
-    organizer: 'Bheki',
+    organizer: 'Can',
     countries: ['India', 'Thailand', 'Indonesia'],
     startingDate: new Date('2020-06-10'),
     endingDate: new Date('2020-06-20'),
     category: 'Beach',
-    description: 'description',
+    description: 'Multi country trip in Asia. Starting in India and then going to Thailand and Indonesia. Main goal is to enjoy the nature and trek the jungles',
     participants: [],
-    budget: ['$500 - $1000']
+    interested: [],
+    budget: ['$300 - $500', '$500 - $1000']
   },
   {
     name: 'Skiing in the Alps',
     organizer: 'Nik',
     countries: ['France', 'Italy'],
-    startingDate: new Date('2020-03-25'),
+    startingDate: new Date('2020-03-15'),
     endingDate: new Date('2020-03-30'),
     category: 'Skiing',
-    description: 'description',
+    description: 'Two weeks trip in Alps! Starting in France in 3 Valleys then going to Italian Dolomites.',
     participants: [],
+    interested: [],
     budget: ['$500 - $1000']
+  },
+  {
+    name: 'Skiing in France',
+    organizer: 'Nik',
+    countries: ['France'],
+    startingDate: new Date('2020-01-10'),
+    endingDate: new Date('2020-01-20'),
+    category: 'Skiing',
+    description: 'Skiing week in France, plan to go to Tignes, but flexible',
+    participants: [],
+    interested: [],
+    budget: ['$500 - $1000']
+  },
+  {
+    name: 'Skiing in Italy',
+    organizer: 'Nik',
+    countries: ['Italy'],
+    startingDate: new Date('2020-02-01'),
+    endingDate: new Date('2020-02-10'),
+    category: 'Skiing',
+    description: '10 days of skiing in Italy. Would like to go to Campitello Di Fassa',
+    participants: [],
+    interested: [],
+    budget: ['$500 - $1000']
+  },
+  {
+    name: 'Surfing trip in Morocco',
+    organizer: 'Nik',
+    countries: ['Morocco'],
+    startingDate: new Date('2020-04-15'),
+    endingDate: new Date('2020-04-30'),
+    category: 'Other',
+    description: 'Want to go catch some waves, weather should be already warm. But the water is always cold! Remember to take wetsuit.',
+    participants: [],
+    interested: [],
+    budget: ['$300 - $500', '$500 - $1000']
   }
 ]
 
@@ -103,6 +142,9 @@ const categoryObjs = [
   },
   {
     name: 'Safari'
+  },
+  {
+    name: 'Other'
   }
 ]
 

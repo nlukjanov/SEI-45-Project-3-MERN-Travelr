@@ -4,7 +4,7 @@ const User = require('../models/userModel')
 
 function secureRoute(req, res, next) {
   if (!req.headers.authorization)
-    return res.status(401).json({ message: 'Unauthorized' })
+    throw new Error('Unauthorized')
   const token = req.headers.authorization.replace('Bearer ', '')
   new Promise((resolve, reject) => {
     jwt.verify(token, secret, (err, payload) => {
@@ -14,11 +14,11 @@ function secureRoute(req, res, next) {
   })
     .then(payload => User.findById(payload.sub))
     .then(user => {
-      if (!user) return res.status(401).json({ message: 'Unauthorized' })
+      if (!user) throw new Error('Unauthorized')
       req.currentUser = user
       next()
     })
-    .catch(err => res.status(401).json({ message: 'Unauthorized' }))
+    .catch(next)
 }
 
 module.exports = secureRoute

@@ -27,6 +27,7 @@ class NewGroup extends Component {
       const res = await axios.post('/api/groups/', this.state.group, {
         headers: { Authorization: `Bearer ${Auth.getToken()}` }
       })
+      this.props.history.push('/')
       // this.props.history.push(`/api/groups/${res.data._id}`)
     } catch (error) {
       console.log(error.res)
@@ -34,7 +35,6 @@ class NewGroup extends Component {
   }
 
   render() {
-    console.log(this.state)
     return (
       <section className='section'>
         <div className='container'>

@@ -17,11 +17,16 @@ function createTrip(req, res, next) {
 
   Trip
     .create(req.body)
+    .then(createdTrip => {
+      createdTrip.participants.push({ user: req.currentUser })
+      return createdTrip.save()
+    })
     .then(createdTrip => res.status(201).json(createdTrip))
+    
     .catch(next)
 }
 
-function showTrip(req, res, next){
+function showTrip(req, res, next) {
   Trip
     .findById(req.params.id)
     .populate('organizer')
@@ -35,7 +40,7 @@ function showTrip(req, res, next){
     .catch(next)
 }
 
-function destroyTrip(req, res, next){
+function destroyTrip(req, res, next) {
   Trip
     .findById(req.params.id)
     .then(trip => {

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import axios from 'axios'
 import Select from 'react-select'
@@ -7,6 +6,7 @@ import countryList from 'react-select-country-list'
 import Auth from '../lib/authHelper'
 
 const countriesList = countryList().getData()
+const moment = require('moment')
 
 const budget = [
   { value: '$0 - $100', label: '$0 - $100' },
@@ -35,7 +35,6 @@ class NewTrip extends Component {
   async componentDidMount() {
     try {
       const res = await axios.get('/api/categories')
-      console.log(res.data)
       this.setState({
         ...this.state,
         categories: res.data
@@ -68,33 +67,12 @@ class NewTrip extends Component {
     })
   }
 
-  setStartingDate = date => {
-    this.setState({
-      ...this.state.trip,
-      trip: {
-        ...this.state.trip,
-        startingDate: date
-      }
-    })
-  }
-
-  setEndingDate = date => {
-    this.setState({
-      ...this.state.trip,
-      trip: {
-        ...this.state.trip,
-        endingDate: date
-      }
-    })
-  }
-
   handleSubmit = async e => {
     e.preventDefault()
     try {
       const res = await axios.post('/api/trips', this.state.trip, {
         headers: { Authorization: `Bearer ${Auth.getToken()}` }
       })
-      console.log(res.data)
       this.props.history.push('/')
     } catch (error) {
       console.log(error)
@@ -103,8 +81,6 @@ class NewTrip extends Component {
   }
 
   render() {
-    console.log(this.state)
-    console.log(Date.parse(this.state.trip.startingDate))
     return (
       <section className='section'>
         <div className='container'>
@@ -150,7 +126,7 @@ class NewTrip extends Component {
                     name='startingDate'
                     onChange={this.handleChange}
                     value={this.state.trip.startingDate}
-                    min={new Date()}
+                    min={moment(new Date()).format('YYYY-MM-DD')}
                     max={this.state.trip.endingDate}
                   ></input>
                 </div>

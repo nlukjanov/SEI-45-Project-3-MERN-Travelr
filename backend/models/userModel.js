@@ -1,6 +1,9 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 
+const Trip = require('./tripModel')
+const Group = require('./groupModel')
+
 const commentSchema = new mongoose.Schema({
   text: { type: String, required: true },
   user: { type: mongoose.Schema.ObjectId, ref: 'User', required: true }
@@ -8,7 +11,7 @@ const commentSchema = new mongoose.Schema({
   timestamps: true
 })
 
-const likeSchema = new mongoose.Schema({
+const embeddedUserSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.ObjectId, ref: 'User', required: true }
 }, {
   timestamps: true
@@ -24,7 +27,7 @@ const userSchema = new mongoose.Schema({
   gender: { type: String, enum: ['Male', 'Female'], required: true },
   languages: { type: Array, required: true },
   profileImage: { type: String, required: true },
-  likes: [ likeSchema ],
+  likes: [ embeddedUserSchema ],
   comments: [ commentSchema ]
   // completed trips will be sorted on the front end
 })
@@ -78,7 +81,7 @@ userSchema
   })
 
 userSchema.pre('validate', function checkPassword(next) {
-  if (this.isModified && this._passwordConfirmation !== this.password) {
+  if (this.isModified('password') && this._passwordConfirmation !== this.password) {
     this.invalidate('passwordConfirmation', 'does not match')
   }
   next()
@@ -88,6 +91,28 @@ userSchema.pre('save', function hashPassword(next) {
   if (this.isModified('password')) {
     this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(0))
   }
+  next()
+})
+
+userSchema.pre('remove', function(next) {
+  console.log('Deleting user...')
+
+  Trip
+    .deleteMany({ organizer: { _id: this._id } })
+    .then(() => console.log('User\'s trips deleted'))
+    .catch(err => console.log(err))
+  
+  Group
+    .find()
+    .then(groups => {
+      groups.forEach(group => {
+        group.members = group.members.filter(member => !member.user._id.equals(this._id))
+        return group.save()
+      })
+      console.log('User deleted from groups')
+    })
+    .catch(err => console.log(err))
+  
   next()
 })
 

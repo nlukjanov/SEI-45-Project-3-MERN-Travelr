@@ -19,7 +19,6 @@ class GroupIndex extends Component {
     const filteredGroups = this.state.groups.filter(group => {
       return group.name.toLowerCase().includes(value.toLowerCase())
     })
-    console.log(filteredGroups)
     this.setState({ filteredGroups })
   }
 
@@ -66,7 +65,7 @@ class GroupIndex extends Component {
                         </div>
                         <div className='card-image'>
                           <div>{group.imageURL}</div>
-                          <div>{group.members}</div>
+                          <div>{group.members.map(member => <p key={member._id}>Members: {member.user.name}</p>)}</div>
                         </div>
                       </div>
                     </div>
