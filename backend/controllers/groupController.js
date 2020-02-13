@@ -92,6 +92,7 @@ function likeGroup(req, res, next) {
 function makeGroupComment(req, res, next) {
   Group
     .findById(req.params.id)
+    .populate('comments.user')
     .then(group => {
       if (!group) throw new Error('Not found')
       group.comments.push({ user: req.currentUser, text: req.body.text })
@@ -101,4 +102,52 @@ function makeGroupComment(req, res, next) {
     .catch(next)
 }
 
-module.exports = { getGroup, getAllGroups, createGroup, likeGroup, joinGroup, updateGroup, deleteGroup, makeGroupComment }
+function editGroupComment(req, res, next) {
+  Group
+    .findById(req.params.id)
+    .populate('comments.user')
+    .then(group => {
+      if (!group) throw new Error('Not found')
+      group.comments.map(comment => {
+        if (comment._id.equals(req.params.commentId) && comment.user._id.equals(req.currentUser._id)) {
+          console.log(req.body.text)
+          comment.text = req.body.text
+          return comment.save()
+        }
+      })
+      return group.save()
+    })
+    .then(group => res.status(201).json(group))
+    .catch(next)
+}
+
+function deleteGroupComment(req, res, next) {
+  Group
+    .findById(req.params.id)
+    .populate('comments.user')
+    .then(group => {
+      if (!group) throw new Error('Not found')
+      group.comments.map(comment => {
+        if (comment._id.equals(req.params.commentId) && comment.user._id.equals(req.currentUser._id)) {
+          group.comments.splice(group.comments.indexOf(comment), 1)
+          return
+        }
+      })
+      return group.save()
+    })
+    .then(group => res.status(204).json(group))
+    .catch(next)
+}
+
+module.exports = { 
+  getGroup, 
+  getAllGroups, 
+  createGroup, 
+  likeGroup, 
+  joinGroup, 
+  updateGroup, 
+  deleteGroup, 
+  makeGroupComment, 
+  editGroupComment, 
+  deleteGroupComment 
+}

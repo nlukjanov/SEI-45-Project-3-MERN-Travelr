@@ -42,6 +42,10 @@ router.route('/groups/:id/like')
 router.route('/groups/:id/comment')
   .post(secureRoute, groups.makeGroupComment)
 
+router.route('/groups/:id/:commentId/comment')
+  .put(secureRoute, groups.editGroupComment)
+  .delete(secureRoute, groups.deleteGroupComment)
+
 // Trips
 router.route('/trips')
   .get(trips.index)
