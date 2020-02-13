@@ -1,18 +1,22 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import moment from 'moment'
+import Auth from '.././lib/authHelper'
 
 
 class ShowGroup extends Component {
 
   state = {
     data: {
-      name: 'Travellin Crew',
-      description: 'something',
-      imageURL: 'some-image.jpg',
+      name: '',
+      description: '',
+      imageURL: '',
       members: [],
       likes: [],
       comments: []
+    },
+    newComment: {
+      text: ''
     }
   }
 
@@ -30,25 +34,36 @@ class ShowGroup extends Component {
     this.setState({ data: res.data })
   }
 
-  showComments({ _id, user, text, createdAt, handleCommentDelete }) {
-    return (
-      <div key={_id} className='box'>
-        <article className='media'>
-          <div className='media-content'>
-            <div className='content'>
-              <strong>{user.username}</strong>{' '}
-              <small>{moment(createdAt).format('MMM Do YYYY')}</small>
-              <p>{text}</p>
-            </div>
-          </div>
-          <div className='media-right'>
-            <button onClick={handleCommentDelete} className='delete'></button>
-          </div>
-        </article>
-      </div>
-    )
+  handleCommentDelete = async (comment) => {
+    try {
+      await axios.delete(`/api/groups/${this.props.match.params.id}/${comment._id}/comment`, {
+        headers: { Authorization: `Bearer ${Auth.getToken()}` }
+      })
+      await this.getGroupData()
+      this.setState({ newComment: { text: '' } })
+    } catch (err) {
+      console.log(err)
+    }
   }
 
+  handleCommentSubmit = async e => {
+    e.preventDefault()
+
+    try {
+      const res = await axios.post(`/api/groups/${this.props.match.params.id}/comment`, this.state.newComment, {
+        headers: { Authorization: `Bearer ${Auth.getToken()}` }
+      })
+      await this.getGroupData()
+      this.setState({ newComment: { text: '' } })
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  handleChange = ({ target: { name, value } }) => {
+    this.setState({ newComment: { [name]: value } })
+    console.log(this.state)
+  }
 
   render() {
     return (
@@ -73,6 +88,7 @@ class ShowGroup extends Component {
             </div>
             <div className='column notification is-danger has-text-centered'>
               <h3 className='bd-notification is-half'>Members</h3>
+              <br />
               <div>
                 {this.state.data.members.map(member => (
                   <div key={member.user.id} style={{ display: 'inline-block' }}>
@@ -86,14 +102,60 @@ class ShowGroup extends Component {
             </div>
           </div>
         </section>
+        <div>
+          <br />
+          <br />
+          <div className='container'>
+            <div className='column notification box'>
+              <form onSubmit={this.handleCommentSubmit} className='media'>
+                <div className='media-content'>
+                  <div className='field'>
+                    <p className='control'>
+                      <textarea
+                        name='text'
+                        onChange={this.handleChange}
+                        className='textarea'
+                        placeholder='Add a comment...'
+                        value={this.state.newComment.text}
+                      ></textarea>
+                    </p>
+                  </div>
+                  <nav className='level'>
+                    <div className='level-left'>
+                      <div className='level-item'>
+                        <button type='submit' className='button is-info'>
+                Submit
+                        </button>
+                      </div>
+                    </div>
+                  </nav>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
         <section className='section'>
           <div className='container'>
             <div className='columm notification box'>
-              {this.showComments}
+              {this.state.data.comments.map(comment => (
+                <div key={comment._id} className='box'>
+                  <article className='media'>
+                    <div className='media-content'>
+                      <div className='content'>
+                        <strong>{comment.user.name}</strong>{' '}
+                        <small>{moment(comment.createdAt).format('MMM Do YYYY')}</small>
+                        <p>{comment.text}</p>
+                      </div>
+                    </div>
+                    <div className='media-right'>
+                      <button onClick={() => this.handleCommentDelete(comment)} className='delete'></button>
+                    </div>
+                  </article>
+                </div>
+              ))}
             </div>
             <div>
               <div>
-
               </div>
             </div>
           </div>
