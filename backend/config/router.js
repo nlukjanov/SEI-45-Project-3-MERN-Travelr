@@ -55,6 +55,9 @@ router.route('/trips/:id/interested')
 router.route('/trips/:id/join')
   .get(secureRoute, trips.joinTrip)
 
+router.route('/trips/:id/comment')
+  .post(secureRoute, trips.commentTrip)
+
 // Users
 router.route('/profile')
   .get(secureRoute, users.profile)

@@ -51,11 +51,13 @@ class Register extends Component {
         this.props.history.push('/login')
       }
     } catch (error) {
-      console.log(error)
+      
+      this.setState({ errors: error.response.data }) 
     }
   }
 
   render() {
+    if (this.state.error) console.log(this.state.errors)
     return (
       <>
         <section className='section'>

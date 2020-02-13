@@ -6,7 +6,9 @@ function handleError(err, req, res, next) {
       formattedErrors[key] = err.errors[key].message
     }
 
-    return res.status(422).json({ message: 'Can\'t accept that, try again', errors: formattedErrors })
+    console.log(formattedErrors)
+    formattedErrors.message = 'Can\'t accept that, try again'
+    return res.status(404).json(formattedErrors)
   }
 
   if (err.message === 'Not found') {
