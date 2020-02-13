@@ -67,4 +67,7 @@ router.route('/users')
 router.route('/users/:id')
   .get(users.getUser)
 
+router.route('/users/:id/like')
+  .get(secureRoute, users.likeUser)
+
 module.exports = router

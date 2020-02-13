@@ -62,4 +62,23 @@ function deleteUser(req, res, next) {
     .catch(next)
 }
 
-module.exports = { profile, deleteUser, updateProfile, getUser, getAllUsers }
+// Likes & Comments
+
+function likeUser(req, res, next) {
+  User
+    .findById(req.params.id)
+    .then(user => {
+      if (!user) throw new Error('Not found')
+      if (user.likes.some(item => item.user._id.equals(req.currentUser._id))) {
+        const foundUser = user.likes.find(item => item.user._id.equals(req.currentUser._id))
+        user.likes.splice(user.likes.indexOf(foundUser), 1)
+        return user.save()
+      }
+      user.likes.push({ user: req.currentUser })
+      return user.save()
+    })
+    .then(user => res.status(201).json(user))
+    .catch(next)
+}
+
+module.exports = { profile, deleteUser, updateProfile, getUser, getAllUsers, likeUser }
