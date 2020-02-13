@@ -25,11 +25,11 @@ const userObjs = [
     email: 'bheki@email.com',
     password: 'pass',
     passwordConfirmation: 'pass',
-    dob: new Date(),
+    dob: new Date('2000-02-20'),
     country: 'South Africa',
     city: 'Johannesburg',
     gender: 'Male',
-    languages: ['Sotho'],
+    languages: ['Sotho', 'English'],
     profileImage: 'my-image.jpg'
   },
   {
@@ -41,19 +41,19 @@ const userObjs = [
     country: 'Russia',
     city: 'Moscow',
     gender: 'Male',
-    languages: ['Russian'],
-    profileImage: 'image.jpg',
+    languages: ['Russian', 'English'],
+    profileImage: 'image.jpg'
   },
   {
-    name: 'Jean',
-    email: 'jean@email.com',
+    name: 'Can',
+    email: 'can@email.com',
     password: 'pass',
     passwordConfirmation: 'pass',
-    dob: new Date(),
+    dob: new Date('1996-01-31'),
     country: 'Turkey',
     city: 'Istanbul',
     gender: 'Male',
-    languages: ['Turkish'],
+    languages: ['Turkish', 'English'],
     profileImage: 'image-2.jpg'
   }
 ]
@@ -66,10 +66,10 @@ const tripObjs = [
     startingDate: new Date('2020-03-01'),
     endingDate: new Date('2020-03-05'),
     category: 'Beach',
-    description: 'description',
+    description: 'Let us go by the see and have some fun! The weather should be nice!',
     participants: [],
     interested: [],
-    budget: ['$0 - $100']
+    budget: ['$0 - $100', '$100 - $300']
   },
   {
     name: 'Jungle Trek',
@@ -78,19 +78,19 @@ const tripObjs = [
     startingDate: new Date('2020-06-10'),
     endingDate: new Date('2020-06-20'),
     category: 'Beach',
-    description: 'description',
+    description: 'Multi country trip in Asia. Starting in India and then going to Thailand and Indonesia. Main goal is to enjoy the nature and trek the jungles',
     participants: [],
     interested: [],
-    budget: ['$500 - $1000']
+    budget: ['$300 - $500', '$500 - $1000']
   },
   {
     name: 'Skiing in the Alps',
     organizer: 'Nik',
     countries: ['France', 'Italy'],
-    startingDate: new Date('2020-03-25'),
+    startingDate: new Date('2020-03-15'),
     endingDate: new Date('2020-03-30'),
     category: 'Skiing',
-    description: 'description',
+    description: 'Two weeks trip in Alps! Starting in France in 3 Valleys then going to Italian Dolomites.',
     participants: [],
     interested: [],
     budget: ['$500 - $1000']
