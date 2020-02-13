@@ -101,7 +101,7 @@ function interestTrip(req, res, next) {
     .catch(next)
 }
 
-function commentTrip(req, res, next) {
+function makeTripComment(req, res, next) {
   Trip
     .findById(req.params.id)
     .then(trip => {
@@ -113,4 +113,4 @@ function commentTrip(req, res, next) {
     .catch(next)
 }
 
-module.exports = { index , createTrip, showTrip, editTrip, interestTrip, joinTrip, destroyTrip, commentTrip }
+module.exports = { index , createTrip, showTrip, editTrip, interestTrip, joinTrip, destroyTrip, makeTripComment }

@@ -39,6 +39,9 @@ router.route('/groups/:id/join')
 router.route('/groups/:id/like')
   .get(secureRoute, groups.likeGroup)
 
+router.route('/groups/:id/comment')
+  .post(secureRoute, groups.makeGroupComment)
+
 // Trips
 router.route('/trips')
   .get(trips.index)
@@ -56,7 +59,7 @@ router.route('/trips/:id/join')
   .get(secureRoute, trips.joinTrip)
 
 router.route('/trips/:id/comment')
-  .post(secureRoute, trips.commentTrip)
+  .post(secureRoute, trips.makeTripComment)
 
 // Users
 router.route('/profile')
@@ -72,5 +75,8 @@ router.route('/users/:id')
 
 router.route('/users/:id/like')
   .get(secureRoute, users.likeUser)
+
+router.route('/users/:id/comment')
+  .post(secureRoute, users.makeUserComment)
 
 module.exports = router
