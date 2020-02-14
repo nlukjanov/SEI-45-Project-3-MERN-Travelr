@@ -6,7 +6,11 @@
   font-family: 'Sriracha', cursive;
 }
 
-button.button, input.input, select.input, textarea.textarea, input.button {
+button.button,
+input.input,
+select.input,
+textarea.textarea,
+input.button {
   font-family: 'Lemonada', cursive;
 }
 
@@ -43,10 +47,10 @@ button.button, input.input, select.input, textarea.textarea, input.button {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  button:first-of-type{
+  button:first-of-type {
     margin-right: 10px;
   }
-  button:last-of-type{
+  button:last-of-type {
     margin-left: 10px;
   }
   button {
@@ -96,7 +100,7 @@ button.button, input.input, select.input, textarea.textarea, input.button {
 
 .plate {
   background-color: black;
-  opacity: 0.5
+  opacity: 0.5;
 }
 
 .header-title {
@@ -141,8 +145,9 @@ button.button, input.input, select.input, textarea.textarea, input.button {
 .active-tab {
   border-bottom: 1px solid darkslategrey;
   color: darkslategrey;
+}
 .dropdown {
-  @media  (min-width : 80%){
-    width: 100%
+  @media (min-width: 80%) {
+    width: 100%;
   }
 }
