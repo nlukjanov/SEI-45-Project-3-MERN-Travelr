@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import MapGL, { NavigationControl, Marker } from 'react-map-gl'
 import Auth from '../lib/authHelper'
+import { Link } from 'react-router-dom'
 const moment = require('moment')
 
 const mapboxToken = process.env.MAPBOX_ACCESS_TOKEN
@@ -88,12 +89,16 @@ class ShowTrip extends Component {
     }
   }
 
+  isOwner = () => Auth.getPayload().sub === this.state.data.organizer._id
+
   render() {
     if (!this.state.data) return null
     if (!this.state.markers) return null
-    const userJoinedTrip = this.state.data.participants.some(item => item.user._id === Auth.getPayload().sub)
+    const userJoinedTrip = this.state.data.participants.some(
+      item => item.user._id === Auth.getPayload().sub
+    )
     return (
-      <section className="section">
+      <section className='section'>
         <div className='tile is-ancestor'>
           <div className='tile is-22'>
             <section className='section' style={{ marginLeft: '4%' }}>
@@ -125,15 +130,17 @@ class ShowTrip extends Component {
                     <br />
                     <p>
                       Spoken languages:{' '}
-                      {this.state.data.organizer.languages.map((lang, index) => {
-                        if (
-                          this.state.data.organizer.languages.length - 1 ===
-                          index
-                        ) {
-                          return lang
+                      {this.state.data.organizer.languages.map(
+                        (lang, index) => {
+                          if (
+                            this.state.data.organizer.languages.length - 1 ===
+                            index
+                          ) {
+                            return lang
+                          }
+                          return lang + ', '
                         }
-                        return lang + ', '
-                      })}
+                      )}
                     </p>
                     <br />
                   </div>
@@ -145,7 +152,7 @@ class ShowTrip extends Component {
                 <div className='tile is-child notification is-success'>
                   <div className='content'>
                     <h3 className='title'>Trip</h3>
-                    <label>Title: {this.state.data.name}</label>
+                    <div>{this.state.data.name}</div>
                     <br />
                     <label>Countries:</label>
                     <div>
@@ -161,19 +168,40 @@ class ShowTrip extends Component {
                       })}
                     </label>
                     <br />
-                    <div>Starting Date: {this.state.data.startingDate}</div>
+                    <label>Starting Date:</label>
+                    <div>
+                      {moment(this.state.data.startingDate).format(
+                        'YYYY MMM DD'
+                      )}
+                    </div>
                     <br />
-                    <div>Ending Date: {this.state.data.endingDate}</div>
+                    <label>Ending Date:</label>
+                    <div>
+                      {moment(this.state.data.endingDate).format('YYYY MMM DD')}
+                    </div>
                     <br />
-                    <div>Category: {this.state.data.category.name}</div>
+                    <label>Category:</label>
+                    <div>{this.state.data.category.name}</div>
                     <br />
-                    <div>Description: {this.state.data.description}</div>
+                    <label>Description:</label>
+                    <div>{this.state.data.description}</div>
                     <br />
                     <button onClick={this.handleJoin} className='button'>
                       {userJoinedTrip ? 'Leave the Trip' : 'Join the Trip'}
                     </button>
-                    <hr />
-                    <div>Participants:</div>
+                    <br />
+                    {this.isOwner() && (
+                      <>
+                        <Link
+                          to={`/trips/${this.state.data._id}/edit`}
+                          className='button'
+                        >
+                          Edit Trip
+                        </Link>
+                      </>
+                    )}
+                    <br />
+                    <label>Participants:</label>
                     <br />
                     <div>
                       {this.state.data.participants.map(participant => {
@@ -184,6 +212,7 @@ class ShowTrip extends Component {
                           >
                             <figure className='image'>
                               <img
+                                className='is-rounded'
                                 style={{ width: '100px', height: '100px' }}
                                 src={participant.user.profileImage}
                               />{' '}
@@ -215,7 +244,8 @@ class ShowTrip extends Component {
                   </div>
                   {this.state.markers.map((marker, index) => {
                     return (
-                      <Marker key={index}
+                      <Marker
+                        key={index}
                         latitude={marker.data.features[0].center[1]}
                         longitude={marker.data.features[0].center[0]}
                       >

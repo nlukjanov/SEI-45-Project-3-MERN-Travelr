@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import DatePicker from 'react-datepicker'
-import 'react-datepicker/dist/react-datepicker.css'
 import axios from 'axios'
 import Select from 'react-select'
 import countryList from 'react-select-country-list'
@@ -99,7 +97,7 @@ class NewTrip extends Component {
       const res = await axios.put(`/api/trips/${tripId}`, this.state.trip, {
         headers: { Authorization: `Bearer ${Auth.getToken('token')}` }
       })
-      // this.props.history.push(`/api/trips/${res.data._id}`)
+      this.props.history.push(`/trips/${res.data._id}`)
     } catch (error) {
       console.log(error.res)
     }

@@ -29,7 +29,7 @@ class NewGroup extends Component {
         headers: { Authorization: `Bearer ${Auth.getToken()}` }
       })
       this.props.history.push('/')
-      // this.props.history.push(`/api/groups/${res.data._id}`)
+      this.props.history.push(`/groups/${res.data._id}`)
     } catch (error) {
       this.setState({ errors: error.response.data.errors })
     }
