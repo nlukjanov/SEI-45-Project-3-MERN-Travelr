@@ -42,14 +42,6 @@ class ShowTrip extends Component {
     }
   }
 
-  // async componentDidUpdate() {
-  //   try {
-  //     this.getCountriesCoordinates()
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
-
   getCountriesCoordinates = async res => {
     const response = await Promise.all(
       res.data.countries.map(country => {
@@ -58,7 +50,6 @@ class ShowTrip extends Component {
         )
       })
     )
-    console.log(response)
     this.setState({
       ...this.state,
       viewport: {
@@ -100,7 +91,6 @@ class ShowTrip extends Component {
   render() {
     if (!this.state.data) return null
     if (!this.state.markers) return null
-    // console.log(this.state.markers)
     const userJoinedTrip = this.state.data.participants.some(item => item.user._id === Auth.getPayload().sub)
     return (
       <section className="section">

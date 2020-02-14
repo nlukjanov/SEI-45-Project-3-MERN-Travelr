@@ -81,7 +81,6 @@ class NewTrip extends Component {
   }
 
   render() {
-    // console.log(this.state)
     return (
       <section className='section'>
         <section className="section">

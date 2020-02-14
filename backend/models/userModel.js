@@ -95,8 +95,6 @@ userSchema.pre('save', function hashPassword(next) {
 })
 
 userSchema.pre('remove', function(next) {
-  console.log('Deleting user...')
-
   Trip
     .deleteMany({ organizer: { _id: this._id } })
     .then(() => console.log('User\'s trips deleted'))
@@ -109,7 +107,6 @@ userSchema.pre('remove', function(next) {
         group.members = group.members.filter(member => !member.user._id.equals(this._id))
         return group.save()
       })
-      console.log('User deleted from groups')
     })
     .catch(err => console.log(err))
   

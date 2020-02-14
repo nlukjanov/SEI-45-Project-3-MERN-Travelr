@@ -5,7 +5,6 @@ var moment = require('moment')
 import Auth from '../lib/authHelper'
 
 const MyTripList = ({ data }) => {
-  // console.log('data', data)
   if (data.length === 0 ) {
     return (
       <div className='container card box flex-container'>

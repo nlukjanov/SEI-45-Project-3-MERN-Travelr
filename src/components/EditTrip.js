@@ -99,7 +99,6 @@ class NewTrip extends Component {
       const res = await axios.put(`/api/trips/${tripId}`, this.state.trip, {
         headers: { Authorization: `Bearer ${Auth.getToken('token')}` }
       })
-      console.log(res.data)
       // this.props.history.push(`/api/trips/${res.data._id}`)
     } catch (error) {
       console.log(error.res)
@@ -121,7 +120,6 @@ class NewTrip extends Component {
     const tripBudgetArray = []
     trip.budget.map(budget => {
       const tripBudgetObject = {}
-      console.log(budget)
       tripBudgetObject.label = budget
       tripBudgetObject.value = budget
       tripBudgetArray.push(tripBudgetObject)

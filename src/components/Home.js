@@ -63,7 +63,6 @@ class Home extends Component {
   }
 
   render() {
-    // console.log(this.state)
     if (!this.state.tripsData.trips || !this.state.groupsData.groups) return null
     return (
       <section className='is-fullheight-with-navbar background'>

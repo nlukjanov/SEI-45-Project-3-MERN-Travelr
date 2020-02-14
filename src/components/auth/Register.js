@@ -58,8 +58,6 @@ class Register extends Component {
   }
 
   render() {
-    // if (this.state.errors) console.log(this.state.errors)
-    console.log(this.state)
     return (
       <section className='section'>
         <section className="section">

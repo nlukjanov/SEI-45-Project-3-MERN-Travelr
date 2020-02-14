@@ -87,7 +87,6 @@ class ShowGroup extends Component {
 
   handleChange = ({ target: { name, value } }) => {
     this.setState({ newComment: { [name]: value } })
-    console.log(this.state)
   }
   _element = React.createRef()
 

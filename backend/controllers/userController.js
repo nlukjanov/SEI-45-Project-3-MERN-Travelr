@@ -104,7 +104,6 @@ function editUserComment(req, res, next) {
       if (!user) throw new Error('Not found')
       user.comments.map(comment => {
         if (comment._id.equals(req.params.commentId) && comment.user._id.equals(req.currentUser._id)) {
-          console.log(req.body.text)
           comment.text = req.body.text
           return comment.save()
         }
