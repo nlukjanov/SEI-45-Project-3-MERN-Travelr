@@ -72,10 +72,7 @@ button.button, input.input, select.input, textarea.textarea, input.button {
   height: 256px;
 }
 
-.active-tab {
-  border-bottom: 1px solid #3273dc;
-  color: #3273dc;
-}
+
 
 .tab-select {
   cursor: pointer;
@@ -90,8 +87,9 @@ button.button, input.input, select.input, textarea.textarea, input.button {
 }
 
 .plate {
-  background-color: black;
-  opacity: 0.5
+  padding: 0 50px;
+  background-color: darkslategrey;
+  opacity: 0.7
 }
 
 .header-title {
@@ -122,4 +120,16 @@ button.button, input.input, select.input, textarea.textarea, input.button {
 .group-subtitle {
   font-size: 24px;
   font-family: 'Pacifico', cursive;
+}
+
+.font-sizing {
+  font-size: 20px;
+}
+
+.profile-back {
+  background-image: url('../../src/assets/profileback.jpg');
+}
+.active-tab {
+  border-bottom: 1px solid darkslategrey;
+  color: darkslategrey;
 }

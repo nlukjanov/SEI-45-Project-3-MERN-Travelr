@@ -40,7 +40,7 @@ class MyAccount extends Component {
       favoriteTrips
     } = this.state.user
     return (
-      <section className='section'>
+      <section className='section font-sizing profile-back'>
         <div className='hero is-small'>
           <div className='columns columns-padding'>
             <div className='column is-4'>
@@ -77,11 +77,11 @@ class MyAccount extends Component {
           </div>
         </div>
         <Tabs
-          className='columns-padding'
+          className='columns-padding transparent'
           selectedIndex={this.state.tabIndex}
           onSelect={tabIndex => this.setState({ tabIndex })}
         >
-          <TabList className='tabs is-fullwidth is-centered'>
+          <TabList className='tabs is-fullwidth is-centered font-sizing'>
             <Tab className='has-text-centered tab-pointer' selectedClassName={'active-tab'}>
               Organized Trips
             </Tab>
