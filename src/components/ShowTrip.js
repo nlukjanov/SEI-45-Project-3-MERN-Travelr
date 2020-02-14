@@ -70,8 +70,7 @@ class ShowTrip extends Component {
   }
 
   getTripData = async () => {
-    const res = await axios.get(`/api/trips/${this.props.match.params.id}`)
-    return res
+    return await axios.get(`/api/trips/${this.props.match.params.id}`)
   }
 
   calculateAge() {
@@ -88,13 +87,14 @@ class ShowTrip extends Component {
   handleJoin = async () => {
     console.log(this.props.match.params.id)
     try {
-      const res = await axios.get(
+      await axios.get(
         `/api/trips/${this.props.match.params.id}/join`,
         {
           headers: { Authorization: `Bearer ${Auth.getToken()}` }
         }
       )
-      this.getTripData()
+      const res = await this.getTripData()
+      this.setState({ data: res.data })
     } catch (error) {
       console.log(error)
     }

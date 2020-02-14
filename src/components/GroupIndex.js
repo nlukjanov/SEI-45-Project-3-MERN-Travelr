@@ -12,7 +12,10 @@ class GroupIndex extends Component {
   async componentDidMount() {
     const { propsData } = this.props
     try {
-      this.setState({ groups: propsData.groups, filteredGroups: propsData.groups })
+      this.setState({
+        groups: propsData.groups,
+        filteredGroups: propsData.groups
+      })
     } catch (err) {
       console.log(err)
     }
@@ -34,7 +37,9 @@ class GroupIndex extends Component {
             <div className='column is-12-tablet is-8-mobile is-offset-2-mobile card'>
               <div className='field'>
                 <div className='control'>
-                  <h2 className='title'>Search for travel groups</h2>
+                  <h2 className='title has-text-centered'>
+                    Search for travel groups
+                  </h2>
                   <div className='field'>
                     <div className='control'>
                       <input
@@ -53,17 +58,29 @@ class GroupIndex extends Component {
                 return (
                   <div key={group._id} className='column'>
                     <div>
-                      <Link to={Auth.isAuthenticated() ? `/groups/${group._id}` : '/login'}>
+                      <Link
+                        to={
+                          Auth.isAuthenticated()
+                            ? `/groups/${group._id}`
+                            : '/login'
+                        }
+                      >
                         <div className='card'>
                           <div className='card-header'>
-                            <h4 className='card-header-title'>
-                              <div>{group.name}</div>
-                              <div>{group.description}</div>
-                            </h4>
+                            <h2 className='card-header-title group-title'>{group.name}</h2>
+                            <h3 className='card-header-title group-subtitle'>
+                              {group.description}
+                            </h3>
                           </div>
                           <div className='card-image'>
-                            <div>{group.imageURL}</div>
-                            <div>{group.members.map(member => <p key={member._id}>Members: {member.user.name}</p>)}</div>
+                            <img src={group.imageURL} alt='group image' />
+                            <div>
+                              {group.members.map(member => (
+                                <p key={member._id}>
+                                  Members: {member.user.name}
+                                </p>
+                              ))}
+                            </div>
                           </div>
                         </div>
                       </Link>
