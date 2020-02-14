@@ -85,7 +85,6 @@ class ShowTrip extends Component {
   }
 
   handleJoin = async () => {
-    console.log(this.props.match.params.id)
     try {
       await axios.get(
         `/api/trips/${this.props.match.params.id}/join`,
@@ -104,6 +103,7 @@ class ShowTrip extends Component {
     if (!this.state.data) return null
     if (!this.state.markers) return null
     console.log(this.state.markers)
+    const userJoinedTrip = this.state.data.participants.some(item => item.user._id === Auth.getPayload().sub)
     return (
       <div className='tile is-ancestor'>
         <div className='tile is-22'>
@@ -181,7 +181,7 @@ class ShowTrip extends Component {
                   <div>Description: {this.state.data.description}</div>
                   <br />
                   <button onClick={this.handleJoin} className='button'>
-                    Join the Trip
+                    {userJoinedTrip ? 'Leave the Trip' : 'Join the Trip'}
                   </button>
                   <hr />
                   <div>Participants:</div>
