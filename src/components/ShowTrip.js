@@ -103,7 +103,7 @@ class ShowTrip extends Component {
   render() {
     if (!this.state.data) return null
     if (!this.state.markers) return null
-    console.log(this.state.markers)
+    // console.log(this.state.markers)
     const userJoinedTrip = this.state.data.participants.some(item => item.user._id === Auth.getPayload().sub)
     return (
       <div className='tile is-ancestor'>
