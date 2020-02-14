@@ -198,25 +198,27 @@ class ShowTrip extends Component {
             </div>
           </section>
           <section className='section'>
-            <div className='tile'>
-              <MapGL
-                mapboxApiAccessToken={mapboxToken}
-                ref={this.mapRef}
-                {...this.state.viewport}
-                height={'85vh'}
-                width={'60vh'}
-                mapStyle='mapbox://styles/mapbox/streets-v11'
-                onViewportChange={this.handleViewportChange}
-                dragRotate={false}
-                minZoom={2}
-              >
-                {/* <Geocoder
+            <div className='tile is-parent' style={{ minWidth: '80vw'}}>
+              <div className='tile is-child'>
+                <MapGL
+                  mapboxApiAccessToken={mapboxToken}
+                  ref={this.mapRef}
+                  {...this.state.viewport}
+                  height={'85vh'}
+                  width={'60vh'}
+                  mapStyle='mapbox://styles/mapbox/streets-v11'
+                  onViewportChange={this.handleViewportChange}
+                  dragRotate={false}
+                  minZoom={2}
+                >
+                  {/* <Geocoder
                   mapRef={this.mapRef}
                   onViewportChange={this.handleGeocoderViewportChange}
                   mapboxApiAccessToken={mapboxToken}
                 /> */}
-                {/* Use <Marker /> here to mark things on map  */}
-              </MapGL>
+                  {/* Use <Marker /> here to mark things on map  */}
+                </MapGL>
+              </div>
             </div>
           </section>
         </div>

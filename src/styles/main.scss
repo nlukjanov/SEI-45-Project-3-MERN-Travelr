@@ -113,3 +113,9 @@ button.button, input.input, select.input, textarea.textarea, input.button {
 .transparent {
   opacity: 0.9;
 }
+
+.dropdown {
+  @media  (min-width: 80%){
+    width: 100%
+  }
+}
