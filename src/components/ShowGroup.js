@@ -2,6 +2,31 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import moment from 'moment'
 import Auth from '.././lib/authHelper'
+import ReactTextCollapse from 'react-text-collapse'
+
+const TEXT_COLLAPSE_OPTIONS = {
+  collapse: false, // default state when component rendered
+  collapseText: '... show more', // text to show when collapsed
+  expandText: 'show less', // text to show when expanded
+  minHeight: 100, // component height when closed
+  maxHeight: 250, // expanded to
+  textStyle: { // pass the css for the collapseText and expandText here
+    color: 'blue',
+    fontSize: '20px'
+  }
+}
+
+const TEXT_COLLAPSE_OPTIONS_MEMBERS = {
+  collapse: false,
+  collapseText: '... show more', 
+  expandText: 'show less', 
+  minHeight: 200, 
+  maxHeight: 250, 
+  textStyle: {
+    color: 'blue',
+    fontSize: '20px'
+  }
+}
 
 
 class ShowGroup extends Component {
@@ -64,6 +89,7 @@ class ShowGroup extends Component {
     this.setState({ newComment: { [name]: value } })
     console.log(this.state)
   }
+  _element = React.createRef()
 
   render() {
     return (
@@ -80,25 +106,31 @@ class ShowGroup extends Component {
         <section>
           <br />
           <div className='columns is-vcentered' style={{ marginTop: '100px' }}>
-            <div className=' column notification is-warning'>
-              <h3 className='bd-notification is-half has-text-centered'>Description</h3>
-              <div>
-                {this.state.data.description}
-              </div>
+            <div className=' column notification is-warning' style={{ minHeight: '230px' }}>
+              <ReactTextCollapse
+                options={TEXT_COLLAPSE_OPTIONS}
+              >
+                <h3 className='bd-notification is-half has-text-centered'>Description</h3>
+                <div>
+                  {this.state.data.description}
+                </div>
+              </ReactTextCollapse>
             </div>
-            <div className='column notification is-danger has-text-centered'>
-              <h3 className='bd-notification is-half'>Members</h3>
-              <br />
-              <div>
+            <div className='column notification is-danger has-text-centered' style={{ minHeight: '200px' }} >
+              <ReactTextCollapse
+                options={TEXT_COLLAPSE_OPTIONS_MEMBERS}
+              >
+                <h3 className='bd-notification is-half'>Members</h3>
+                <br />
                 {this.state.data.members.map(member => (
                   <div key={member.user.id} style={{ display: 'inline-block' }}>
                     <figure className='image'>
-                      <img style={{ width: '100px', height: '100px', marginLeft: '10px' } } src={member.user.profileImage} /> <br />{' '}
+                      <img style={{ width: '100px', height: '100px', marginLeft: '10px' } } src={member.user.profileImage} />{' '}
                       {member.user.name}
                     </figure>
                   </div>
                 ))}
-              </div>
+              </ReactTextCollapse>
             </div>
           </div>
         </section>
