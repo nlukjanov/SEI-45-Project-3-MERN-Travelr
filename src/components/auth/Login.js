@@ -33,50 +33,52 @@ class Login extends Component {
   render() {
     return (
       <section className='section'>
-        <div className='container'>
-          <div className='columns'>
-            <form
-              onSubmit={this.handleSubmit}
-              className='column is-half is-offset-one-quarter'
-            >
-              <h2 className='title'>Login</h2>
-              <div className='field'>
-                <label className='label'>Email</label>
-                <div className='control'>
-                  <input
-                    className={`input ${this.state.error ? 'is-danger' : ''}`}
-                    name='email'
-                    placeholder='Email'
-                    onChange={this.handleChange}
-                  />
+        <section className="section">
+          <div className='container'>
+            <div className='columns'>
+              <form
+                onSubmit={this.handleSubmit}
+                className='column is-half is-offset-one-quarter'
+              >
+                <h2 className='title'>Login</h2>
+                <div className='field'>
+                  <label className='label'>Email</label>
+                  <div className='control'>
+                    <input
+                      className={`input ${this.state.error ? 'is-danger' : ''}`}
+                      name='email'
+                      placeholder='Email'
+                      onChange={this.handleChange}
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className='field'>
-                <label className='label'>Password</label>
-                <div className='control'>
-                  <input
-                    className={`input ${this.state.error ? 'is-danger' : ''}`}
-                    type='password'
-                    name='password'
-                    placeholder='Password'
-                    onChange={this.handleChange}
-                  />
+                <div className='field'>
+                  <label className='label'>Password</label>
+                  <div className='control'>
+                    <input
+                      className={`input ${this.state.error ? 'is-danger' : ''}`}
+                      type='password'
+                      name='password'
+                      placeholder='Password'
+                      onChange={this.handleChange}
+                    />
+                  </div>
+                  {this.state.error && (
+                    <small className='help is-danger'>{this.state.error}</small>
+                  )}
                 </div>
-                {this.state.error && (
-                  <small className='help is-danger'>{this.state.error}</small>
-                )}
-              </div>
-              <div className="field">
-                <button type='submit' className='button is-primary is-fullwidth'>
-                  Login
-                </button>
-              </div>
-              <div className="field">
-                <p className="subtitle has-text-centered is-6">Don&apos;t have an account? <Link to='/register'>Register</Link></p>
-              </div>
-            </form>
+                <div className="field">
+                  <button type='submit' className='button is-primary is-fullwidth'>
+                    Login
+                  </button>
+                </div>
+                <div className="field">
+                  <p className="subtitle has-text-centered is-6">Don&apos;t have an account? <Link to='/register'>Register</Link></p>
+                </div>
+              </form>
+            </div>
           </div>
-        </div>
+        </section>
       </section>
     )
   }
