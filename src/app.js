@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import Notifications from 'react-notify-toast'
 import 'bulma'
 import './styles/main.scss'
 
@@ -22,6 +23,7 @@ class App extends React.Component {
     return (
       <BrowserRouter>
         <main>
+          <Notifications />
           <Navbar />
           <Switch>
             <Route exact path='/' component={Home}></Route>

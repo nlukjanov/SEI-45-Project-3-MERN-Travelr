@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import Auth from '../../lib/authHelper'
 import { Link } from 'react-router-dom'
+import { notify } from 'react-notify-toast'
 
 class Login extends Component {
   state = {
@@ -22,6 +23,7 @@ class Login extends Component {
     try {
       const res = await axios.post('api/login', this.state.credentials)
       Auth.setToken(res.data.token)
+      notify.show(res.data.message, 'success', 3000)
       this.props.history.push('/')
     } catch (error) {
       this.setState({ error: 'Incorrect Credentials' })

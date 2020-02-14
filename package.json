@@ -24,6 +24,7 @@
     "react-dom": "^16.12.0",
     "react-map-gl": "^5.2.3",
     "react-map-gl-geocoder": "^2.0.11",
+    "react-notify-toast": "^0.5.1",
     "react-router-dom": "^5.1.2",
     "react-select": "^3.0.8",
     "react-select-country-list": "^2.1.2",
