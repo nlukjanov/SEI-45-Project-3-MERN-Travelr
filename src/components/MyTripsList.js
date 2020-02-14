@@ -2,6 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 var moment = require('moment')
 
+import Auth from '../lib/authHelper'
+
 const MyTripList = ({ data }) => {
   console.log('data', data)
   if (data.length === 0 ) {
@@ -17,7 +19,7 @@ const MyTripList = ({ data }) => {
         return (
           <div key={trip._id} className='container card box flex-container'>
             <Link
-              to={`/trips/${trip._id}`}
+              to={Auth.isAuthenticated() ? `/trips/${trip._id}` : '/login'}
               className='container flex-container'
             >
               <div className='column has-text-centered'>{trip.name}</div>
