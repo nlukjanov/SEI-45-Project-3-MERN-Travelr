@@ -1,20 +1,20 @@
 const groupObjs = [
   {
     name: 'The Web Pack',
-    description: 'something',
-    imageURL: 'some-image.jpg',
+    description: 'Travelling together and web surfing the world',
+    imageURL: 'https://res.cloudinary.com/nlukjanov/image/upload/v1581679539/Travelr/group3_tmmyrw.jpg',
     isPrivate: true
   },
   {
     name: 'Travellin Crew',
-    description: 'something',
-    imageURL: 'some-image.jpg',
+    description: 'Going places, seeing faces',
+    imageURL: 'https://res.cloudinary.com/nlukjanov/image/upload/v1581679539/Travelr/group4_sbv11c.jpg',
     isPrivate: true
   },
   {
     name: 'Phoebe\'s Flybies',
-    description: 'something',
-    imageURL: 'some-image.jpg',
+    description: 'Fly with us',
+    imageURL: 'https://res.cloudinary.com/nlukjanov/image/upload/v1581679539/Travelr/group2_hzs8lx.jpg',
     isPrivate: true
   }
 ]
@@ -30,7 +30,7 @@ const userObjs = [
     city: 'Johannesburg',
     gender: 'Male',
     languages: ['Sotho', 'English'],
-    profileImage: 'my-image.jpg'
+    profileImage: 'https://res.cloudinary.com/nlukjanov/image/upload/v1581617113/travelr/wcwchh1kzm218xpwxmlg.jpg'
   },
   {
     name: 'Nik',
@@ -42,7 +42,7 @@ const userObjs = [
     city: 'Moscow',
     gender: 'Male',
     languages: ['Russian', 'English'],
-    profileImage: 'image.jpg'
+    profileImage: 'https://res.cloudinary.com/nlukjanov/image/upload/v1581508679/travelr/ash68jg45te3gjrlldzu.jpg'
   },
   {
     name: 'Can',
@@ -54,7 +54,7 @@ const userObjs = [
     city: 'Istanbul',
     gender: 'Male',
     languages: ['Turkish', 'English'],
-    profileImage: 'image-2.jpg'
+    profileImage: 'https://res.cloudinary.com/nlukjanov/image/upload/v1581602706/travelr/gxf5iozk2ltyleghuvla.jpg'
   }
 ]
 
@@ -123,13 +123,73 @@ const tripObjs = [
     name: 'Surfing trip in Morocco',
     organizer: 'Nik',
     countries: ['Morocco'],
-    startingDate: new Date('2020-04-15'),
-    endingDate: new Date('2020-04-30'),
+    startingDate: new Date('2020-03-15'),
+    endingDate: new Date('2020-03-30'),
     category: 'Other',
     description: 'Want to go catch some waves, weather should be already warm. But the water is always cold! Remember to take wetsuit.',
     participants: [],
     interested: [],
     budget: ['$300 - $500', '$500 - $1000']
+  },
+  {
+    name: 'City break in Paris',
+    organizer: 'Can',
+    countries: ['France'],
+    startingDate: new Date('2020-05-05'),
+    endingDate: new Date('2020-05-08'),
+    category: 'Other',
+    description: 'Long weekend in Paris',
+    participants: [],
+    interested: [],
+    budget: ['$300 - $500', '$500 - $1000']
+  },
+  {
+    name: 'Kite surfing in Egypt',
+    organizer: 'Nik',
+    countries: ['Egypt'],
+    startingDate: new Date('2020-04-15'),
+    endingDate: new Date('2020-04-30'),
+    category: 'Other',
+    description: 'Nice and windy weather in Egypt this time of the year. Join to have lots of fun',
+    participants: [],
+    interested: [],
+    budget: ['$300 - $500', '$500 - $1000']
+  },
+  {
+    name: 'Sightseeing in Italy',
+    organizer: 'Bheki',
+    countries: ['Italy'],
+    startingDate: new Date('2020-04-15'),
+    endingDate: new Date('2020-04-30'),
+    category: 'Other',
+    description: 'Enjoy architecure and nice weather in Italy',
+    participants: [],
+    interested: [],
+    budget: ['$100 - $300', '$300 - $500']
+  },
+  {
+    name: 'Visiting Turkey',
+    organizer: 'Can',
+    countries: ['Turkey'],
+    startingDate: new Date('2020-08-15'),
+    endingDate: new Date('2020-08-30'),
+    category: 'Other',
+    description: 'Flying hot air balloons in Cappadocia',
+    participants: [],
+    interested: [],
+    budget: ['$300 - $500', '$500 - $1000']
+  },
+  {
+    name: 'Hiking in Pyrenees then going to Portugal',
+    organizer: 'Nik',
+    countries: ['Spain', 'France', 'Portugal'],
+    startingDate: new Date('2020-07-15'),
+    endingDate: new Date('2020-07-25'),
+    category: 'Other',
+    description: 'Flying to France then quick 5 days trip to Northern spain Pyrenees. Hiking and camping along the way. Bring your backpack and tent. After that taking bus to Portugal Porto.',
+    participants: [],
+    interested: [],
+    budget: ['$300 - $500']
   }
 ]
 
