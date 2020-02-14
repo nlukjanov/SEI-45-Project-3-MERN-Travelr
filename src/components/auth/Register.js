@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import Select from 'react-select'
 import ImageUpload from '../ImageUpload'
+import { Link } from 'react-router-dom'
 
 const options = [
   { value: 'English', label: 'English' },
@@ -263,6 +264,9 @@ class Register extends Component {
                 >
                   Join Travelr
                 </button>
+              </div>
+              <div className="field">
+                <p className="subtitle has-text-centered is-6">Already have an account? <Link to='/login'>Login</Link></p>
               </div>
             </form>
           </div>

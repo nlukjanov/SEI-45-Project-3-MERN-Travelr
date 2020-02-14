@@ -10,7 +10,8 @@ class NewGroup extends Component {
       description: '',
       imageURL: '',
       isPrivate: false
-    }
+    },
+    errors: {}
   }
 
   handleChange = ({ target: { name, value, type, checked } }) => {
@@ -30,11 +31,12 @@ class NewGroup extends Component {
       this.props.history.push('/')
       // this.props.history.push(`/api/groups/${res.data._id}`)
     } catch (error) {
-      console.log(error.res)
+      this.setState({ errors: error.response.data.errors })
     }
   }
 
   render() {
+    console.log(this.state)
     return (
       <section className='section'>
         <div className='container'>
@@ -48,35 +50,38 @@ class NewGroup extends Component {
                 <label className='label'>Name your group</label>
                 <div className='control'>
                   <input
-                    className='input'
+                    className={`input ${this.state.errors.name ? 'is-danger' : ''}`}
                     placeholder='Name'
                     name='name'
                     onChange={this.handleChange}
                     value={this.state.group.name}
                   />
                 </div>
+                {this.state.errors.name && <small className="has-text-danger">{this.state.errors.name}</small>}
               </div>
               <div className='field'>
                 <label className='label'>Description</label>
                 <div className='control'>
                   <textarea
-                    className='textarea'
+                    className={`textarea ${this.state.errors.description ? 'is-danger' : ''}`}
                     placeholder='Description'
                     name='description'
                     onChange={this.handleChange}
                     value={this.state.group.description}
                   />
                 </div>
+                {this.state.errors.description && <small className="has-text-danger">{this.state.errors.description}</small>}
               </div>
               <div className='field'>
                 <label className='label'>Upload Group Image</label>
-                <div className='control'>
+                <div className='control' style={this.state.errors.imageURL ? { border: '1px solid red', borderRadius: '5px' } : {} }>
                   <ImageUpload
                     handleChange={this.handleChange}
                     fieldName='imageURL'
                     labelClassName='my-class'
                   />
                 </div>
+                {this.state.errors.imageURL && <small className="has-text-danger">{this.state.errors.imageURL}</small>}
               </div>
               <div className='field'>
                 <label className='label'>Private Group?</label>

@@ -29,7 +29,7 @@ class NewTrip extends Component {
       budget: []
     },
     categories: [],
-    errors: null
+    errors: {}
   }
 
   async componentDidMount() {
@@ -41,7 +41,7 @@ class NewTrip extends Component {
       })
     } catch (err) {
       console.log(err)
-      // this.setState({ errors: err.response.data.errors })
+      this.setState({ errors: err.response.data.errors })
     }
   }
 
@@ -76,13 +76,12 @@ class NewTrip extends Component {
       })
       this.props.history.push('/')
     } catch (error) {
-      console.log(error)
       this.setState({ errors: error.response.data.errors })
     }
   }
 
   render() {
-    console.log(this.state.errors)
+    console.log(this.state)
     return (
       <section className='section'>
         <div className='container'>
@@ -96,18 +95,17 @@ class NewTrip extends Component {
                 <label className='label'>Make a name for your trip</label>
                 <div className='control'>
                   <input
-                    className={`input ${
-                      this.state.errors ? 'is-danger' : ''
-                    }`}
+                    className={`input ${this.state.errors.name ? 'is-danger' : ''}`}
                     placeholder='Name'
                     name='name'
                     onChange={this.handleChange}
                     value={this.state.trip.name}
                   />
                 </div>
+                {this.state.errors.name && <small className="has-text-danger">{this.state.errors.name}</small>}
               </div>
               <div className='field'>
-                <div className='control'>
+                <div className='control' style={this.state.errors.countries ? { border: '1px solid red', borderRadius: '5px' } : {} }>
                   <Select
                     name='countries'
                     onChange={this.handleCountriesSelection}
@@ -116,14 +114,16 @@ class NewTrip extends Component {
                     className='basic-multi-select'
                     classNamePrefix='select'
                     placeholder='Select Destination'
+                    required
                   />
                 </div>
+                {this.state.errors.countries && <small className="has-text-danger">{this.state.errors.countries}</small>}
               </div>
               <div className='field'>
                 <div className='control'>
                   <label className='label'>Start Date</label>
                   <input
-                    className='input'
+                    className={`input ${this.state.errors.name ? 'is-danger' : ''}`}
                     type='date'
                     name='startingDate'
                     onChange={this.handleChange}
@@ -132,12 +132,13 @@ class NewTrip extends Component {
                     max={this.state.trip.endingDate}
                   ></input>
                 </div>
+                {this.state.errors.startingDate && <small className="has-text-danger">{this.state.errors.startingDate}</small>}
               </div>
               <div className='field'>
                 <div className='control'>
                   <label className='label'>End Date</label>
                   <input
-                    className='input'
+                    className={`input ${this.state.errors.name ? 'is-danger' : ''}`}
                     type='date'
                     name='endingDate'
                     onChange={this.handleChange}
@@ -145,12 +146,13 @@ class NewTrip extends Component {
                     min={this.state.trip.startingDate}
                   ></input>
                 </div>
+                {this.state.errors.endingDate && <small className="has-text-danger">{this.state.errors.endingDate}</small>}
               </div>
               <div className='field'>
                 <label className='label'>Category</label>
                 <div className='control'>
                   <select
-                    className='input'
+                    className={`input ${this.state.errors.name ? 'is-danger' : ''}`}
                     placeholder='Category'
                     name='category'
                     onChange={this.handleChange}
@@ -169,10 +171,11 @@ class NewTrip extends Component {
                     })}
                   </select>
                 </div>
+                {this.state.errors.category && <small className="has-text-danger">{this.state.errors.category}</small>}
               </div>
               <div className='field'>
                 <label className='label'>Budget</label>
-                <div className='control'>
+                <div className='control' style={this.state.errors.budget ? { border: '1px solid red', borderRadius: '5px' } : {} }>
                   <Select
                     name='budget'
                     onChange={this.handleBudgetSelection}
@@ -183,18 +186,20 @@ class NewTrip extends Component {
                     placeholder='Select Budget'
                   />
                 </div>
+                {this.state.errors.budget && <small className="has-text-danger">{this.state.errors.budget}</small>}
               </div>
               <div className='field'>
                 <label className='label'>Description</label>
                 <div className='control'>
                   <textarea
-                    className='textarea'
+                    className={`textarea ${this.state.errors.description ? 'is-danger' : ''}`}
                     placeholder='Description'
                     name='description'
                     onChange={this.handleChange}
                     value={this.state.trip.description}
                   />
                 </div>
+                {this.state.errors.description && <small className="has-text-danger">{this.state.errors.description}</small>}
               </div>
               <div className='field'>
                 <button

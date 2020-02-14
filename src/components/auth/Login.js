@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import Auth from '../../lib/authHelper'
+import { Link } from 'react-router-dom'
 
 class Login extends Component {
   state = {
@@ -63,9 +64,14 @@ class Login extends Component {
                   <small className='help is-danger'>{this.state.error}</small>
                 )}
               </div>
-              <button type='submit' className='button is-primary is-fullwidth'>
-                Login
-              </button>
+              <div className="field">
+                <button type='submit' className='button is-primary is-fullwidth'>
+                  Login
+                </button>
+              </div>
+              <div className="field">
+                <p className="subtitle has-text-centered is-6">Don&apos;t have an account? <Link to='/register'>Register</Link></p>
+              </div>
             </form>
           </div>
         </div>

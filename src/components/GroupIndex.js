@@ -53,7 +53,7 @@ class GroupIndex extends Component {
                 return (
                   <div key={group._id} className='column'>
                     <div>
-                      <Link to={Auth.isAuthenticated() ? `/groups/${group._id}` : '/register'}>
+                      <Link to={Auth.isAuthenticated() ? `/groups/${group._id}` : '/login'}>
                         <div className='card'>
                           <div className='card-header'>
                             <h4 className='card-header-title'>
