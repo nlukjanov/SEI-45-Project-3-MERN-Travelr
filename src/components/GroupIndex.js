@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+
+import Auth from '../lib/authHelper'
 
 class GroupIndex extends Component {
   state = {
@@ -50,18 +53,20 @@ class GroupIndex extends Component {
                 return (
                   <div key={group._id} className='column'>
                     <div>
-                      <div className='card'>
-                        <div className='card-header'>
-                          <h4 className='card-header-title'>
-                            <div>{group.name}</div>
-                            <div>{group.description}</div>
-                          </h4>
+                      <Link to={Auth.isAuthenticated() ? `/groups/${group._id}` : '/login'}>
+                        <div className='card'>
+                          <div className='card-header'>
+                            <h4 className='card-header-title'>
+                              <div>{group.name}</div>
+                              <div>{group.description}</div>
+                            </h4>
+                          </div>
+                          <div className='card-image'>
+                            <div>{group.imageURL}</div>
+                            <div>{group.members.map(member => <p key={member._id}>Members: {member.user.name}</p>)}</div>
+                          </div>
                         </div>
-                        <div className='card-image'>
-                          <div>{group.imageURL}</div>
-                          <div>{group.members.map(member => <p key={member._id}>Members: {member.user.name}</p>)}</div>
-                        </div>
-                      </div>
+                      </Link>
                     </div>
                   </div>
                 )

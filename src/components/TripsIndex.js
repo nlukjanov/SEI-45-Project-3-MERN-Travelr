@@ -113,8 +113,8 @@ class TripsIndex extends Component {
         this.state.select.budget.length === 0
           ? true
           : trip.budget.some(budget =>
-              this.state.select.budget.includes(budget)
-            )
+            this.state.select.budget.includes(budget)
+          )
       if (countriesMatch && categoryMatch && budgetMatch && dateMatch())
         return trip
     })

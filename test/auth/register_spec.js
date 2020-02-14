@@ -52,7 +52,7 @@ describe('testing registration controller: POST to /register', () => {
       country: 'Russia',
       city: 'Moscow',
       gender: 'Male',
-      languages: 'Russian',
+      languages: ['Russian'],
       profileImage: 'image.jpg',
       organizedTrips: [],
       joinedTrips: [],

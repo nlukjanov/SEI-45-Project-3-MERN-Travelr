@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import MapGL, { Marker, Popup } from 'react-map-gl'
-import Geocoder from 'react-map-gl-geocoder'
+import MapGL, { NavigationControl, Marker } from 'react-map-gl'
 import Auth from '../lib/authHelper'
 
 const mapboxToken = process.env.MAPBOX_ACCESS_TOKEN
@@ -15,7 +14,6 @@ class ShowTrip extends Component {
       organizer: {
         languages: []
       },
-      country: '',
       startingDate: '',
       endingDate: '',
       category: {},
@@ -26,21 +24,54 @@ class ShowTrip extends Component {
     viewport: {
       latitude: 0,
       longitude: 0,
-      zoom: 7
-    }
+      zoom: 2,
+      bearing: 0,
+      pitch: 0
+    },
+    markers: null
   }
 
   async componentDidMount() {
     try {
-      this.getTripData()
+      const res = await this.getTripData()
+      this.getCountriesCoordinates(res)
+      this.setState({ data: res.data })
     } catch (error) {
       console.log(error)
     }
   }
 
+  // async componentDidUpdate() {
+  //   try {
+  //     this.getCountriesCoordinates()
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
+
+  getCountriesCoordinates = async res => {
+    const response = await Promise.all(
+      res.data.countries.map(country => {
+        return axios.get(
+          `https://api.mapbox.com/geocoding/v5/mapbox.places/${country}.json?access_token=${mapboxToken}`
+        )
+      })
+    )
+    console.log(response)
+    this.setState({
+      ...this.state,
+      viewport: {
+        ...this.state.viewport,
+        latitude: response[0].data.features[0].center[1],
+        longitude: response[0].data.features[0].center[0]
+      },
+      markers: response
+    })
+  }
+
   getTripData = async () => {
     const res = await axios.get(`/api/trips/${this.props.match.params.id}`)
-    this.setState({ data: res.data })
+    return res
   }
 
   calculateAge() {
@@ -51,31 +82,7 @@ class ShowTrip extends Component {
     if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
       age = age - 1
     }
-    console.log(age)
     return age
-  }
-
-  mapRef = React.createRef()
-  handleViewportChange = viewport => {
-    this.setState({
-      viewport: { ...this.state.viewport, ...viewport }
-    })
-  }
-
-  handleGeocoderViewportChange = viewport => {
-    const geocoderDefaultOverrides = { transitionDuration: 3000 }
-    this.setState({
-      viewport: {
-        latitude: viewport.latitude,
-        longitude: viewport.longitude,
-        zoom: viewport.zoom
-      }
-    })
-
-    return this.handleViewportChange({
-      ...viewport,
-      ...geocoderDefaultOverrides
-    })
   }
 
   handleJoin = async () => {
@@ -88,24 +95,24 @@ class ShowTrip extends Component {
         }
       )
       this.getTripData()
-      console.log(res)
     } catch (error) {
       console.log(error)
     }
   }
 
   render() {
-    if (!this.state.data.organizer) return null
+    if (!this.state.data) return null
+    if (!this.state.markers) return null
+    console.log(this.state.markers)
     return (
       <div className='tile is-ancestor'>
         <div className='tile is-22'>
-          <section className='section' style={ { marginLeft: '4%' }}>
+          <section className='section' style={{ marginLeft: '4%' }}>
             <div className='tile'>
               <div className='tile is-parent'>
-                <div className='tile is-child notification is-info' >
+                <div className='tile is-child notification is-info'>
                   <figure className='image is-4by3'>
-                    <img src={this.state.data.organizer.profileImage}
-                    />
+                    <img src={this.state.data.organizer.profileImage} />
                   </figure>
                 </div>
               </div>
@@ -124,15 +131,15 @@ class ShowTrip extends Component {
                   <div>Email: {this.state.data.organizer.email}</div>
                   <br />
                   <div>
-                Country of Origin: {this.state.data.organizer.country}
+                    Country of Origin: {this.state.data.organizer.country}
                   </div>
                   <br />
                   <p>
-                Spoken languages:{' '}
+                    Spoken languages:{' '}
                     {this.state.data.organizer.languages.map((lang, index) => {
                       if (
                         this.state.data.organizer.languages.length - 1 ===
-                    index
+                        index
                       ) {
                         return lang
                       }
@@ -144,7 +151,7 @@ class ShowTrip extends Component {
               </div>
             </div>
           </section>
-          <section className='section' style={ { minWidth: '40%' }}>
+          <section className='section' style={{ minWidth: '40%' }}>
             <div className='tile is-parent'>
               <div className='tile is-child notification is-success'>
                 <div className='content'>
@@ -159,7 +166,7 @@ class ShowTrip extends Component {
                   </div>
                   <br />
                   <label>
-              Budget:{' '}
+                    Budget:{' '}
                     {this.state.data.budget.map((budget, index) => {
                       return <div key={index}>{budget}</div>
                     })}
@@ -174,7 +181,7 @@ class ShowTrip extends Component {
                   <div>Description: {this.state.data.description}</div>
                   <br />
                   <button onClick={this.handleJoin} className='button'>
-              Join the Trip
+                    Join the Trip
                   </button>
                   <hr />
                   <div>Participants:</div>
@@ -182,10 +189,16 @@ class ShowTrip extends Component {
                   <div>
                     {this.state.data.participants.map(participant => {
                       return (
-                        <div key={participant.user.id} style={{ display: 'inline-block' }}>
+                        <div
+                          key={participant.user.id}
+                          style={{ display: 'inline-block' }}
+                        >
                           <figure className='image'>
-                            <img style={{ width: '100px', height: '100px' } } src={participant.user.profileImage} /> <br />{' '}
-                            {participant.user.name}
+                            <img
+                              style={{ width: '100px', height: '100px' }}
+                              src={participant.user.profileImage}
+                            />{' '}
+                            <br /> {participant.user.name}
                           </figure>
                         </div>
                       )
@@ -194,31 +207,34 @@ class ShowTrip extends Component {
                 </div>
               </div>
             </div>
-            <div>
-            </div>
+            <div></div>
           </section>
           <section className='section'>
-            <div className='tile is-parent' style={{ minWidth: '80vw'}}>
-              <div className='tile is-child'>
-                <MapGL
-                  mapboxApiAccessToken={mapboxToken}
-                  ref={this.mapRef}
-                  {...this.state.viewport}
-                  height={'85vh'}
-                  width={'60vh'}
-                  mapStyle='mapbox://styles/mapbox/streets-v11'
-                  onViewportChange={this.handleViewportChange}
-                  dragRotate={false}
-                  minZoom={2}
-                >
-                  {/* <Geocoder
-                  mapRef={this.mapRef}
-                  onViewportChange={this.handleGeocoderViewportChange}
-                  mapboxApiAccessToken={mapboxToken}
-                /> */}
-                  {/* Use <Marker /> here to mark things on map  */}
-                </MapGL>
-              </div>
+            <div className='tile'>
+              <MapGL
+                mapboxApiAccessToken={mapboxToken}
+                ref={this.mapRef}
+                height={'85vh'}
+                width={'60vh'}
+                {...this.state.viewport}
+                mapStyle='mapbox://styles/mapbox/streets-v11'
+                onViewportChange={viewport => this.setState({ viewport })}
+                // minZoom={2}
+              >
+                <div style={{ position: 'absolute', right: 0 }}>
+                  <NavigationControl />
+                </div>
+                {this.state.markers.map((marker, index) => {
+                  return (
+                    <Marker key={index}
+                      latitude={marker.data.features[0].center[1]}
+                      longitude={marker.data.features[0].center[0]}
+                    >
+                      <div>📌</div>
+                    </Marker>
+                  )
+                })}
+              </MapGL>
             </div>
           </section>
         </div>

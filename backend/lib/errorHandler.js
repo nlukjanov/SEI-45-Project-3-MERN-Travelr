@@ -1,10 +1,10 @@
 function handleError(err, req, res, next) {
   console.log(err)
-  if (err.name === 'ValidationError') {
+  if (err.name === 'ValidationError' || err.message === 'ValidationError') {
     const formattedErrors = {}
 
     for (const key in err.errors) {
-      if (key === 'profileImage') {
+      if (key === 'profileImage' || key === 'imageURL') {
         formattedErrors[key] = 'Please upload image'
       } else if (key === 'passwordConfirmation') {
         formattedErrors[key] = 'Passwords do not match'
