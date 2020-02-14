@@ -3,6 +3,7 @@ import axios from 'axios'
 import Select from 'react-select'
 import ImageUpload from '../ImageUpload'
 import { Link } from 'react-router-dom'
+import { notify } from 'react-notify-toast'
 
 const options = [
   { value: 'English', label: 'English' },
@@ -49,8 +50,8 @@ class Register extends Component {
     e.preventDefault()
     try {
       const res = await axios.post('/api/register', this.state.credentials)
+      notify.show(res.data.message, 'success', 3000)
       this.props.history.push('/login')
-      console.log('response', res.data)
     } catch (error) {
       this.setState({ errors: error.response.data.errors })
     }
@@ -58,6 +59,7 @@ class Register extends Component {
 
   render() {
     // if (this.state.errors) console.log(this.state.errors)
+    console.log(this.state)
     return (
       <section className='section'>
         <div className='container'>

@@ -35,33 +35,33 @@ describe('testing trip controller get all trips GET /index', () => {
           {
             name: 'Trip 1',
             organizer: createdUser,
-            country: 'United Kingdom',
+            countries: ['United Kingdom'],
             startingDate: new Date(),
             endingDate: new Date(),
             category: category,
-            description: 'desciprion',
+            description: 'description. it is my funny trip',
             participants: [],
             budget: 'lots of money'
           },
           {
             name: 'Trip 2',
             organizer: createdUser,
-            country: 'India',
+            countries: ['India'],
             startingDate: new Date(),
             endingDate: new Date(),
             category: category,
-            description: 'desciprion',
+            description: 'description. it is my funny trip',
             participants: [],
             budget: 'lots of money'
           },
           {
             name: 'Trip 3',
             organizer: createdUser,
-            country: 'France',
+            countries: ['France'],
             startingDate: new Date(),
             endingDate: new Date(),
             category: category,
-            description: 'desciprion',
+            description: 'description. it is my funny trip',
             participants: [],
             budget: 'lots of money'
           }
