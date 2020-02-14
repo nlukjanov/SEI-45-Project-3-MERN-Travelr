@@ -159,59 +159,67 @@ class TripsIndex extends Component {
                   />
                 </div>
               </div>
-              <div className='flex-container'>
-                <div className='field'>
-                  <div className='control'>
-                    <label className='label'>Start Date</label>
-                    <input
-                      className='button'
-                      type='date'
-                      name='startingDate'
-                      onChange={this.handleChange}
-                      value={tripData.select.startingDate}
-                      min={moment(new Date()).format('YYYY-MM-DD')}
-                      max={tripData.select.endingDate}
-                    ></input>
+              <div className="field">
+                <div className='level'>
+                  <div className="level-left">
+                    <div className='field level-item'>
+                      <div className='control'>
+                        <label className='label'>Start Date</label>
+                        <input
+                          className='button'
+                          type='date'
+                          name='startingDate'
+                          onChange={this.handleChange}
+                          value={tripData.select.startingDate}
+                          min={moment(new Date()).format('YYYY-MM-DD')}
+                          max={tripData.select.endingDate}
+                        ></input>
+                      </div>
+                    </div>
+                    <div className='field level-item'>
+                      <div className='control'>
+                        <label className='label'>End Date</label>
+                        <input
+                          className='button'
+                          type='date'
+                          name='endingDate'
+                          onChange={this.handleChange}
+                          value={tripData.select.endingDate}
+                          min={tripData.select.startingDate}
+                        ></input>
+                      </div>
+                    </div>
+                    <div className="level-right" /*style={{ width: '45%' }}*/>
+                    </div>
                   </div>
-                </div>
-                <div className='field'>
-                  <div className='control'>
-                    <label className='label'>End Date</label>
-                    <input
-                      className='button'
-                      type='date'
-                      name='endingDate'
-                      onChange={this.handleChange}
-                      value={tripData.select.endingDate}
-                      min={tripData.select.startingDate}
-                    ></input>
+                  <div className='field level-item' /*style={{ width: '45%' }}*/>
+                    <div className='control' style={{ width: '95%' }}>
+                      <label className='label'>Trip Type</label>
+                      <Select
+                        name='category'
+                        onChange={this.handleCategorySelection}
+                        options={tripData.categories}
+                        className='basic-single'
+                        classNamePrefix='select'
+                        placeholder='Select Trip Type'
+                      />
+                    </div>
                   </div>
-                </div>
-                <div className='field select'>
-                  <div className='control'>
-                    <label className='label'>Trip Type</label>
-                    <Select
-                      name='category'
-                      onChange={this.handleCategorySelection}
-                      options={tripData.categories}
-                      className='basic-single'
-                      classNamePrefix='select'
-                      placeholder='Select Trip Type'
-                    />
+                  <div className='field level-item' /*style={{ width: '45%' }}*/>
+                    <div className='control' style={{ width: '95%' }}>
+                      <label className='label'>Budget</label>
+                      <Select
+                        name='budget'
+                        onChange={this.handleBudgetSelection}
+                        options={budget}
+                        isMulti
+                        className='basic-multi-select'
+                        classNamePrefix='select'
+                        placeholder='Select Budget'
+                      />
+                    </div>
                   </div>
-                </div>
-                <div className='field select'>
-                  <div className='control'>
-                    <label className='label'>Budget</label>
-                    <Select
-                      name='budget'
-                      onChange={this.handleBudgetSelection}
-                      options={budget}
-                      isMulti
-                      className='basic-multi-select'
-                      classNamePrefix='select'
-                      placeholder='Select Budget'
-                    />
+                  <div className="level-right" /*style={{ width: '45%' }}*/>
                   </div>
                 </div>
               </div>
