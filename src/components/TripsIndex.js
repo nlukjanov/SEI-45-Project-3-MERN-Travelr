@@ -189,10 +189,9 @@ class TripsIndex extends Component {
                         ></input>
                       </div>
                     </div>
-                    <div className="level-right" /*style={{ width: '45%' }}*/>
-                    </div>
+                    <div className="level-right"></div>
                   </div>
-                  <div className='field level-item' /*style={{ width: '45%' }}*/>
+                  <div className='field level-item'>
                     <div className='control' style={{ width: '95%' }}>
                       <label className='label'>Trip Type</label>
                       <Select
@@ -205,7 +204,7 @@ class TripsIndex extends Component {
                       />
                     </div>
                   </div>
-                  <div className='field level-item' /*style={{ width: '45%' }}*/>
+                  <div className='field level-item'>
                     <div className='control' style={{ width: '95%' }}>
                       <label className='label'>Budget</label>
                       <Select
@@ -219,8 +218,7 @@ class TripsIndex extends Component {
                       />
                     </div>
                   </div>
-                  <div className="level-right" /*style={{ width: '45%' }}*/>
-                  </div>
+                  <div className="level-right"></div>
                 </div>
               </div>
               <div className='field'>
