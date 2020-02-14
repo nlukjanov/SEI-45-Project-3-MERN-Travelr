@@ -25,7 +25,7 @@ class Navbar extends Component {
   render() {
     const { isNavbarOpen } = this.state
     return (
-      <nav className='navbar is-dark'>
+      <nav className='navbar is-dark font-sizing'>
         <div className="container">
           <div className="navbar-brand">
             <Link className='navbar-item' to='/'>Home</Link>
