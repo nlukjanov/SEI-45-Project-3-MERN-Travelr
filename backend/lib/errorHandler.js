@@ -1,5 +1,4 @@
 function handleError(err, req, res, next) {
-  console.log(err)
   if (err.name === 'ValidationError' || err.message === 'ValidationError') {
     const formattedErrors = {}
 
