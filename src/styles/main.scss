@@ -81,6 +81,11 @@ button.button, input.input, select.input, textarea.textarea, input.button {
   color: white;
 }
 
+.tab-pointer {
+  cursor: pointer;
+  font-size: 24px;
+}
+
 .trips-block {
   margin-top: 50px;
   font-size: 24px;
@@ -128,6 +133,8 @@ button.button, input.input, select.input, textarea.textarea, input.button {
 
 .profile-back {
   background-image: url('../../src/assets/profileback.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .active-tab {
   border-bottom: 1px solid darkslategrey;
