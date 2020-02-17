@@ -18,7 +18,9 @@ describe('Testing logger middleware', () => {
   it('should console log correct message', function() {
     const nextSpy = sinon.spy()
     const spy = sinon.spy(console, 'log')
-    logger({ method: 'GET', url: '/' }, {}, nextSpy)
+    const req = { method: 'GET', url: '/' }
+    const res = {}
+    logger(req, res, nextSpy)
     assert(spy.calledWith('Incoming GET to /'))
     spy.restore()
   })
