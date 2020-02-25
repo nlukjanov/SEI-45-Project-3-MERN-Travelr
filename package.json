@@ -1,7 +1,9 @@
 {
   "name": "travelr",
   "jest": {
-    "setupFilesAfterEnv": ["./src/setupTests.js"]
+    "setupFilesAfterEnv": [
+      "./src/setupTests.js"
+    ]
   },
   "version": "1.0.0",
   "main": "index.js",
@@ -11,7 +13,9 @@
     "start:back": "nodemon backend/index.js",
     "seed": "node backend/db/seeds.js",
     "test": "nodemon --exec nyc mocha test/**/*_spec.js --require test/testHelper --recursive --exit",
-    "jstest": "jest --watch"
+    "jstest": "jest --watch",
+    "start": "node index",
+    "build": "webpack -p"
   },
   "dependencies": {
     "axios": "^0.19.2",
