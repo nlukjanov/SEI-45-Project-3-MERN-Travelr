@@ -14,8 +14,8 @@
     "seed": "node backend/db/seeds.js",
     "test": "nodemon --exec nyc mocha test/**/*_spec.js --require test/testHelper --recursive --exit",
     "jstest": "jest --watch",
-    "start": "node index",
-    "build": "webpack -p"
+    "build": "webpack -p",
+    "start": "node index"
   },
   "dependencies": {
     "axios": "^0.19.2",
