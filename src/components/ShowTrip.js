@@ -47,7 +47,8 @@ class ShowTrip extends Component {
     const response = await Promise.all(
       res.data.countries.map(country => {
         return axios.get(
-          `https://api.mapbox.com/geocoding/v5/mapbox.places/${country}.json?access_token=${mapboxToken}`
+          `https://api.mapbox.com/geocoding/v5/mapbox.places/${country}.json`,
+          { params: { access_token: mapboxToken } }
         )
       })
     )
