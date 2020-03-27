@@ -170,6 +170,12 @@ const dateMatch = () => {
 We were fixing bugs as they were appearing, so at the moment there are no known bugs and all the functionality works as it should.
 The only things I can think of at the moment is that when a user is registering the account and uploading the picture it goes straight to Cloudinary server even before user submits the registration form. In this case if user has some errors while registering the image will still be uploaded.
 
+![project1](/readme-images/travelr1.png)
+![project2](/readme-images/travelr2.png)
+
+## Key Learnings
+I felt it as a great preview of a real life work. Github setup and team work was interesting to practice. We had some merging conflicts, because at some point we were working on the same files, but I got pretty quickly how to fix them. I like MongoDB as it allows more flexibility to make changes at any stage of the project. I think overall we spent too much time on backend and too little on frontend. It is rewarding to understand that I can build an app from start to finish, both backend and frontend.
+
 ## Wins and Blockers
 Wins: 
 * Working MVP level full stack app
